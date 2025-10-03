@@ -15,12 +15,9 @@ tasks:
       - name: lint-megalinter
         image: oxsecurity/megalinter:v7
         env:
-          - name: ENABLE_LINTERS
-            value: JAVASCRIPT_ES,MARKDOWN_MARKDOWNLINT,EDITORCONFIG_EDITORCONFIG_CHECK
-          - name: VALIDATE_ALL_CODEBASE
-            value: "true"
-          - name: DEFAULT_BRANCH
-            value: main
+          ENABLE_LINTERS: JAVASCRIPT_ES,MARKDOWN_MARKDOWNLINT,EDITORCONFIG_EDITORCONFIG_CHECK
+          VALIDATE_ALL_CODEBASE: "true"
+          DEFAULT_BRANCH: main
         script:
           - python3 /app/mega_linter.py
 

@@ -12,14 +12,11 @@ workflows:
 tasks:
   - name: build-task
     cubes:
-      - name: lint-megalinter
-        image: oxsecurity/megalinter:v7
-        env:
-          ENABLE_LINTERS: JAVASCRIPT_ES,MARKDOWN_MARKDOWNLINT,EDITORCONFIG_EDITORCONFIG_CHECK
-          VALIDATE_ALL_CODEBASE: "true"
-          DEFAULT_BRANCH: main
+      - name: lint-eslint
+        image: cr.yandex/mirror/library/node:lts
         script:
-          - python3 /app/mega_linter.py
+          - npm ci
+          - npm run lint
 
       - name: build-npm
         image: cr.yandex/mirror/library/node:lts

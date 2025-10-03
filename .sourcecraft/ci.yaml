@@ -1,7 +1,7 @@
 on:
   push:
-    - workflows: build-workflow
-      filter:
+    - workflows: build-workflow 
+      filter: 
         branches: ["master", "main", "feat/**"]
 
 workflows:

@@ -1,0 +1,20 @@
+on:
+  push:
+    - workflows: build-workflow 
+      filter: 
+        branches: ["master", "main"]
+
+workflows:
+  build-workflow:
+    tasks:
+      - build-task
+
+tasks:
+  - name: build-task
+    cubes:
+      - name: build-npm
+        image: cr.yandex/mirror/library/node:lts
+        script:
+          - npm ci
+          - npm run build --if-present
+          - npm test

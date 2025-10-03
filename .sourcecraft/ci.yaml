@@ -1,8 +1,8 @@
 on:
   push:
-    - workflows: build-workflow 
-      filter: 
-        branches: ["master", "main"]
+    - workflows: build-workflow
+      filter:
+        branches: ["master", "main", "feat/**"]
 
 workflows:
   build-workflow:
@@ -12,6 +12,18 @@ workflows:
 tasks:
   - name: build-task
     cubes:
+      - name: lint-megalinter
+        image: oxsecurity/megalinter:v7
+        env:
+          - name: ENABLE_LINTERS
+            value: JAVASCRIPT_ES,MARKDOWN_MARKDOWNLINT,EDITORCONFIG_EDITORCONFIG_CHECK
+          - name: VALIDATE_ALL_CODEBASE
+            value: "true"
+          - name: DEFAULT_BRANCH
+            value: main
+        script:
+          - python3 /app/mega_linter.py
+
       - name: build-npm
         image: cr.yandex/mirror/library/node:lts
         script:

@@ -1,0 +1,40 @@
+
+import axios from 'axios'
+
+export const api = axios.create({ baseURL: '/api' })
+
+export type RegisterPayload = { login: string; email: string; password: string }
+export type AuthPayload = { login: string; password: string }
+export type Project = { id: string; name: string; createdAt: string }
+export type ComputeConfig = { paramA: number; paramB: number }
+export type JobStatus = { status: 'queued' | 'done'; mesh?: { type: 'box'; args: [number, number, number] } }
+
+export async function registerUser(data: RegisterPayload) {
+  const res = await api.post('/register', data)
+  return res.data as { ok: true }
+}
+
+export async function loginUser(data: AuthPayload) {
+  const res = await api.post('/login', data)
+  return res.data as { token: string; email: string }
+}
+
+export async function listProjects() {
+  const res = await api.get('/projects')
+  return res.data as Project[]
+}
+
+export async function saveConfig(projectId: string, cfg: ComputeConfig) {
+  const res = await api.post(`/projects/${projectId}/config`, cfg)
+  return res.data as { ok: true }
+}
+
+export async function requestCompute(projectId: string) {
+  const res = await api.post(`/projects/${projectId}/compute`)
+  return res.data as { jobId: string }
+}
+
+export async function getJob(jobId: string) {
+  const res = await api.get(`/jobs/${jobId}`)
+  return res.data as JobStatus
+}

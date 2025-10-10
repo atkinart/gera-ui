@@ -5,6 +5,7 @@ on:
     branches: ["main", "master"]
   push:
     branches: ["main", "master"]
+    tags: ["v*"]
 
 jobs:
   pr-ci:
@@ -30,8 +31,11 @@ jobs:
         run: npm test
 
   main-ci:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     env:
       SCR_HOST: pkg.sourcecraft.tech
       ORG_SLUG: ${{ secrets.SCR_ORG_SLUG }}
@@ -68,6 +72,26 @@ jobs:
           name: dist
           path: dist
 
+      # --- GHCR publish (branch pushes) ---
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image to GHCR
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
+
       - name: Docker login (SCR)
         if: env.PAT != ''
         run: |
@@ -88,3 +112,58 @@ jobs:
         if: env.PAT != ''
         run: docker logout "$SCR_HOST"
 
+  release-image:
+    name: Release Image (tags)
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Optional: sanity checks before releasing the image
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload dist artifact
+        if: ${{ hashFiles('dist/**') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push release image to GHCR
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+            ghcr.io/${{ github.repository }}:latest

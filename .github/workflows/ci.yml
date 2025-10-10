@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  pull_request:
+    branches: ["main", "master"]
+  push:
+    branches: ["main", "master"]
+
+jobs:
+  pr-ci:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+  main-ci:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    env:
+      SCR_HOST: pkg.sourcecraft.tech
+      ORG_SLUG: ${{ secrets.SCR_ORG_SLUG }}
+      REGISTRY_ID: ${{ secrets.SCR_REGISTRY_ID }}
+      IMAGE_NAME: ${{ secrets.SCR_IMAGE_NAME }}
+      TAG: ${{ secrets.SCR_TAG }}
+      PAT: ${{ secrets.SCR_PAT }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload dist artifact
+        if: ${{ hashFiles('dist/**') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Docker login (SCR)
+        if: env.PAT != ''
+        run: |
+          echo "$PAT" | docker login "$SCR_HOST" -u iam --password-stdin
+
+      - name: Docker build (SCR)
+        if: env.PAT != ''
+        run: |
+          FULL_IMAGE="$SCR_HOST/cr/$ORG_SLUG/$REGISTRY_ID/$IMAGE_NAME:${TAG:-ci}"
+          echo "FULL_IMAGE=$FULL_IMAGE" >> $GITHUB_ENV
+          docker build -t "$FULL_IMAGE" .
+
+      - name: Docker push (SCR)
+        if: env.PAT != ''
+        run: docker push "$FULL_IMAGE"
+
+      - name: Docker logout (SCR)
+        if: env.PAT != ''
+        run: docker logout "$SCR_HOST"
+

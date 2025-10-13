@@ -43,7 +43,9 @@ export default function ProjectsPanel() {
       setToast('Импорт успешно выполнен')
       setTimeout(() => setToast(null), 2500)
     } catch (e: any) {
-      const message = e?.response?.data?.error || 'Ошибка импорта'
+      // По требованию: закрывать модалку при ошибке и показать текст ошибки мока
+      closeImport()
+      const message = e?.response?.data?.error || 'модель не прошла провеку'
       setToast(message)
       setTimeout(() => setToast(null), 3000)
     }

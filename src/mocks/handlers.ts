@@ -7,8 +7,8 @@ const jobHits: Record<string, number> = {}
 type Model = { id: string; name: string; createdAt: string }
 const nowInit = new Date().toISOString()
 let models: Model[] = [
-  { id: 'p1', name: 'Проект 1', createdAt: nowInit },
-  { id: 'p2', name: 'Проект 2', createdAt: nowInit },
+  { id: 'p1', name: 'Модель 1', createdAt: nowInit },
+  { id: 'p2', name: 'Модель 2', createdAt: nowInit },
 ]
 
 export const handlers = [
@@ -26,7 +26,7 @@ export const handlers = [
     const rawName = (body?.name ?? '').trim()
     const modelName = rawName || (body?.filename ?? '').replace(/\.[^.]+$/, '') || 'Безымянная модель'
     if (modelName.toLowerCase() === 'fail') {
-      return HttpResponse.json({ error: 'Ошибка импорта' }, { status: 400 })
+      return HttpResponse.json({ error: 'модель не прошла провеку' }, { status: 400 })
     }
     const created: Model = {
       id: `p${models.length + 1}`,

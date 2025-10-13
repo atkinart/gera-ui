@@ -51,6 +51,7 @@ export default function ProjectsPanel() {
 
   if (isLoading) return <p>Загрузка проектов...</p>
   return (
+    <>
     <div>
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-semibold">Модели</h3>
@@ -130,5 +131,6 @@ export default function ProjectsPanel() {
         {toast}
       </div>
     )}
+    </>
   )
 }

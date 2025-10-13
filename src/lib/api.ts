@@ -24,6 +24,22 @@ export async function listProjects() {
   return res.data as Project[]
 }
 
+// Импорт модели: dev-режим ожидает name и опционально filename, файл не обязателен
+export async function importModel(payload: { name: string; filename?: string }) {
+  const res = await api.post('/models/import', payload)
+  return res.data as { ok: true; model: Project }
+}
+
+export async function createModel(payload: { name: string }) {
+  const res = await api.post('/models/create', payload)
+  return res.data as { ok: true; model: Project }
+}
+
+export async function deleteModel(id: string) {
+  const res = await api.delete(`/models/${id}`)
+  return res.data as { ok: true }
+}
+
 export async function saveConfig(projectId: string, cfg: ComputeConfig) {
   const res = await api.post(`/projects/${projectId}/config`, cfg)
   return res.data as { ok: true }

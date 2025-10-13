@@ -17,6 +17,7 @@ export default function ProjectsPanel() {
   const [toast, setToast] = useState<string | null>(null)
   const [isCreateOpen, setCreateOpen] = useState(false)
   const [createName, setCreateName] = useState('')
+  const [createError, setCreateError] = useState<string | null>(null)
   const [isDeleteOpen, setDeleteOpen] = useState(false)
 
   const openFileDialog = () => fileInputRef.current?.click()
@@ -58,17 +59,22 @@ export default function ProjectsPanel() {
   const openCreate = () => {
     setCreateOpen(true)
     setCreateName('')
+    setCreateError(null)
   }
 
   const closeCreate = () => {
     setCreateOpen(false)
     setCreateName('')
+    setCreateError(null)
   }
 
   const doCreate = async () => {
+    const name = createName.trim()
+    if (!name) {
+      setCreateError('Имя модели не может быть пустым')
+      return
+    }
     try {
-      const name = createName.trim()
-      if (!name) return
       await createModel({ name })
       closeCreate()
       await qc.invalidateQueries({ queryKey: ['projects'] })
@@ -76,9 +82,7 @@ export default function ProjectsPanel() {
       setTimeout(() => setToast(null), 2500)
     } catch (e: any) {
       const message = e?.response?.data?.error || 'Не удалось создать модель'
-      closeCreate()
-      setToast(message)
-      setTimeout(() => setToast(null), 3000)
+      setCreateError(message)
     }
   }
 
@@ -199,10 +203,13 @@ export default function ProjectsPanel() {
           <label className="block text-sm mb-1">Название модели</label>
           <input
             value={createName}
-            onChange={e=>setCreateName(e.target.value)}
+            onChange={e=>{ setCreateName(e.target.value); if (createError) setCreateError(null) }}
             placeholder="Например: Демонстрационная модель"
             className="w-full border rounded px-3 py-2 mb-4 focus:outline-none focus:ring focus:ring-green-200"
           />
+          {createError && (
+            <div className="text-sm text-red-600 mb-3">{createError}</div>
+          )}
           <div className="flex items-center justify-end gap-2">
             <button onClick={closeCreate} className="px-3 py-1.5 rounded border hover:bg-slate-50">Отмена</button>
             <button

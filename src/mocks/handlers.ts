@@ -44,6 +44,10 @@ export const handlers = [
     if (!modelName) {
       return HttpResponse.json({ error: 'Имя модели не может быть пустым' }, { status: 400 })
     }
+    const exists = models.some(m => m.name.trim().toLowerCase() === modelName.toLowerCase())
+    if (exists) {
+      return HttpResponse.json({ error: 'Модель с таким именем уже существует' }, { status: 409 })
+    }
     const created: Model = {
       id: `p${models.length + 1}`,
       name: modelName,

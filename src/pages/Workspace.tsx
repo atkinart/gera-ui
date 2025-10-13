@@ -13,7 +13,7 @@ export default function Workspace() {
           onClick={toggleProjects}
           className="px-3 py-1.5 rounded border text-sm hover:bg-slate-50"
         >
-          {isProjectsOpen ? 'Скрыть проекты' : 'Показать проекты'}
+          {isProjectsOpen ? 'Скрыть модели' : 'Показать модели'}
         </button>
       </div>
 

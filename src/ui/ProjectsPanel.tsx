@@ -12,7 +12,7 @@ export default function ProjectsPanel() {
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <h3 className="font-semibold">Проекты</h3>
+        <h3 className="font-semibold">Модели</h3>
       </div>
       <div className="flex items-center gap-2 mb-3">
         <button

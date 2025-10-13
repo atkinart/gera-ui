@@ -25,7 +25,7 @@ export default function App() {
               onClick={() => { setProjectsOpen(true); navigate('/app') }}
               className="px-3 py-1.5 rounded border text-sm hover:bg-slate-50"
             >
-              Панель проектов
+              Панель моделей
             </button>
             <Link to="/register" className="text-sm hover:underline">Регистрация</Link>
             <Link to="/login" className="text-sm hover:underline">Вход</Link>

@@ -29,6 +29,10 @@ export default [
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-react': 'off',
+      // React Three Fiber uses non-DOM props like `args`, `position` on lowercase elements
+      'react/no-unknown-property': 'off',
+      // Allow pragmatic "any" where needed (e.g., event buses)
+      '@typescript-eslint/no-explicit-any': 'off',
       // Avoid false positives for browser globals when using TS
       'no-undef': 'off',
     },

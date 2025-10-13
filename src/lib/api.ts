@@ -35,6 +35,11 @@ export async function createModel(payload: { name: string }) {
   return res.data as { ok: true; model: Project }
 }
 
+export async function deleteModel(id: string) {
+  const res = await api.delete(`/models/${id}`)
+  return res.data as { ok: true }
+}
+
 export async function saveConfig(projectId: string, cfg: ComputeConfig) {
   const res = await api.post(`/projects/${projectId}/config`, cfg)
   return res.data as { ok: true }

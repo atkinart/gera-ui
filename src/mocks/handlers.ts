@@ -53,6 +53,18 @@ export const handlers = [
     return HttpResponse.json({ ok: true, model: created }, { status: 200 })
   }),
 
+  // Удаление модели (dev)
+  http.delete('/api/models/:id', async ({ params }) => {
+    const id = params.id as string
+    const before = models.length
+    models = models.filter(m => m.id !== id)
+    const changed = models.length !== before
+    if (!changed) {
+      return HttpResponse.json({ error: 'Модель не найдена' }, { status: 404 })
+    }
+    return HttpResponse.json({ ok: true }, { status: 200 })
+  }),
+
   http.post('/api/projects/:id/config', async () => HttpResponse.json({ ok: true }, { status: 200 })),
 
   http.post('/api/projects/:id/compute', async () => {

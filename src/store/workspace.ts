@@ -12,6 +12,7 @@ type State = {
 
 type Actions = {
   selectProject: (id: string) => void
+  deselectProject: () => void
   setJobId: (id: string | null) => void
   setMesh: (mesh: MeshResult) => void
   reset: () => void
@@ -25,6 +26,7 @@ const useWorkspace = create<State & Actions>((set) => ({
   mesh: null,
   isProjectsOpen: true,
   selectProject: (id) => set({ selectedProjectId: id }),
+  deselectProject: () => set({ selectedProjectId: null }),
   setJobId: (id) => set({ lastJobId: id }),
   setMesh: (mesh) => set({ mesh }),
   reset: () => set({ selectedProjectId: null, lastJobId: null, mesh: null }),

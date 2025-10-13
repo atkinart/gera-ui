@@ -1,6 +1,6 @@
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { listProjects, Project, importModel, createModel } from '@/lib/api'
+import { listProjects, Project, importModel, createModel, deleteModel } from '@/lib/api'
 import useWorkspace from '@/store/workspace'
 import { useRef, useState } from 'react'
 
@@ -9,6 +9,7 @@ export default function ProjectsPanel() {
   const { data, isLoading } = useQuery({ queryKey: ['projects'], queryFn: listProjects })
   const selected = useWorkspace(s => s.selectedProjectId)
   const select = useWorkspace(s => s.selectProject)
+  const deselect = useWorkspace(s => s.deselectProject)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [isImportOpen, setImportOpen] = useState(false)
   const [importFile, setImportFile] = useState<File | null>(null)
@@ -16,6 +17,7 @@ export default function ProjectsPanel() {
   const [toast, setToast] = useState<string | null>(null)
   const [isCreateOpen, setCreateOpen] = useState(false)
   const [createName, setCreateName] = useState('')
+  const [isDeleteOpen, setDeleteOpen] = useState(false)
 
   const openFileDialog = () => fileInputRef.current?.click()
   const onFileChosen: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -80,6 +82,30 @@ export default function ProjectsPanel() {
     }
   }
 
+  const openDelete = () => {
+    if (!selected) return
+    setDeleteOpen(true)
+  }
+
+  const closeDelete = () => setDeleteOpen(false)
+
+  const doDelete = async () => {
+    if (!selected) return
+    try {
+      await deleteModel(selected)
+      closeDelete()
+      deselect()
+      await qc.invalidateQueries({ queryKey: ['projects'] })
+      setToast('Модель удалена')
+      setTimeout(() => setToast(null), 2500)
+    } catch (e: any) {
+      closeDelete()
+      const message = e?.response?.data?.error || 'Не удалось удалить модель'
+      setToast(message)
+      setTimeout(() => setToast(null), 3000)
+    }
+  }
+
   if (isLoading) return <p>Загрузка проектов...</p>
   return (
     <>
@@ -110,7 +136,7 @@ export default function ProjectsPanel() {
         <button
           className={`px-3 py-1.5 rounded border text-sm ${selected ? 'border-red-300 text-red-700 hover:bg-red-50' : 'opacity-50 cursor-not-allowed'}`}
           disabled={!selected}
-          onClick={() => selected && console.log('delete project', selected)}
+          onClick={openDelete}
         >
           Удалить
         </button>
@@ -177,6 +203,25 @@ export default function ProjectsPanel() {
             >
               Создать
             </button>
+          </div>
+        </div>
+      </div>
+    )}
+    {isDeleteOpen && (
+      <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg shadow-xl w-[520px] max-w-[92vw] p-5">
+          <h4 className="font-semibold mb-3">Удаление модели</h4>
+          <p className="mb-4">
+            Точно хотите удалить модель
+            {" "}
+            <span className="font-semibold">
+              {data?.find(p => p.id === selected)?.name ?? ''}
+            </span>
+            ?
+          </p>
+          <div className="flex items-center justify-end gap-2">
+            <button onClick={closeDelete} className="px-3 py-1.5 rounded border hover:bg-slate-50">Отмена</button>
+            <button onClick={doDelete} className="px-3 py-1.5 rounded bg-red-600 text-white hover:bg-red-700">Да</button>
           </div>
         </div>
       </div>

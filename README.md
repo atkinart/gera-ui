@@ -1,27 +1,26 @@
 Geo Construction App
 ====================
 
-Docker image (GHCR)
-- Image is published to GitHub Container Registry (GHCR): `ghcr.io/atkinart/gera-ui`
-- On pushes to `main`/`master` → tags `latest` and full commit SHA
-- On tag pushes (e.g. `v1.2.3`) → tags `v1.2.3` and `latest`
+Docker‑образ (GHCR)
+- Образ публикуется в GitHub Container Registry (GHCR): `ghcr.io/atkinart/gera-ui`
+- При пушах в `main`/`master` публикуются теги: `latest` и полный SHA коммита
+- При пушах тега (например, `v1.2.3`) публикуются теги: `v1.2.3` и `latest`
 
-Pull and Run
-- Pull latest: `docker pull ghcr.io/atkinart/gera-ui:latest`
-- Run: `docker run --rm -p 8080:80 ghcr.io/atkinart/gera-ui:latest`
-- Then open http://localhost:8080
+Как скачать и запустить
+- Скачать последний образ: `docker pull ghcr.io/atkinart/gera-ui:latest`
+- Запустить: `docker run --rm -p 8080:80 ghcr.io/atkinart/gera-ui:latest`
+- Открыть в браузере: http://localhost:8080
 
-Using a specific version
-- Pull a tag: `docker pull ghcr.io/atkinart/gera-ui:v1.2.3`
-- Run: `docker run --rm -p 8080:80 ghcr.io/atkinart/gera-ui:v1.2.3`
+Использование конкретной версии
+- Скачать тег: `docker pull ghcr.io/atkinart/gera-ui:v1.2.3`
+- Запустить: `docker run --rm -p 8080:80 ghcr.io/atkinart/gera-ui:v1.2.3`
 
-Authentication notes
-- If the repository/package is private, authenticate first:
-  - `echo $GITHUB_TOKEN | docker login ghcr.io -u <YOUR_GH_USERNAME> --password-stdin`
-  - Token must have `read:packages` scope
-  - Alternatively, make the GHCR package public in repository settings
+Аутентификация
+- Если репозиторий/пакет приватный, сначала выполните вход:
+  - `echo $GITHUB_TOKEN | docker login ghcr.io -u <ВАШ_ЛОГИН_GH> --password-stdin`
+  - Токен должен иметь право `read:packages`
+  - Либо сделайте пакет GHCR публичным в настройках репозитория
 
-CI Overview
-- GitHub Actions workflow at `.github/workflows/ci.yml` runs lint, tests, and builds Docker images
-- Images are built with the project `Dockerfile` and served via Nginx on port 80
-# gera-ui
+CI
+- Воркфлоу GitHub Actions (`.github/workflows/ci.yml`) запускает lint, тесты и сборку Docker‑образов
+- Образы собираются из `Dockerfile` и отдаются Nginx на порту 80

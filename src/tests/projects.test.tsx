@@ -10,8 +10,7 @@ test('renders projects from backend', async () => {
       <ProjectsPanel />
     </QueryClientProvider>
   )
-  await waitFor(async () => {
-    expect(await screen.findByText('Проект 1')).toBeInTheDocument()
-    expect(await screen.findByText('Проект 2')).toBeInTheDocument()
-  })
+  // Не оборачиваем findBy* в waitFor: сами методы уже ждут появления
+  await screen.findByText('Проект 1')
+  await screen.findByText('Проект 2')
 })

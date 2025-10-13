@@ -115,16 +115,22 @@ export default function ProjectsPanel() {
       </div>
       <div className="flex items-center gap-2 mb-3">
         <button
-          className="px-3 py-1.5 rounded bg-green-600 text-white hover:bg-green-700 text-sm"
+          className="p-2 rounded-md bg-green-600 text-white hover:bg-green-700"
           onClick={openCreate}
+          title="Создать модель"
+          aria-label="Создать модель"
         >
-          Создать
+          <span aria-hidden>➕</span>
+          <span className="sr-only">Создать модель</span>
         </button>
         <button
-          className="px-3 py-1.5 rounded border hover:bg-slate-50 text-sm"
+          className="p-2 rounded-md border hover:bg-slate-50"
           onClick={openFileDialog}
+          title="Импортировать модель (.DAN)"
+          aria-label="Импортировать модель"
         >
-          Импортировать
+          <span aria-hidden>📥</span>
+          <span className="sr-only">Импортировать модель</span>
         </button>
         <input
           ref={fileInputRef}
@@ -134,11 +140,14 @@ export default function ProjectsPanel() {
           onChange={onFileChosen}
         />
         <button
-          className={`px-3 py-1.5 rounded border text-sm ${selected ? 'border-red-300 text-red-700 hover:bg-red-50' : 'opacity-50 cursor-not-allowed'}`}
+          className={`p-2 rounded-md border ${selected ? 'border-red-300 text-red-700 hover:bg-red-50' : 'opacity-50 cursor-not-allowed'}`}
           disabled={!selected}
           onClick={openDelete}
+          title="Удалить выбранную модель"
+          aria-label="Удалить модель"
         >
-          Удалить
+          <span aria-hidden>🗑️</span>
+          <span className="sr-only">Удалить модель</span>
         </button>
       </div>
       <ul className="space-y-2">

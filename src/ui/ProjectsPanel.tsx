@@ -11,7 +11,30 @@ export default function ProjectsPanel() {
   if (isLoading) return <p>Загрузка проектов...</p>
   return (
     <div>
-      <h3 className="font-semibold mb-2">Проекты</h3>
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="font-semibold">Проекты</h3>
+      </div>
+      <div className="flex items-center gap-2 mb-3">
+        <button
+          className="px-3 py-1.5 rounded bg-green-600 text-white hover:bg-green-700 text-sm"
+          onClick={() => console.log('create project')}
+        >
+          Создать
+        </button>
+        <button
+          className="px-3 py-1.5 rounded border hover:bg-slate-50 text-sm"
+          onClick={() => console.log('import project')}
+        >
+          Импортировать
+        </button>
+        <button
+          className={`px-3 py-1.5 rounded border text-sm ${selected ? 'border-red-300 text-red-700 hover:bg-red-50' : 'opacity-50 cursor-not-allowed'}`}
+          disabled={!selected}
+          onClick={() => selected && console.log('delete project', selected)}
+        >
+          Удалить
+        </button>
+      </div>
       <ul className="space-y-2">
         {data?.map((p: Project) => (
           <li key={p.id}>

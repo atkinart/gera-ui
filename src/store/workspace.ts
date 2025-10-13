@@ -16,6 +16,7 @@ type Actions = {
   setMesh: (mesh: MeshResult) => void
   reset: () => void
   toggleProjects: () => void
+  setProjectsOpen: (open: boolean) => void
 }
 
 const useWorkspace = create<State & Actions>((set) => ({
@@ -28,6 +29,7 @@ const useWorkspace = create<State & Actions>((set) => ({
   setMesh: (mesh) => set({ mesh }),
   reset: () => set({ selectedProjectId: null, lastJobId: null, mesh: null }),
   toggleProjects: () => set((s) => ({ isProjectsOpen: !s.isProjectsOpen })),
+  setProjectsOpen: (open) => set({ isProjectsOpen: open }),
 }))
 
 export default useWorkspace

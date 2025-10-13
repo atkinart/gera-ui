@@ -27,6 +27,8 @@ export default [
       ...tsPlugin.configs.recommended.rules,
       ...react.configs.recommended.rules,
       'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-uses-react': 'off',
       // Avoid false positives for browser globals when using TS
       'no-undef': 'off',
     },

@@ -37,6 +37,22 @@ export const handlers = [
     return HttpResponse.json({ ok: true, model: created }, { status: 200 })
   }),
 
+  // Создание модели (dev)
+  http.post('/api/models/create', async ({ request }) => {
+    const body = (await request.json()) as { name?: string }
+    const modelName = (body?.name ?? '').trim()
+    if (!modelName) {
+      return HttpResponse.json({ error: 'Имя модели не может быть пустым' }, { status: 400 })
+    }
+    const created: Model = {
+      id: `p${models.length + 1}`,
+      name: modelName,
+      createdAt: new Date().toISOString(),
+    }
+    models = [...models, created]
+    return HttpResponse.json({ ok: true, model: created }, { status: 200 })
+  }),
+
   http.post('/api/projects/:id/config', async () => HttpResponse.json({ ok: true }, { status: 200 })),
 
   http.post('/api/projects/:id/compute', async () => {

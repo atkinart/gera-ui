@@ -30,6 +30,11 @@ export async function importModel(payload: { name: string; filename?: string }) 
   return res.data as { ok: true; model: Project }
 }
 
+export async function createModel(payload: { name: string }) {
+  const res = await api.post('/models/create', payload)
+  return res.data as { ok: true; model: Project }
+}
+
 export async function saveConfig(projectId: string, cfg: ComputeConfig) {
   const res = await api.post(`/projects/${projectId}/config`, cfg)
   return res.data as { ok: true }

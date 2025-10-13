@@ -1,6 +1,6 @@
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { listProjects, Project, importModel } from '@/lib/api'
+import { listProjects, Project, importModel, createModel } from '@/lib/api'
 import useWorkspace from '@/store/workspace'
 import { useRef, useState } from 'react'
 
@@ -14,6 +14,8 @@ export default function ProjectsPanel() {
   const [importFile, setImportFile] = useState<File | null>(null)
   const [importName, setImportName] = useState('')
   const [toast, setToast] = useState<string | null>(null)
+  const [isCreateOpen, setCreateOpen] = useState(false)
+  const [createName, setCreateName] = useState('')
 
   const openFileDialog = () => fileInputRef.current?.click()
   const onFileChosen: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -51,6 +53,33 @@ export default function ProjectsPanel() {
     }
   }
 
+  const openCreate = () => {
+    setCreateOpen(true)
+    setCreateName('')
+  }
+
+  const closeCreate = () => {
+    setCreateOpen(false)
+    setCreateName('')
+  }
+
+  const doCreate = async () => {
+    try {
+      const name = createName.trim()
+      if (!name) return
+      await createModel({ name })
+      closeCreate()
+      await qc.invalidateQueries({ queryKey: ['projects'] })
+      setToast('Модель создана')
+      setTimeout(() => setToast(null), 2500)
+    } catch (e: any) {
+      const message = e?.response?.data?.error || 'Не удалось создать модель'
+      closeCreate()
+      setToast(message)
+      setTimeout(() => setToast(null), 3000)
+    }
+  }
+
   if (isLoading) return <p>Загрузка проектов...</p>
   return (
     <>
@@ -61,7 +90,7 @@ export default function ProjectsPanel() {
       <div className="flex items-center gap-2 mb-3">
         <button
           className="px-3 py-1.5 rounded bg-green-600 text-white hover:bg-green-700 text-sm"
-          onClick={() => console.log('create project')}
+          onClick={openCreate}
         >
           Создать
         </button>
@@ -123,6 +152,30 @@ export default function ProjectsPanel() {
               className="px-3 py-1.5 rounded bg-green-600 text-white hover:bg-green-700"
             >
               Импорт
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+    {isCreateOpen && (
+      <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg shadow-xl w-[520px] max-w-[92vw] p-5">
+          <h4 className="font-semibold mb-3">Создать модель</h4>
+          <label className="block text-sm mb-1">Название модели</label>
+          <input
+            value={createName}
+            onChange={e=>setCreateName(e.target.value)}
+            placeholder="Например: Демонстрационная модель"
+            className="w-full border rounded px-3 py-2 mb-4 focus:outline-none focus:ring focus:ring-green-200"
+          />
+          <div className="flex items-center justify-end gap-2">
+            <button onClick={closeCreate} className="px-3 py-1.5 rounded border hover:bg-slate-50">Отмена</button>
+            <button
+              onClick={doCreate}
+              disabled={!createName.trim()}
+              className={`px-3 py-1.5 rounded text-white ${createName.trim() ? 'bg-green-600 hover:bg-green-700' : 'bg-slate-300 cursor-not-allowed'}`}
+            >
+              Создать
             </button>
           </div>
         </div>

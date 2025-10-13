@@ -9,10 +9,16 @@ export default function ConfigPanel() {
   const { selectedProjectId, setJobId, lastJobId } = useWorkspace()
   const [paramA, setParamA] = useState(10)
   const [paramB, setParamB] = useState(20)
+  // Таблицы процедур (12 столбцов): j1..j12
+  const emptyRow = () => Array.from({ length: 12 }, () => 0)
+  const [geomRows, setGeomRows] = useState<number[][]>([emptyRow()])
+  const [graphRows, setGraphRows] = useState<number[][]>([])
+  const [geomSelected, setGeomSelected] = useState<number | null>(null)
+  const [graphSelected, setGraphSelected] = useState<number | null>(null)
 
   const disableActions = !selectedProjectId
 
-  const save = useMutation({ mutationFn: () => saveConfig(selectedProjectId!, { paramA, paramB }) })
+  const save = useMutation({ mutationFn: () => saveConfig(selectedProjectId!, { paramA, paramB, geometry: geomRows, graphic: graphRows }) })
   const compute = useMutation({
     mutationFn: () => requestCompute(selectedProjectId!),
     onSuccess: (data) => {
@@ -35,9 +41,65 @@ export default function ConfigPanel() {
   }, [jobQuery.data, lastJobId])
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <h3 className="font-semibold">Конфигурация</h3>
-      <p className="text-sm text-slate-600">Проект: <b>{selectedProjectId ?? 'не выбран'}</b></p>
+      <p className="text-sm text-slate-600">Модель: <b>{selectedProjectId ?? 'не выбрана'}</b></p>
+
+      {/* Геометрические процедуры */}
+      <section>
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="font-medium">Геометрические процедуры</h4>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setGeomRows(r => [...r, emptyRow()])}
+              className="px-3 py-1.5 rounded border hover:bg-slate-50 text-sm"
+              title="Добавить строку"
+            >Добавить</button>
+            <button
+              onClick={() => geomSelected!=null && setGeomRows(r => r.filter((_,i)=>i!==geomSelected))}
+              className={`px-3 py-1.5 rounded border text-sm ${geomSelected==null?'opacity-50 cursor-not-allowed':'hover:bg-red-50 border-red-300 text-red-700'}`}
+              disabled={geomSelected==null}
+              title="Удалить выбранную строку"
+            >Удалить</button>
+          </div>
+        </div>
+        <ProcTable
+          rows={geomRows}
+          onChange={(rows)=>setGeomRows(rows)}
+          selected={geomSelected}
+          onSelect={setGeomSelected}
+        />
+        <ProcLegend />
+      </section>
+
+      {/* Графические процедуры */}
+      <section>
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="font-medium">Графические процедуры</h4>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setGraphRows(r => [...r, emptyRow()])}
+              className="px-3 py-1.5 rounded border hover:bg-slate-50 text-sm"
+              title="Добавить строку"
+            >Добавить</button>
+            <button
+              onClick={() => graphSelected!=null && setGraphRows(r => r.filter((_,i)=>i!==graphSelected))}
+              className={`px-3 py-1.5 rounded border text-sm ${graphSelected==null?'opacity-50 cursor-not-allowed':'hover:bg-red-50 border-red-300 text-red-700'}`}
+              disabled={graphSelected==null}
+              title="Удалить выбранную строку"
+            >Удалить</button>
+          </div>
+        </div>
+        <ProcTable
+          rows={graphRows}
+          onChange={(rows)=>setGraphRows(rows)}
+          selected={graphSelected}
+          onSelect={setGraphSelected}
+        />
+        <ProcLegend />
+      </section>
+
+      {/* Общие параметры и действия */}
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
           <span className="text-sm">Параметр A</span>
@@ -60,6 +122,67 @@ export default function ConfigPanel() {
       {compute.isSuccess && <p className="text-slate-700">Задача: {lastJobId}</p>}
       {jobQuery.isFetching && <p className="text-slate-500">Статус: ожидаем результат…</p>}
       {jobQuery.data?.status === 'done' && <p className="text-green-700">Готово. Вьюер обновлён.</p>}
+    </div>
+  )
+}
+
+type ProcTableProps = {
+  rows: number[][]
+  onChange: (rows: number[][]) => void
+  selected: number | null
+  onSelect: (idx: number | null) => void
+}
+
+function ProcTable({ rows, onChange, selected, onSelect }: ProcTableProps) {
+  const setCell = (r: number, c: number, v: number) => {
+    onChange(rows.map((row, i) => i===r ? row.map((val, j)=> j===c ? v : val) : row))
+  }
+  const headers = Array.from({ length: 12 }, (_,i)=>`j${i+1}`)
+  return (
+    <div className="overflow-auto border rounded">
+      <table className="min-w-full text-sm">
+        <thead className="bg-slate-50 sticky top-0">
+          <tr>
+            <th className="px-2 py-1 border-r w-8">#</th>
+            {headers.map(h => (
+              <th key={h} className="px-2 py-1 border-r text-left whitespace-nowrap">{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.length===0 && (
+            <tr><td colSpan={13} className="px-3 py-3 text-center text-slate-500">Нет строк</td></tr>
+          )}
+          {rows.map((row, i) => (
+            <tr key={i} className={`${selected===i?'bg-green-50':''} hover:bg-slate-50 cursor-pointer`} onClick={()=>onSelect(i)}>
+              <td className="px-2 py-1 border-r text-slate-500">{i+1}</td>
+              {Array.from({ length: 12 }).map((_, j) => (
+                <td key={j} className="px-1 py-1 border-r">
+                  <input
+                    type="number"
+                    value={String(row?.[j] ?? 0)}
+                    onChange={(e)=>setCell(i, j, parseFloat(e.target.value || '0'))}
+                    className="w-20 border rounded px-2 py-1"
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+function ProcLegend() {
+  return (
+    <div className="mt-2 text-xs text-slate-600 space-y-1">
+      <div><b>j1</b> — код процедуры</div>
+      <div><b>j2..j7</b> — индексы целевых/опорных узлов</div>
+      <div><b>j8..j9</b> — индексы расстояний (lc) или доп. узлы</div>
+      <div><b>j10</b> — опорный узел/центр/эталон</div>
+      <div><b>j11</b> — код плоскости/выбора (1: XY, 2: XZ, 3: YZ)</div>
+      <div><b>j12</b> — флаг направления/режима</div>
     </div>
   )
 }

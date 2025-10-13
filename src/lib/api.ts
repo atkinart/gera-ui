@@ -6,7 +6,13 @@ export const api = axios.create({ baseURL: '/api' })
 export type RegisterPayload = { login: string; email: string; password: string }
 export type AuthPayload = { login: string; password: string }
 export type Project = { id: string; name: string; createdAt: string }
-export type ComputeConfig = { paramA: number; paramB: number }
+// Конфигурация расчёта. Включает параметры и таблицы процедур (12 столбцов каждая строка)
+export type ComputeConfig = {
+  paramA: number
+  paramB: number
+  geometry?: number[][]
+  graphic?: number[][]
+}
 export type JobStatus = { status: 'queued' | 'done'; mesh?: { type: 'box'; args: [number, number, number] } }
 
 export async function registerUser(data: RegisterPayload) {

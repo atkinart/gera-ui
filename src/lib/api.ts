@@ -61,3 +61,8 @@ export async function getJob(jobId: string) {
   const res = await api.get(`/jobs/${jobId}`)
   return res.data as JobStatus
 }
+
+export async function getModelMesh(modelId: string) {
+  const res = await api.get(`/models/${modelId}/mesh`)
+  return res.data as { nodes: number[][]; elements: number[][] }
+}

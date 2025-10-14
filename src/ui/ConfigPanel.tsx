@@ -272,14 +272,14 @@ function CoordsTable({ rows, onChange, selected, onSelect }: CoordsTableProps) {
     onChange(rows.map((row, i) => i===r ? row.map((val, j)=> j===c ? v : val) : row))
   }
   return (
-    <div className="overflow-auto border rounded">
-      <table className="min-w-full text-sm">
+    <div className="overflow-x-auto border rounded">
+      <table className="min-w-full w-full text-sm table-fixed">
         <thead className="bg-slate-50 sticky top-0">
           <tr>
-            <th className="px-2 py-1 border-r text-left whitespace-nowrap">Номер узла</th>
-            <th className="px-2 py-1 border-r text-left">X</th>
-            <th className="px-2 py-1 border-r text-left">Y</th>
-            <th className="px-2 py-1 border-r text-left">Z</th>
+            <th className="px-2 py-1 border-r text-left whitespace-nowrap w-28">Номер узла</th>
+            <th className="px-2 py-1 border-r text-left w-24">X</th>
+            <th className="px-2 py-1 border-r text-left w-24">Y</th>
+            <th className="px-2 py-1 border-r text-left w-24">Z</th>
           </tr>
         </thead>
         <tbody>

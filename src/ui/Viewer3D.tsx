@@ -29,6 +29,7 @@ export default function Viewer3D() {
   const [mode, setMode] = useState<'edges' | 'faces'>('edges')
   const [showNodes, setShowNodes] = useState(true)
   const fitRef = useRef<null | (() => void)>(null)
+  const edgeColor = selectedId === 'p2' ? '#9ca3af' : '#111827'
 
   useEffect(() => {
     const onDone = async () => {
@@ -69,7 +70,7 @@ export default function Viewer3D() {
       )
     }
 
-    function CylinderBetween({ a, b, radius = 0.05 }: { a: THREE.Vector3; b: THREE.Vector3; radius?: number }) {
+    function CylinderBetween({ a, b, radius = 0.03, color = edgeColor }: { a: THREE.Vector3; b: THREE.Vector3; radius?: number; color?: string }) {
       const { mid, quat, len } = useMemo(() => {
         const dir = new THREE.Vector3().subVectors(b, a)
         const len = dir.length()
@@ -82,7 +83,7 @@ export default function Viewer3D() {
       return (
         <mesh position={mid} quaternion={quat}>
           <cylinderGeometry args={[radius, radius, len, 12]} />
-          <meshStandardMaterial color="#111827" />
+          <meshStandardMaterial color={color} />
         </mesh>
       )
     }
@@ -126,7 +127,7 @@ export default function Viewer3D() {
             <bufferAttribute attach="attributes-position" array={positions} itemSize={3} />
             <bufferAttribute attach="index" array={indices} itemSize={1} />
           </bufferGeometry>
-          <meshStandardMaterial color="#7dd3fc" metalness={0.1} roughness={0.8} side={2} />
+          <meshStandardMaterial color={selectedId === 'p2' ? '#9ca3af' : '#7dd3fc'} metalness={0.1} roughness={0.8} side={2} />
         </mesh>
       )
     }

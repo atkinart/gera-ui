@@ -20,6 +20,15 @@ export const handlers = [
     return HttpResponse.json(models, { status: 200 })
   }),
 
+  // Mesh for visualization: nodes (x,y,z) and elements (triangles as node indices)
+  http.get('/api/models/:id/mesh', async ({ params }) => {
+    const id = params.id as string
+    // Simple param-based variation: different radius per model id
+    const radius = id === 'p2' ? 3.5 : 3
+    const { nodes, elements } = generateDomeMesh(10, radius)
+    return HttpResponse.json({ nodes, elements }, { status: 200 })
+  }),
+
   // Импорт модели (dev): добавляет запись, если name != 'fail', иначе ошибка
   http.post('/api/models/import', async ({ request }) => {
     const body = (await request.json()) as { name?: string; filename?: string }
@@ -87,3 +96,54 @@ export const handlers = [
     return HttpResponse.json({ status: 'done', mesh: { type: 'box', args: [1.2, 0.8, 1.0] } }, { status: 200 })
   }),
 ]
+
+// --- Helpers ---
+function generateDomeMesh(segments = 12, R = 3) {
+  // Build a small dome: top + 3 latitude rings (30°, 60°, 90°)
+  const deg = (a: number) => (a * Math.PI) / 180
+  const thetas = [30, 60, 90].map(deg) // from top
+  const nodes: number[][] = []
+  const elements: number[][] = []
+
+  // Top node
+  const top = nodes.push([0, R, 0]) - 1
+
+  // Rings
+  const rings: number[][] = []
+  for (const theta of thetas) {
+    const y = R * Math.cos(theta)
+    const r = R * Math.sin(theta)
+    const ringIdxs: number[] = []
+    for (let s = 0; s < segments; s++) {
+      const phi = (2 * Math.PI * s) / segments
+      const x = r * Math.cos(phi)
+      const z = r * Math.sin(phi)
+      ringIdxs.push(nodes.push([x, y, z]) - 1)
+    }
+    rings.push(ringIdxs)
+  }
+
+  // Top fan (top to first ring)
+  const ring1 = rings[0]
+  for (let i = 0; i < segments; i++) {
+    const a = ring1[i]
+    const b = ring1[(i + 1) % segments]
+    elements.push([top, a, b])
+  }
+
+  // Bands between rings (triangulated quads)
+  const addBand = (upper: number[], lower: number[]) => {
+    for (let i = 0; i < segments; i++) {
+      const a = upper[i]
+      const b = upper[(i + 1) % segments]
+      const c = lower[i]
+      const d = lower[(i + 1) % segments]
+      elements.push([a, c, b])
+      elements.push([b, c, d])
+    }
+  }
+  addBand(rings[0], rings[1])
+  addBand(rings[1], rings[2])
+
+  return { nodes, elements }
+}

@@ -195,19 +195,18 @@ export default function Viewer3D() {
         />
         <ResultMesh />
       </Canvas>
-      {/* Overlay controls (responsive) */}
-      <div className="absolute md:top-2 md:right-2 top-auto right-auto left-1/2 -translate-x-1/2 bottom-2 bg-white/90 backdrop-blur rounded border shadow px-2 py-1 text-xs flex md:flex-row flex-col items-stretch md:items-center gap-1 flex-wrap max-w-[92%] overflow-x-auto">
-        <span className="text-slate-600 hidden md:inline">Вид:</span>
-        <button onClick={()=>setShowEdges(v=>!v)} className={`px-2 py-1 rounded border md:w-auto w-full ${showEdges?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать рёбра">Рёбра</button>
-        <button onClick={()=>setShowNodes(v=>!v)} className={`px-2 py-1 rounded border md:w-auto w-full ${showNodes?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать узлы">Узлы</button>
-        <div className="hidden md:block w-px h-4 bg-slate-300 mx-1" />
-        <div className="flex md:flex-row flex-row md:w-auto w-full gap-1">
-          <button onClick={()=>controlsApiRef.current?.zoomIn()} className="px-2 py-1 rounded border hover:bg-slate-50" title="Приблизить">＋</button>
-          <button onClick={()=>controlsApiRef.current?.zoomOut()} className="px-2 py-1 rounded border hover:bg-slate-50" title="Отдалить">－</button>
-          <button onClick={()=>fitRef.current?.()} className="px-2 py-1 rounded border hover:bg-slate-50" title="Вписать модель в кадр">Вписать</button>
-        </div>
-        <div className="hidden md:block w-px h-4 bg-slate-300 mx-1" />
-        <button onClick={toggleMaximize} className="px-2 py-1 rounded border hover:bg-slate-50 md:w-auto w-full" title="На весь экран / восстановить">{savedPanels ? 'Восстановить' : 'На весь экран'}</button>
+      {/* Overlay controls */}
+      <div className="absolute top-2 right-2 bg-white/90 backdrop-blur rounded border shadow px-2 py-1 text-xs flex items-center gap-1">
+        <span className="text-slate-600">Вид:</span>
+        <button onClick={()=>setShowEdges(v=>!v)} className={`px-2 py-0.5 rounded border ${showEdges?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать рёбра">Рёбра</button>
+        <button onClick={()=>setShowNodes(v=>!v)} className={`px-2 py-0.5 rounded border ${showNodes?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать узлы">Узлы</button>
+        <div className="w-px h-4 bg-slate-300 mx-1" />
+        <button onClick={()=>controlsApiRef.current?.zoomIn()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Приблизить">＋</button>
+        <button onClick={()=>controlsApiRef.current?.zoomOut()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Отдалить">－</button>
+        <div className="w-px h-4 bg-slate-300 mx-1" />
+        <button onClick={()=>fitRef.current?.()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Вписать модель в кадр">Вписать</button>
+        <div className="w-px h-4 bg-slate-300 mx-1" />
+        <button onClick={toggleMaximize} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="На весь экран / восстановить">{savedPanels ? 'Восстановить' : 'На весь экран'}</button>
       </div>
     </div>
   )

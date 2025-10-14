@@ -38,7 +38,8 @@ export default function Viewer3D() {
     zoomIn: () => void
     zoomOut: () => void
   } | null>(null)
-  const edgeColor = selectedId === 'p2' ? '#9ca3af' : '#111827'
+  // Глобальные параметры стиля для всех моделей
+  const edgeColor = '#9ca3af'
 
   useEffect(() => {
     const onDone = async () => {
@@ -136,7 +137,7 @@ export default function Viewer3D() {
             <bufferAttribute attach="attributes-position" array={positions} itemSize={3} />
             <bufferAttribute attach="index" array={indices} itemSize={1} />
           </bufferGeometry>
-          <meshStandardMaterial color={selectedId === 'p2' ? '#9ca3af' : '#7dd3fc'} metalness={0.1} roughness={0.8} side={2} />
+          <meshStandardMaterial color={edgeColor} metalness={0.1} roughness={0.8} side={2} />
         </mesh>
       )
     }

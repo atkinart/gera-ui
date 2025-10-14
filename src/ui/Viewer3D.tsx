@@ -66,7 +66,7 @@ export default function Viewer3D() {
 
     function NodeSpheres() {
       if (!data || !data.nodes?.length) return null
-      const radius = 0.05
+      const radius = 0.025
       return (
         <group>
           {data.nodes.map((n, idx) => (

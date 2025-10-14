@@ -149,6 +149,7 @@ export default function ConfigPanel() {
           onChange={setBaseDistances}
           selected={distSelected}
           onSelect={setDistSelected}
+          minZero
         />
       </section>
 

@@ -30,10 +30,6 @@ export default function Viewer3D() {
   const [showNodes, setShowNodes] = useState(true)
   const fitRef = useRef<null | (() => void)>(null)
   const controlsApiRef = useRef<{
-    rotateLeft: () => void
-    rotateRight: () => void
-    rotateUp: () => void
-    rotateDown: () => void
     zoomIn: () => void
     zoomOut: () => void
   } | null>(null)
@@ -59,7 +55,7 @@ export default function Viewer3D() {
     enabled: !!selectedId,
   })
 
-  function Scene({ flags, bindFit, bindControls }: { flags: { showEdges: boolean; showNodes: boolean }; bindFit: (fn: () => void) => void; bindControls: (api: { rotateLeft:()=>void; rotateRight:()=>void; rotateUp:()=>void; rotateDown:()=>void; zoomIn:()=>void; zoomOut:()=>void }) => void }) {
+  function Scene({ flags, bindFit, bindControls }: { flags: { showEdges: boolean; showNodes: boolean }; bindFit: (fn: () => void) => void; bindControls: (api: { zoomIn:()=>void; zoomOut:()=>void }) => void }) {
     const data = meshQuery.data
     const controlsRef = useRef<any>(null)
     const camera = useThree((s) => s.camera as THREE.PerspectiveCamera)
@@ -151,11 +147,7 @@ export default function Viewer3D() {
     // Bind control API for toolbar buttons
     useEffect(() => {
       bindControls({
-        rotateLeft: () => { controlsRef.current?.rotateLeft(Math.PI/8); controlsRef.current?.update?.() },
-        rotateRight: () => { controlsRef.current?.rotateLeft(-Math.PI/8); controlsRef.current?.update?.() },
-        rotateUp: () => { controlsRef.current?.rotateUp(Math.PI/8); controlsRef.current?.update?.() },
-        rotateDown: () => { controlsRef.current?.rotateUp(-Math.PI/8); controlsRef.current?.update?.() },
-        // Invert perceived direction: «+» приближает, «-» отдаляет
+        // «+» приближает, «-» отдаляет
         zoomIn: () => { controlsRef.current?.dollyOut?.(0.9); controlsRef.current?.update?.() },
         zoomOut: () => { controlsRef.current?.dollyIn?.(0.9); controlsRef.current?.update?.() },
       })
@@ -190,11 +182,6 @@ export default function Viewer3D() {
         <span className="text-slate-600">Вид:</span>
         <button onClick={()=>setShowEdges(v=>!v)} className={`px-2 py-0.5 rounded border ${showEdges?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать рёбра">Рёбра</button>
         <button onClick={()=>setShowNodes(v=>!v)} className={`px-2 py-0.5 rounded border ${showNodes?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать узлы">Узлы</button>
-        <div className="w-px h-4 bg-slate-300 mx-1" />
-        <button onClick={()=>controlsApiRef.current?.rotateLeft()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Повернуть влево">⟲</button>
-        <button onClick={()=>controlsApiRef.current?.rotateRight()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Повернуть вправо">⟳</button>
-        <button onClick={()=>controlsApiRef.current?.rotateUp()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Повернуть вверх">⤴︎</button>
-        <button onClick={()=>controlsApiRef.current?.rotateDown()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Повернуть вниз">⤵︎</button>
         <div className="w-px h-4 bg-slate-300 mx-1" />
         <button onClick={()=>controlsApiRef.current?.zoomIn()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Приблизить">＋</button>
         <button onClick={()=>controlsApiRef.current?.zoomOut()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Отдалить">－</button>

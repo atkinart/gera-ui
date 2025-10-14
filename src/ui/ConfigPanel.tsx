@@ -101,6 +101,7 @@ export default function ConfigPanel() {
           onChange={(rows)=>setGraphRows(rows)}
           selected={graphSelected}
           onSelect={setGraphSelected}
+          graphConstraints
         />
         <ProcLegend />
       </section>
@@ -205,17 +206,24 @@ type ProcTableProps = {
   selected: number | null
   onSelect: (idx: number | null) => void
   geomConstraints?: boolean
+  graphConstraints?: boolean
 }
 
-function ProcTable({ rows, onChange, selected, onSelect, geomConstraints = false }: ProcTableProps) {
+function ProcTable({ rows, onChange, selected, onSelect, geomConstraints = false, graphConstraints = false }: ProcTableProps) {
   const clampVal = (col: number, v: number) => {
-    if (!geomConstraints) return v
     const n = Number.isNaN(v) ? 0 : Math.trunc(v)
-    // col: 0=j1, 1..8=j2..j9, 9=j10, 10=j11, 11=j12
-    if (col === 0) return Math.min(20, Math.max(1, n))       // j1 in [1..20]
-    if (col >= 1 && col <= 8) return Math.max(1, n)          // j2..j9 > 0
-    if (col === 9) return Math.max(1, n)                     // j10 > 0
-    if (col === 10) return Math.min(3, Math.max(1, n))       // j11 in [1..3]
+    if (geomConstraints) {
+      // col: 0=j1, 1..8=j2..j9, 9=j10, 10=j11, 11=j12
+      if (col === 0) return Math.min(20, Math.max(1, n))     // j1 in [1..20]
+      if (col >= 1 && col <= 8) return Math.max(1, n)        // j2..j9 > 0
+      if (col === 9) return Math.max(1, n)                   // j10 > 0
+      if (col === 10) return Math.min(3, Math.max(1, n))     // j11 in [1..3]
+      return n
+    }
+    if (graphConstraints) {
+      if (col === 0) return Math.min(3, Math.max(1, n))      // j1 in [1..3]
+      return Math.max(1, n)                                  // others > 0
+    }
     return n
   }
   const setCell = (r: number, c: number, v: number) => {
@@ -249,6 +257,9 @@ function ProcTable({ rows, onChange, selected, onSelect, geomConstraints = false
                   else if (j === 9) { attrs.min = 1; attrs.step = 1 }
                   else if (j === 10) { attrs.min = 1; attrs.max = 3; attrs.step = 1 }
                   else { attrs.step = 1 }
+                } else if (graphConstraints) {
+                  if (j === 0) { attrs.min = 1; attrs.max = 3; attrs.step = 1 }
+                  else { attrs.min = 1; attrs.step = 1 }
                 }
                 return (
                   <td key={j} className="px-1 py-1 border-r">

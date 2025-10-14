@@ -26,9 +26,18 @@ export default function Viewer3D() {
   const setMesh = useWorkspace(s => s.setMesh)
   const lastJobId = useWorkspace(s => s.lastJobId)
   const selectedId = useWorkspace(s => s.selectedProjectId)
-  const [mode, setMode] = useState<'edges' | 'faces'>('edges')
+  const [showEdges, setShowEdges] = useState(true)
+  const [showFaces, setShowFaces] = useState(false)
   const [showNodes, setShowNodes] = useState(true)
   const fitRef = useRef<null | (() => void)>(null)
+  const controlsApiRef = useRef<{
+    rotateLeft: () => void
+    rotateRight: () => void
+    rotateUp: () => void
+    rotateDown: () => void
+    zoomIn: () => void
+    zoomOut: () => void
+  } | null>(null)
   const edgeColor = selectedId === 'p2' ? '#9ca3af' : '#111827'
 
   useEffect(() => {
@@ -50,14 +59,14 @@ export default function Viewer3D() {
     enabled: !!selectedId,
   })
 
-  function Scene({ mode, showNodes, bindFit }: { mode: 'edges'|'faces'; showNodes: boolean; bindFit: (fn: () => void) => void }) {
+  function Scene({ flags, bindFit, bindControls }: { flags: { showEdges: boolean; showFaces: boolean; showNodes: boolean }; bindFit: (fn: () => void) => void; bindControls: (api: { rotateLeft:()=>void; rotateRight:()=>void; rotateUp:()=>void; rotateDown:()=>void; zoomIn:()=>void; zoomOut:()=>void }) => void }) {
     const data = meshQuery.data
     const controlsRef = useRef<any>(null)
     const camera = useThree((s) => s.camera as THREE.PerspectiveCamera)
 
     function NodeSpheres() {
       if (!data || !data.nodes?.length) return null
-      const radius = 0.1
+      const radius = 0.06
       return (
         <group>
           {data.nodes.map((n, idx) => (
@@ -152,33 +161,57 @@ export default function Viewer3D() {
     }
     useEffect(() => { bindFit(doFit) }, [data])
 
+    // Bind control API for toolbar buttons
+    useEffect(() => {
+      bindControls({
+        rotateLeft: () => { controlsRef.current?.rotateLeft(Math.PI/12); controlsRef.current?.update?.() },
+        rotateRight: () => { controlsRef.current?.rotateLeft(-Math.PI/12); controlsRef.current?.update?.() },
+        rotateUp: () => { controlsRef.current?.rotateUp(Math.PI/12); controlsRef.current?.update?.() },
+        rotateDown: () => { controlsRef.current?.rotateUp(-Math.PI/12); controlsRef.current?.update?.() },
+        zoomIn: () => { controlsRef.current?.dollyIn?.(1.1); controlsRef.current?.update?.() },
+        zoomOut: () => { controlsRef.current?.dollyOut?.(1.1); controlsRef.current?.update?.() },
+      })
+    }, [])
+
     return (
       <>
-        {mode === 'faces' ? <FaceMesh /> : <ElementCylinders />}
-        {showNodes && <NodeSpheres />}
+        {flags.showFaces && <FaceMesh />}
+        {flags.showEdges && <ElementCylinders />}
+        {flags.showNodes && <NodeSpheres />}
         <OrbitControls ref={controlsRef} enablePan enableZoom enableRotate />
       </>
     )
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full relative">
       <Canvas camera={{ position: [6,6,6], fov: 60 }}>
         <ambientLight />
         <directionalLight position={[5,5,5]} />
         <gridHelper args={[10, 10]} />
         <axesHelper args={[3]} />
         {/* Сцена: режимы отображения и узлы */}
-        <Scene mode={mode} showNodes={showNodes} bindFit={(fn)=>{ fitRef.current = fn }} />
+        <Scene
+          flags={{ showEdges, showFaces, showNodes }}
+          bindFit={(fn)=>{ fitRef.current = fn }}
+          bindControls={(api)=>{ controlsApiRef.current = api }}
+        />
         <ResultMesh />
       </Canvas>
       {/* Overlay controls */}
       <div className="absolute top-2 right-2 bg-white/90 backdrop-blur rounded border shadow px-2 py-1 text-xs flex items-center gap-1">
         <span className="text-slate-600">Вид:</span>
-        <button onClick={()=>setMode('edges')} className={`px-2 py-0.5 rounded border ${mode==='edges'?'bg-slate-200':'hover:bg-slate-50'}`} title="Отображать элементы как рёбра">Рёбра</button>
-        <button onClick={()=>setMode('faces')} className={`px-2 py-0.5 rounded border ${mode==='faces'?'bg-slate-200':'hover:bg-slate-50'}`} title="Отображать элементы как грани">Грани</button>
+        <button onClick={()=>setShowEdges(v=>!v)} className={`px-2 py-0.5 rounded border ${showEdges?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать рёбра">Рёбра</button>
+        <button onClick={()=>setShowFaces(v=>!v)} className={`px-2 py-0.5 rounded border ${showFaces?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать грани">Грани</button>
+        <button onClick={()=>setShowNodes(v=>!v)} className={`px-2 py-0.5 rounded border ${showNodes?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать узлы">Узлы</button>
         <div className="w-px h-4 bg-slate-300 mx-1" />
-        <button onClick={()=>setShowNodes(v=>!v)} className={`px-2 py-0.5 rounded border ${showNodes?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать узлы (сферы)">Узлы</button>
+        <button onClick={()=>controlsApiRef.current?.rotateLeft()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Повернуть влево">⟲</button>
+        <button onClick={()=>controlsApiRef.current?.rotateRight()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Повернуть вправо">⟳</button>
+        <button onClick={()=>controlsApiRef.current?.rotateUp()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Повернуть вверх">⤴︎</button>
+        <button onClick={()=>controlsApiRef.current?.rotateDown()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Повернуть вниз">⤵︎</button>
+        <div className="w-px h-4 bg-slate-300 mx-1" />
+        <button onClick={()=>controlsApiRef.current?.zoomIn()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Приблизить">＋</button>
+        <button onClick={()=>controlsApiRef.current?.zoomOut()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Отдалить">－</button>
         <div className="w-px h-4 bg-slate-300 mx-1" />
         <button onClick={()=>fitRef.current?.()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Вписать модель в кадр">Вписать</button>
       </div>

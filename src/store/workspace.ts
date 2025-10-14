@@ -8,6 +8,7 @@ type State = {
   lastJobId: string | null
   mesh: MeshResult
   isProjectsOpen: boolean
+  isViewerOpen: boolean
 }
 
 type Actions = {
@@ -18,6 +19,8 @@ type Actions = {
   reset: () => void
   toggleProjects: () => void
   setProjectsOpen: (open: boolean) => void
+  toggleViewer: () => void
+  setViewerOpen: (open: boolean) => void
 }
 
 const useWorkspace = create<State & Actions>((set) => ({
@@ -25,6 +28,7 @@ const useWorkspace = create<State & Actions>((set) => ({
   lastJobId: null,
   mesh: null,
   isProjectsOpen: true,
+  isViewerOpen: true,
   selectProject: (id) => set({ selectedProjectId: id }),
   deselectProject: () => set({ selectedProjectId: null }),
   setJobId: (id) => set({ lastJobId: id }),
@@ -32,6 +36,8 @@ const useWorkspace = create<State & Actions>((set) => ({
   reset: () => set({ selectedProjectId: null, lastJobId: null, mesh: null }),
   toggleProjects: () => set((s) => ({ isProjectsOpen: !s.isProjectsOpen })),
   setProjectsOpen: (open) => set({ isProjectsOpen: open }),
+  toggleViewer: () => set((s) => ({ isViewerOpen: !s.isViewerOpen })),
+  setViewerOpen: (open) => set({ isViewerOpen: open }),
 }))
 
 export default useWorkspace

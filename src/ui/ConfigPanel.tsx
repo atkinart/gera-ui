@@ -110,7 +110,7 @@ export default function ConfigPanel() {
           <h4 className="font-medium">Базовые координаты</h4>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setBaseCoords(r => [...r, [0,0,0]])}
+              onClick={() => setBaseCoords(r => [...r, [0,0,0,0]])}
               className="px-3 py-1.5 rounded border hover:bg-slate-50 text-sm"
               title="Добавить строку"
             >Добавить</button>
@@ -276,7 +276,7 @@ function CoordsTable({ rows, onChange, selected, onSelect }: CoordsTableProps) {
       <table className="min-w-full text-sm">
         <thead className="bg-slate-50 sticky top-0">
           <tr>
-            <th className="px-2 py-1 border-r w-8">#</th>
+            <th className="px-2 py-1 border-r text-left whitespace-nowrap">Номер узла</th>
             <th className="px-2 py-1 border-r text-left">X</th>
             <th className="px-2 py-1 border-r text-left">Y</th>
             <th className="px-2 py-1 border-r text-left">Z</th>
@@ -288,8 +288,15 @@ function CoordsTable({ rows, onChange, selected, onSelect }: CoordsTableProps) {
           )}
           {rows.map((row, i) => (
             <tr key={i} className={`${selected===i?'bg-green-50':''} hover:bg-slate-50 cursor-pointer`} onClick={()=>onSelect(i)}>
-              <td className="px-2 py-1 border-r text-slate-500">{i+1}</td>
-              {[0,1,2].map((j) => (
+              <td className="px-1 py-1 border-r">
+                <input
+                  type="number"
+                  value={String(row?.[0] ?? 0)}
+                  onChange={(e)=>setCell(i, 0, parseFloat(e.target.value || '0'))}
+                  className="w-28 border rounded px-2 py-1"
+                />
+              </td>
+              {[1,2,3].map((j) => (
                 <td key={j} className="px-1 py-1 border-r">
                   <input
                     type="number"

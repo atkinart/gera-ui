@@ -10,7 +10,7 @@ export type Project = { id: string; name: string; createdAt: string }
 export type ComputeConfig = {
   geometry?: number[][]
   graphic?: number[][]
-  baseCoords?: number[][] // [[x,y,z], ...]
+  baseCoords?: number[][] // [[node,x,y,z], ...]
   baseDistances?: number[] // [lc1, lc2, ...]
   baseNodes?: number[] // [n1, n2, ...]
 }

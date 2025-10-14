@@ -7,8 +7,6 @@ import { bus } from '@/lib/bus'
 
 export default function ConfigPanel() {
   const { selectedProjectId, setJobId, lastJobId } = useWorkspace()
-  const [paramA, setParamA] = useState(10)
-  const [paramB, setParamB] = useState(20)
   // Таблицы процедур (12 столбцов): j1..j12
   const emptyRow = () => Array.from({ length: 12 }, () => 0)
   const [geomRows, setGeomRows] = useState<number[][]>([emptyRow()])
@@ -18,7 +16,7 @@ export default function ConfigPanel() {
 
   const disableActions = !selectedProjectId
 
-  const save = useMutation({ mutationFn: () => saveConfig(selectedProjectId!, { paramA, paramB, geometry: geomRows, graphic: graphRows }) })
+  const save = useMutation({ mutationFn: () => saveConfig(selectedProjectId!, { geometry: geomRows, graphic: graphRows }) })
   const compute = useMutation({
     mutationFn: () => requestCompute(selectedProjectId!),
     onSuccess: (data) => {
@@ -99,17 +97,7 @@ export default function ConfigPanel() {
         <ProcLegend />
       </section>
 
-      {/* Общие параметры и действия */}
-      <div className="grid grid-cols-2 gap-3">
-        <label className="block">
-          <span className="text-sm">Параметр A</span>
-          <input type="number" value={paramA} onChange={(e)=>setParamA(parseFloat(e.target.value))} className="mt-1 w-full rounded-md border px-3 py-2" />
-        </label>
-        <label className="block">
-          <span className="text-sm">Параметр B</span>
-          <input type="number" value={paramB} onChange={(e)=>setParamB(parseFloat(e.target.value))} className="mt-1 w-full rounded-md border px-3 py-2" />
-        </label>
-      </div>
+      {/* Действия */}
       <div className="flex gap-2">
         <button onClick={()=>save.mutate()} className="brand-btn" disabled={save.isPending || disableActions}>
           {save.isPending?'Сохранение...':'Сохранить'}

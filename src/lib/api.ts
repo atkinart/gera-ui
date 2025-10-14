@@ -8,8 +8,6 @@ export type AuthPayload = { login: string; password: string }
 export type Project = { id: string; name: string; createdAt: string }
 // Конфигурация расчёта. Включает параметры и таблицы процедур (12 столбцов каждая строка)
 export type ComputeConfig = {
-  paramA: number
-  paramB: number
   geometry?: number[][]
   graphic?: number[][]
 }

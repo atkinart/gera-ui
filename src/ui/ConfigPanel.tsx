@@ -73,6 +73,7 @@ export default function ConfigPanel() {
           onChange={(rows)=>setGeomRows(rows)}
           selected={geomSelected}
           onSelect={setGeomSelected}
+          geomConstraints
         />
         <ProcLegend />
       </section>
@@ -203,11 +204,23 @@ type ProcTableProps = {
   onChange: (rows: number[][]) => void
   selected: number | null
   onSelect: (idx: number | null) => void
+  geomConstraints?: boolean
 }
 
-function ProcTable({ rows, onChange, selected, onSelect }: ProcTableProps) {
+function ProcTable({ rows, onChange, selected, onSelect, geomConstraints = false }: ProcTableProps) {
+  const clampVal = (col: number, v: number) => {
+    if (!geomConstraints) return v
+    const n = Number.isNaN(v) ? 0 : Math.trunc(v)
+    // col: 0=j1, 1..8=j2..j9, 9=j10, 10=j11, 11=j12
+    if (col === 0) return Math.min(20, Math.max(1, n))       // j1 in [1..20]
+    if (col >= 1 && col <= 8) return Math.max(1, n)          // j2..j9 > 0
+    if (col === 9) return Math.max(1, n)                     // j10 > 0
+    if (col === 10) return Math.min(3, Math.max(1, n))       // j11 in [1..3]
+    return n
+  }
   const setCell = (r: number, c: number, v: number) => {
-    onChange(rows.map((row, i) => i===r ? row.map((val, j)=> j===c ? v : val) : row))
+    const nv = clampVal(c, v)
+    onChange(rows.map((row, i) => i===r ? row.map((val, j)=> j===c ? nv : val) : row))
   }
   const headers = Array.from({ length: 12 }, (_,i)=>`j${i+1}`)
   return (
@@ -228,16 +241,30 @@ function ProcTable({ rows, onChange, selected, onSelect }: ProcTableProps) {
           {rows.map((row, i) => (
             <tr key={i} className={`${selected===i?'bg-green-50':''} hover:bg-slate-50 cursor-pointer`} onClick={()=>onSelect(i)}>
               <td className="px-2 py-1 border-r text-slate-500">{i+1}</td>
-              {Array.from({ length: 12 }).map((_, j) => (
-                <td key={j} className="px-1 py-1 border-r">
-                  <input
-                    type="number"
-                    value={String(row?.[j] ?? 0)}
-                    onChange={(e)=>setCell(i, j, parseFloat(e.target.value || '0'))}
-                    className="w-20 border rounded px-2 py-1"
-                  />
-                </td>
-              ))}
+              {Array.from({ length: 12 }).map((_, j) => {
+                const attrs: Record<string, any> = {}
+                if (geomConstraints) {
+                  if (j === 0) { attrs.min = 1; attrs.max = 20; attrs.step = 1 }
+                  else if (j >= 1 && j <= 8) { attrs.min = 1; attrs.step = 1 }
+                  else if (j === 9) { attrs.min = 1; attrs.step = 1 }
+                  else if (j === 10) { attrs.min = 1; attrs.max = 3; attrs.step = 1 }
+                  else { attrs.step = 1 }
+                }
+                return (
+                  <td key={j} className="px-1 py-1 border-r">
+                    <input
+                      type="number"
+                      {...attrs}
+                      value={String(row?.[j] ?? 0)}
+                      onChange={(e)=>{
+                        const raw = parseFloat(e.target.value || '0')
+                        setCell(i, j, raw)
+                      }}
+                      className="w-20 border rounded px-2 py-1"
+                    />
+                  </td>
+                )
+              })}
             </tr>
           ))}
         </tbody>

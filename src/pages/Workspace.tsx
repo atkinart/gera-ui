@@ -6,9 +6,6 @@ import useWorkspace from '@/store/workspace'
 
 export default function Workspace() {
   const { isProjectsOpen, toggleProjects, isViewerOpen, toggleViewer } = useWorkspace()
-  const projectsCol = isProjectsOpen ? 3 : 0
-  const viewerCol = isViewerOpen ? (isProjectsOpen ? 5 : 8) : 0
-  const configCol = isViewerOpen ? 4 : (isProjectsOpen ? 9 : 12)
   return (
     <div className="h-[calc(100vh-56px)] w-full py-3 px-3">
       <div className="mb-2 flex items-center gap-2">
@@ -33,7 +30,9 @@ export default function Workspace() {
           </aside>
         )}
 
-        <section className={`card p-3 overflow-auto h-full col-span-${configCol}`}>
+        <section className={`card p-3 overflow-auto h-full ${
+          isViewerOpen ? 'col-span-4' : (isProjectsOpen ? 'col-span-9' : 'col-span-12')
+        }`}>
           <ConfigPanel />
         </section>
 

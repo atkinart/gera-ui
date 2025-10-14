@@ -176,13 +176,16 @@ function ProcTable({ rows, onChange, selected, onSelect }: ProcTableProps) {
 
 function ProcLegend() {
   return (
-    <div className="mt-2 text-xs text-slate-600 space-y-1">
-      <div><b>j1</b> — код процедуры</div>
-      <div><b>j2..j7</b> — индексы целевых/опорных узлов</div>
-      <div><b>j8..j9</b> — индексы расстояний (lc) или доп. узлы</div>
-      <div><b>j10</b> — опорный узел/центр/эталон</div>
-      <div><b>j11</b> — код плоскости/выбора (1: XY, 2: XZ, 3: YZ)</div>
-      <div><b>j12</b> — флаг направления/режима</div>
-    </div>
+    <details className="mt-2 text-xs text-slate-600">
+      <summary className="cursor-pointer select-none text-slate-700">Пояснения j1..j12</summary>
+      <div className="mt-2 space-y-1">
+        <div><b>j1</b> — код процедуры</div>
+        <div><b>j2..j7</b> — индексы целевых/опорных узлов</div>
+        <div><b>j8..j9</b> — индексы расстояний (lc) или доп. узлы</div>
+        <div><b>j10</b> — опорный узел/центр/эталон</div>
+        <div><b>j11</b> — код плоскости/выбора (1: XY, 2: XZ, 3: YZ)</div>
+        <div><b>j12</b> — флаг направления/режима</div>
+      </div>
+    </details>
   )
 }

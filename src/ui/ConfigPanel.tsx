@@ -176,6 +176,7 @@ export default function ConfigPanel() {
           onChange={setBaseNodes}
           selected={nodeSelected}
           onSelect={setNodeSelected}
+          minZero
         />
       </section>
 
@@ -291,8 +292,13 @@ function CoordsTable({ rows, onChange, selected, onSelect }: CoordsTableProps) {
               <td className="px-1 py-1 border-r">
                 <input
                   type="number"
+                  min={0}
                   value={String(row?.[0] ?? 0)}
-                  onChange={(e)=>setCell(i, 0, parseFloat(e.target.value || '0'))}
+                  onChange={(e)=>{
+                    const raw = parseFloat(e.target.value || '0')
+                    const v = Number.isNaN(raw) ? 0 : Math.max(0, raw)
+                    setCell(i, 0, v)
+                  }}
                   className="w-28 border rounded px-2 py-1"
                 />
               </td>
@@ -320,11 +326,13 @@ type OneColTableProps = {
   onChange: (rows: number[]) => void
   selected: number | null
   onSelect: (idx: number | null) => void
+  minZero?: boolean
 }
 
-function OneColTable({ header, rows, onChange, selected, onSelect }: OneColTableProps) {
+function OneColTable({ header, rows, onChange, selected, onSelect, minZero = false }: OneColTableProps) {
   const setCell = (r: number, v: number) => {
-    onChange(rows.map((val, i) => i===r ? v : val))
+    const nv = Number.isNaN(v) ? 0 : (minZero ? Math.max(0, v) : v)
+    onChange(rows.map((val, i) => i===r ? nv : val))
   }
   return (
     <div className="overflow-auto border rounded">
@@ -345,8 +353,12 @@ function OneColTable({ header, rows, onChange, selected, onSelect }: OneColTable
               <td className="px-1 py-1 border-r">
                 <input
                   type="number"
+                  min={minZero ? 0 : undefined}
                   value={String(val ?? 0)}
-                  onChange={(e)=>setCell(i, parseFloat(e.target.value || '0'))}
+                  onChange={(e)=>{
+                    const raw = parseFloat(e.target.value || '0')
+                    setCell(i, raw)
+                  }}
                   className="w-32 border rounded px-2 py-1"
                 />
               </td>

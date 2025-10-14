@@ -5,7 +5,7 @@ import Viewer3D from '@/ui/Viewer3D'
 import useWorkspace from '@/store/workspace'
 
 export default function Workspace() {
-  const { isProjectsOpen, toggleProjects, isViewerOpen, toggleViewer } = useWorkspace()
+  const { isProjectsOpen, toggleProjects, isViewerOpen, toggleViewer, isConfigOpen } = useWorkspace()
   return (
     <div className="h-[calc(100vh-56px)] w-full py-3 px-3">
       <div className="mb-2 flex items-center gap-2">
@@ -30,14 +30,21 @@ export default function Workspace() {
           </aside>
         )}
 
-        <section className={`card p-3 overflow-auto h-full ${
-          isViewerOpen ? 'col-span-4' : (isProjectsOpen ? 'col-span-9' : 'col-span-12')
-        }`}>
-          <ConfigPanel />
-        </section>
+        {isConfigOpen && (
+          <section className={`card p-3 overflow-auto h-full ${
+            isViewerOpen ? 'col-span-4' : (isProjectsOpen ? 'col-span-9' : 'col-span-12')
+          }`}>
+            <ConfigPanel />
+          </section>
+        )}
 
         {isViewerOpen && (
-          <section className={`card p-0 overflow-hidden h-full ${isProjectsOpen ? 'col-span-5' : 'col-span-8'}`}>
+          <section className={`card p-0 overflow-hidden h-full ${
+            isProjectsOpen && isConfigOpen ? 'col-span-5'
+            : isProjectsOpen && !isConfigOpen ? 'col-span-9'
+            : !isProjectsOpen && isConfigOpen ? 'col-span-8'
+            : 'col-span-12'
+          }`}>
             <Viewer3D />
           </section>
         )}

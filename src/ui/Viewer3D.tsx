@@ -35,6 +35,24 @@ export default function Viewer3D() {
   } | null>(null)
   // Глобальные параметры стиля для всех моделей
   const edgeColor = '#9ca3af'
+  // Toggle maximize: скрыть панели моделей и параметров / восстановить
+  const { isProjectsOpen, isConfigOpen, isViewerOpen, setProjectsOpen, setConfigOpen, setViewerOpen } = useWorkspace()
+  const [savedPanels, setSavedPanels] = useState<null | { p: boolean; c: boolean; v: boolean }>(null)
+  const toggleMaximize = () => {
+    if (savedPanels == null) {
+      setSavedPanels({ p: isProjectsOpen, c: isConfigOpen, v: isViewerOpen })
+      setProjectsOpen(false)
+      setConfigOpen(false)
+      setViewerOpen(true)
+      // подстроить вид
+      setTimeout(()=>fitRef.current?.(), 0)
+    } else {
+      setProjectsOpen(savedPanels.p)
+      setConfigOpen(savedPanels.c)
+      setViewerOpen(savedPanels.v)
+      setSavedPanels(null)
+    }
+  }
 
   useEffect(() => {
     const onDone = async () => {
@@ -187,6 +205,8 @@ export default function Viewer3D() {
         <button onClick={()=>controlsApiRef.current?.zoomOut()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Отдалить">－</button>
         <div className="w-px h-4 bg-slate-300 mx-1" />
         <button onClick={()=>fitRef.current?.()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Вписать модель в кадр">Вписать</button>
+        <div className="w-px h-4 bg-slate-300 mx-1" />
+        <button onClick={toggleMaximize} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="На весь экран / восстановить">{savedPanels ? 'Восстановить' : 'На весь экран'}</button>
       </div>
     </div>
   )

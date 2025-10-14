@@ -27,7 +27,6 @@ export default function Viewer3D() {
   const lastJobId = useWorkspace(s => s.lastJobId)
   const selectedId = useWorkspace(s => s.selectedProjectId)
   const [showEdges, setShowEdges] = useState(true)
-  const [showFaces, setShowFaces] = useState(false)
   const [showNodes, setShowNodes] = useState(true)
   const fitRef = useRef<null | (() => void)>(null)
   const controlsApiRef = useRef<{
@@ -60,27 +59,27 @@ export default function Viewer3D() {
     enabled: !!selectedId,
   })
 
-  function Scene({ flags, bindFit, bindControls }: { flags: { showEdges: boolean; showFaces: boolean; showNodes: boolean }; bindFit: (fn: () => void) => void; bindControls: (api: { rotateLeft:()=>void; rotateRight:()=>void; rotateUp:()=>void; rotateDown:()=>void; zoomIn:()=>void; zoomOut:()=>void }) => void }) {
+  function Scene({ flags, bindFit, bindControls }: { flags: { showEdges: boolean; showNodes: boolean }; bindFit: (fn: () => void) => void; bindControls: (api: { rotateLeft:()=>void; rotateRight:()=>void; rotateUp:()=>void; rotateDown:()=>void; zoomIn:()=>void; zoomOut:()=>void }) => void }) {
     const data = meshQuery.data
     const controlsRef = useRef<any>(null)
     const camera = useThree((s) => s.camera as THREE.PerspectiveCamera)
 
     function NodeSpheres() {
       if (!data || !data.nodes?.length) return null
-      const radius = 0.06
+      const radius = 0.05
       return (
         <group>
           {data.nodes.map((n, idx) => (
             <mesh key={idx} position={[n[0], n[1], n[2]]}>
               <sphereGeometry args={[radius, 16, 16]} />
-              <meshStandardMaterial color="#206cf1" />
+              <meshStandardMaterial color="#374151" />
             </mesh>
           ))}
         </group>
       )
     }
 
-    function CylinderBetween({ a, b, radius = 0.03, color = edgeColor }: { a: THREE.Vector3; b: THREE.Vector3; radius?: number; color?: string }) {
+    function CylinderBetween({ a, b, radius = 0.015, color = edgeColor }: { a: THREE.Vector3; b: THREE.Vector3; radius?: number; color?: string }) {
       const { mid, quat, len } = useMemo(() => {
         const dir = new THREE.Vector3().subVectors(b, a)
         const len = dir.length()
@@ -127,20 +126,7 @@ export default function Viewer3D() {
       )
     }
 
-    function FaceMesh() {
-      if (!data || !data.nodes?.length || !data.elements?.length) return null
-      const positions = new Float32Array(data.nodes.flat())
-      const indices = new Uint32Array(data.elements.flat())
-      return (
-        <mesh>
-          <bufferGeometry>
-            <bufferAttribute attach="attributes-position" array={positions} itemSize={3} />
-            <bufferAttribute attach="index" array={indices} itemSize={1} />
-          </bufferGeometry>
-          <meshStandardMaterial color={edgeColor} metalness={0.1} roughness={0.8} side={2} />
-        </mesh>
-      )
-    }
+    // Убрали режим «грани» по требованию
 
     // Fit impl
     const doFit = () => {
@@ -165,21 +151,21 @@ export default function Viewer3D() {
     // Bind control API for toolbar buttons
     useEffect(() => {
       bindControls({
-        rotateLeft: () => { controlsRef.current?.rotateLeft(Math.PI/12); controlsRef.current?.update?.() },
-        rotateRight: () => { controlsRef.current?.rotateLeft(-Math.PI/12); controlsRef.current?.update?.() },
-        rotateUp: () => { controlsRef.current?.rotateUp(Math.PI/12); controlsRef.current?.update?.() },
-        rotateDown: () => { controlsRef.current?.rotateUp(-Math.PI/12); controlsRef.current?.update?.() },
-        zoomIn: () => { controlsRef.current?.dollyIn?.(1.1); controlsRef.current?.update?.() },
-        zoomOut: () => { controlsRef.current?.dollyOut?.(1.1); controlsRef.current?.update?.() },
+        rotateLeft: () => { controlsRef.current?.rotateLeft(Math.PI/8); controlsRef.current?.update?.() },
+        rotateRight: () => { controlsRef.current?.rotateLeft(-Math.PI/8); controlsRef.current?.update?.() },
+        rotateUp: () => { controlsRef.current?.rotateUp(Math.PI/8); controlsRef.current?.update?.() },
+        rotateDown: () => { controlsRef.current?.rotateUp(-Math.PI/8); controlsRef.current?.update?.() },
+        // Invert perceived direction: «+» приближает, «-» отдаляет
+        zoomIn: () => { controlsRef.current?.dollyOut?.(0.9); controlsRef.current?.update?.() },
+        zoomOut: () => { controlsRef.current?.dollyIn?.(0.9); controlsRef.current?.update?.() },
       })
     }, [])
 
     return (
       <>
-        {flags.showFaces && <FaceMesh />}
         {flags.showEdges && <ElementCylinders />}
         {flags.showNodes && <NodeSpheres />}
-        <OrbitControls ref={controlsRef} enablePan enableZoom enableRotate />
+        <OrbitControls ref={controlsRef} enablePan enableZoom enableRotate enableDamping dampingFactor={0.08} />
       </>
     )
   }
@@ -193,7 +179,7 @@ export default function Viewer3D() {
         <axesHelper args={[3]} />
         {/* Сцена: режимы отображения и узлы */}
         <Scene
-          flags={{ showEdges, showFaces, showNodes }}
+          flags={{ showEdges, showNodes }}
           bindFit={(fn)=>{ fitRef.current = fn }}
           bindControls={(api)=>{ controlsApiRef.current = api }}
         />
@@ -203,7 +189,6 @@ export default function Viewer3D() {
       <div className="absolute top-2 right-2 bg-white/90 backdrop-blur rounded border shadow px-2 py-1 text-xs flex items-center gap-1">
         <span className="text-slate-600">Вид:</span>
         <button onClick={()=>setShowEdges(v=>!v)} className={`px-2 py-0.5 rounded border ${showEdges?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать рёбра">Рёбра</button>
-        <button onClick={()=>setShowFaces(v=>!v)} className={`px-2 py-0.5 rounded border ${showFaces?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать грани">Грани</button>
         <button onClick={()=>setShowNodes(v=>!v)} className={`px-2 py-0.5 rounded border ${showNodes?'bg-slate-200':'hover:bg-slate-50'}`} title="Показывать узлы">Узлы</button>
         <div className="w-px h-4 bg-slate-300 mx-1" />
         <button onClick={()=>controlsApiRef.current?.rotateLeft()} className="px-2 py-0.5 rounded border hover:bg-slate-50" title="Повернуть влево">⟲</button>

@@ -72,15 +72,46 @@
   renderProjects([]);
   initViewer();
   clearResultOutput();
-  setHealthStatus("health-ui-status", "n/a");
-  setHealthStatus("health-auth-status", "n/a");
-  setHealthStatus("health-api-status", "n/a");
+  setHealthStatus("health-ui-status", "н/д");
+  setHealthStatus("health-auth-status", "н/д");
+  setHealthStatus("health-api-status", "н/д");
 
-  handleCallback().catch(function (error) {
-    print("Callback error", {
-      message: toErrorMessage(error)
-    });
-  });
+  bootstrapAuthFlow();
+
+  function bootstrapAuthFlow() {
+    handleCallback()
+      .then(function () {
+        maybeStartLoginFromQuery();
+      })
+      .catch(function (error) {
+        print("Callback error", {
+          message: toErrorMessage(error)
+        });
+      });
+  }
+
+  function maybeStartLoginFromQuery() {
+    var url = new URL(window.location.href);
+    if (url.pathname.startsWith("/callback")) {
+      return;
+    }
+
+    if (url.searchParams.get("login") !== "1") {
+      return;
+    }
+
+    url.searchParams.delete("login");
+    var cleanPath = url.pathname + (url.searchParams.toString() ? "?" + url.searchParams.toString() : "") + url.hash;
+    window.history.replaceState({}, "", cleanPath || "/");
+
+    if (state.accessToken) {
+      print("Автовход", { message: "Сессия уже активна" });
+      return;
+    }
+
+    print("Автовход", { message: "Запуск нового login-flow" });
+    beginLogin();
+  }
 
   function initStaticInfo() {
     byId("auth-endpoint").textContent = authBase || "-";
@@ -94,16 +125,16 @@
 
     byId("check-ui").addEventListener("click", function () {
       runAndPrint(
-        "UI health",
+        "Проверка интерфейса",
         function () {
           return fetchJson("/health");
         },
         {
           onSuccess: function () {
-            setHealthStatus("health-ui-status", "UP 200");
+            setHealthStatus("health-ui-status", "OK 200");
           },
           onError: function (error) {
-            setHealthStatus("health-ui-status", "DOWN " + String(error && error.status ? error.status : "x"));
+            setHealthStatus("health-ui-status", "ОШИБКА " + String(error && error.status ? error.status : "x"));
           }
         }
       );
@@ -111,16 +142,16 @@
 
     byId("check-auth").addEventListener("click", function () {
       runAndPrint(
-        "Auth health",
+        "Проверка авторизации",
         function () {
           return fetchJson("/proxy/auth/actuator/health");
         },
         {
           onSuccess: function () {
-            setHealthStatus("health-auth-status", "UP 200");
+            setHealthStatus("health-auth-status", "OK 200");
           },
           onError: function (error) {
-            setHealthStatus("health-auth-status", "DOWN " + String(error && error.status ? error.status : "x"));
+            setHealthStatus("health-auth-status", "ОШИБКА " + String(error && error.status ? error.status : "x"));
           }
         }
       );
@@ -128,16 +159,16 @@
 
     byId("check-api").addEventListener("click", function () {
       runAndPrint(
-        "API readiness",
+        "Проверка готовности API",
         function () {
           return fetchJson("/proxy/api/actuator/health/readiness");
         },
         {
           onSuccess: function () {
-            setHealthStatus("health-api-status", "UP 200");
+            setHealthStatus("health-api-status", "OK 200");
           },
           onError: function (error) {
-            setHealthStatus("health-api-status", "DOWN " + String(error && error.status ? error.status : "x"));
+            setHealthStatus("health-api-status", "ОШИБКА " + String(error && error.status ? error.status : "x"));
           }
         }
       );
@@ -203,11 +234,11 @@
 
     byId("apply-template-btn").addEventListener("click", function () {
       setModelFromParams(MODEL_TEMPLATE);
-      print("Model template applied", { ok: true });
+      print("Шаблон модели применен", { ok: true });
     });
 
     byId("apply-ger-dan-btn").addEventListener("click", function () {
-      runAndPrint("Load GER.DAN baseline", applyGerDanBaseline);
+      runAndPrint("Загрузка базового GER.DAN", applyGerDanBaseline);
     });
 
     byId("add-base-point-btn").addEventListener("click", function () {
@@ -237,7 +268,7 @@
     });
 
     byId("compare-legacy-btn").addEventListener("click", function () {
-      runAndPrint("Compare with ger.xyz", compareWithLegacy);
+      runAndPrint("Сравнение с ger.xyz", compareWithLegacy);
     });
 
     byId("viewer-rot-left-btn").addEventListener("click", function () {
@@ -299,7 +330,7 @@
         });
       } else if (action === "review") {
         setActiveProjectId(projectId);
-        print("Review project selected", { projectId: projectId });
+        print("Выбран проект для ревью", { projectId: projectId });
       }
     });
 
@@ -333,7 +364,7 @@
   async function createProject() {
     var draft = collectDraft();
     if (!draft.name) {
-      throw new Error("Project name is required");
+      throw new Error("Название проекта обязательно");
     }
 
     var response = await fetchJson("/proxy/api/api/v1/projects", {
@@ -367,7 +398,7 @@
     state.lastResult = null;
     state.compareSummary = null;
     state.viewer.expectedOverlay = null;
-    setLegacyCompareStatus("n/a");
+    setLegacyCompareStatus("н/д");
     render3DScene();
 
     return response;
@@ -377,7 +408,7 @@
     ensureProjectId(projectId);
     var draft = collectDraft();
     if (!draft.name) {
-      throw new Error("Project name is required");
+      throw new Error("Название проекта обязательно");
     }
 
     var response = await fetchJson("/proxy/api/api/v1/projects/" + encodeURIComponent(projectId), {
@@ -440,7 +471,7 @@
 
     var status = String(byId("review-status").value || "").trim().toUpperCase();
     if (!["PENDING", "APPROVED", "REWORK"].includes(status)) {
-      throw new Error("Unsupported review status");
+      throw new Error("Неподдерживаемый статус ревью");
     }
 
     var response = await fetchJson("/proxy/api/api/v1/projects/" + encodeURIComponent(projectId) + "/review-status", {
@@ -475,7 +506,7 @@
   function requireProjectId(message) {
     var projectId = readProjectId();
     if (!projectId) {
-      throw new Error(message || "projectId is required");
+      throw new Error(message || "ID проекта обязателен");
     }
     return projectId;
   }
@@ -509,7 +540,7 @@
 
   function ensureProjectId(projectId) {
     if (!projectId) {
-      throw new Error("projectId is required");
+      throw new Error("ID проекта обязателен");
     }
   }
 
@@ -535,7 +566,7 @@
 
     setModelFromParams(modelParams);
     byId("project-name-input").value = "GER.DAN baseline";
-    byId("project-comment-input").value = "Loaded from gera-lib/code/ger.dan";
+    byId("project-comment-input").value = "Загружено из gera-lib/code/ger.dan";
     state.activeProjectId = "";
     state.viewer.renderEnabled = false;
     state.lastResult = null;
@@ -544,7 +575,7 @@
     byId("project-id-input").value = "";
     byId("review-project-id").value = "";
 
-    setLegacyCompareStatus("fixture loaded");
+    setLegacyCompareStatus("fixture загружен");
     render3DScene();
 
     var header = fixture.legacyHeader || {};
@@ -619,8 +650,8 @@
     var rmse = matched > 0 ? Math.sqrt(sumSq / (matched * 3)) : null;
     var pass = matched > 0 && missingExpected === 0 && extraActual === 0 && maxAbsDelta <= 0.01;
     var statusText = pass
-      ? "PASS maxΔ=" + maxAbsDelta.toFixed(4)
-      : "DIFF maxΔ=" + maxAbsDelta.toFixed(4) + " miss=" + missingExpected + " extra=" + extraActual;
+      ? "СОВПАЛО maxΔ=" + maxAbsDelta.toFixed(4)
+      : "РАСХОЖДЕНИЕ maxΔ=" + maxAbsDelta.toFixed(4) + " пропущено=" + missingExpected + " лишнее=" + extraActual;
 
     setLegacyCompareStatus(statusText);
 
@@ -646,7 +677,7 @@
     if (!el) {
       return;
     }
-    el.textContent = String(value || "n/a");
+    el.textContent = String(value || "н/д");
   }
 
   function initViewer() {
@@ -816,11 +847,11 @@
 
     ctx.fillStyle = "#2c4569";
     ctx.font = "12px Avenir Next, sans-serif";
-    ctx.fillText("nodes=" + nodes.length + " edges=" + edges.length, 16, 20);
+    ctx.fillText("узлы=" + nodes.length + " связи=" + edges.length, 16, 20);
     if (state.compareSummary) {
       var label = state.compareSummary.pass
-        ? "legacy compare: PASS"
-        : "legacy compare: DIFF";
+        ? "сравнение legacy: СОВПАЛО"
+        : "сравнение legacy: РАСХОЖДЕНИЕ";
       ctx.fillText(label, 16, 38);
     }
   }
@@ -1036,13 +1067,13 @@
 
   function renderProjects(items) {
     var rows = Array.isArray(items) ? items : [];
-    byId("projects-summary").textContent = rows.length + " project(s)";
+    byId("projects-summary").textContent = rows.length + " проект(ов)";
     byId("kpi-project-count").textContent = String(rows.length);
 
     var readyCount = rows.filter(function (item) {
       return String(item && item.status || "").toUpperCase() === "READY";
     }).length;
-    byId("kpi-ready-count").textContent = "READY: " + String(readyCount);
+    byId("kpi-ready-count").textContent = "ГОТОВО: " + String(readyCount);
 
     var tbody = byId("projects-table-body");
     tbody.innerHTML = "";
@@ -1051,7 +1082,7 @@
       var tr = document.createElement("tr");
       var td = document.createElement("td");
       td.colSpan = 6;
-      td.textContent = "No projects";
+      td.textContent = "Проекты не найдены";
       tr.appendChild(td);
       tbody.appendChild(tr);
       return;
@@ -1062,18 +1093,18 @@
       var trRow = document.createElement("tr");
       appendTextCell(trRow, String(item.projectId || ""));
       appendTextCell(trRow, String(item.name || ""));
-      appendTextCell(trRow, String(item.status || ""));
-      appendTextCell(trRow, String(item.reviewStatus || ""));
+      appendTextCell(trRow, translateProjectStatus(String(item.status || "")));
+      appendTextCell(trRow, translateReviewStatus(String(item.reviewStatus || "")));
       appendTextCell(trRow, String(item.updatedAt || ""));
 
       var actionsTd = document.createElement("td");
       var actions = document.createElement("div");
       actions.className = "row";
-      actions.appendChild(actionButton("Load", "load", item.projectId));
-      actions.appendChild(actionButton("Ready", "ready", item.projectId));
-      actions.appendChild(actionButton("Calc", "calc", item.projectId));
-      actions.appendChild(actionButton("Result", "result", item.projectId));
-      actions.appendChild(actionButton("Review", "review", item.projectId));
+      actions.appendChild(actionButton("Загрузить", "load", item.projectId));
+      actions.appendChild(actionButton("Готово", "ready", item.projectId));
+      actions.appendChild(actionButton("Расчет", "calc", item.projectId));
+      actions.appendChild(actionButton("Результат", "result", item.projectId));
+      actions.appendChild(actionButton("Ревью", "review", item.projectId));
       actionsTd.appendChild(actions);
       trRow.appendChild(actionsTd);
 
@@ -1085,6 +1116,40 @@
     var td = document.createElement("td");
     td.textContent = value;
     row.appendChild(td);
+  }
+
+  function translateProjectStatus(value) {
+    var status = String(value || "").toUpperCase();
+    if (status === "READY") {
+      return "ГОТОВО";
+    }
+    if (status === "DRAFT") {
+      return "ЧЕРНОВИК";
+    }
+    if (status === "CALCULATING") {
+      return "РАСЧЕТ";
+    }
+    if (status === "SUCCESS") {
+      return "УСПЕХ";
+    }
+    if (status === "FAILED") {
+      return "ОШИБКА";
+    }
+    return status || "-";
+  }
+
+  function translateReviewStatus(value) {
+    var status = String(value || "").toUpperCase();
+    if (status === "PENDING") {
+      return "ОЖИДАЕТ";
+    }
+    if (status === "APPROVED") {
+      return "ПОДТВЕРЖДЕНО";
+    }
+    if (status === "REWORK") {
+      return "НА ДОРАБОТКУ";
+    }
+    return status || "-";
   }
 
   function actionButton(label, action, projectId) {
@@ -1100,7 +1165,7 @@
     state.lastResult = payload && typeof payload === "object" ? payload : {};
     state.viewer.expectedOverlay = null;
     state.compareSummary = null;
-    setLegacyCompareStatus("n/a");
+    setLegacyCompareStatus("н/д");
 
     var model = payload && payload.visualizationModel ? payload.visualizationModel : {};
     var nodes = Array.isArray(model.nodes) ? model.nodes : [];
@@ -1123,8 +1188,8 @@
     };
 
     byId("result-output").textContent = pretty(summary);
-    byId("kpi-result-nodes").textContent = "nodes: " + String(nodes.length) + " / edges: " + String(edges.length);
-    byId("kpi-last-op").textContent = "Result loaded";
+    byId("kpi-result-nodes").textContent = "узлы: " + String(nodes.length) + " / связи: " + String(edges.length);
+    byId("kpi-last-op").textContent = "Результат загружен";
     render3DScene();
   }
 
@@ -1133,12 +1198,12 @@
     state.viewer.renderEnabled = false;
     state.viewer.expectedOverlay = null;
     state.compareSummary = null;
-    setLegacyCompareStatus("n/a");
+    setLegacyCompareStatus("н/д");
 
     byId("result-output").textContent = pretty({
-      message: "No result loaded yet"
+      message: "Результат пока не загружен"
     });
-    byId("kpi-result-nodes").textContent = "nodes: 0 / edges: 0";
+    byId("kpi-result-nodes").textContent = "узлы: 0 / связи: 0";
     render3DScene();
   }
 
@@ -1477,12 +1542,12 @@
     var distancesCount = byId("base-distances-body").querySelectorAll("tr").length;
     var geoCount = byId("geometry-proc-body").querySelectorAll("tr").length;
     var graphCount = byId("graph-proc-body").querySelectorAll("tr").length;
-    byId("model-summary").textContent = "Модель: points=" + pointsCount + ", distances=" + distancesCount + ", geometry=" + geoCount + ", graph=" + graphCount;
+    byId("model-summary").textContent = "Модель: точки=" + pointsCount + ", расстояния=" + distancesCount + ", геометрия=" + geoCount + ", граф=" + graphCount;
   }
 
   function beginLogin() {
     if (!authBase) {
-      print("Login error", { message: "Auth base URL is empty" });
+      print("Ошибка входа", { message: "Пустой URL auth-сервиса" });
       return;
     }
 
@@ -1507,7 +1572,7 @@
 
       window.location.assign(authBase + "/oauth2/authorize?" + params.toString());
     }).catch(function (error) {
-      print("Login error", {
+      print("Ошибка входа", {
         message: toErrorMessage(error)
       });
     });
@@ -1516,7 +1581,7 @@
   function beginLogout() {
     if (!state.idToken) {
       clearTokens();
-      print("Logout", { message: "No id_token stored, local session cleared" });
+      print("Выход", { message: "id_token отсутствует, локальная сессия очищена" });
       return;
     }
 
@@ -1540,7 +1605,7 @@
     var stateValue = url.searchParams.get("state");
     var err = url.searchParams.get("error");
     if (err) {
-      print("OIDC callback error", {
+      print("Ошибка входа при возврате", {
         error: err,
         error_description: url.searchParams.get("error_description") || ""
       });
@@ -1549,7 +1614,7 @@
     }
 
     if (!code || !stateValue) {
-      print("OIDC callback", { message: "Missing code/state" });
+      print("Возврат после входа", { message: "Отсутствуют параметры code/state" });
       window.history.replaceState({}, "", "/");
       return;
     }
@@ -1557,7 +1622,7 @@
     var entryRaw = sessionStorage.getItem("gera.pkce." + stateValue);
     sessionStorage.removeItem("gera.pkce." + stateValue);
     if (!entryRaw) {
-      print("OIDC callback", { message: "PKCE state not found" });
+      print("Возврат после входа", { message: "Состояние входа не найдено" });
       window.history.replaceState({}, "", "/");
       return;
     }
@@ -1583,7 +1648,7 @@
     localStorage.setItem("gera.id_token", state.idToken);
     updateTokenState();
 
-    print("OIDC token exchange", {
+    print("Обмен токена входа", {
       status: tokenResponse.status,
       token_type: tokenResponse.body.token_type,
       expires_in: tokenResponse.body.expires_in,
@@ -1617,7 +1682,7 @@
   }
 
   function updateTokenState() {
-    byId("token-state").textContent = state.accessToken ? "present" : "none";
+    byId("token-state").textContent = state.accessToken ? "есть" : "нет";
     var accessPayload = decodeJwtPayload(state.accessToken);
     byId("token-sub").textContent = accessPayload && accessPayload.sub ? String(accessPayload.sub) : "-";
 
@@ -1669,7 +1734,7 @@
         if (typeof options.onError === "function") {
           options.onError(error);
         }
-        print(title + " failed", {
+        print(title + " — ошибка", {
           message: toErrorMessage(error),
           status: error && error.status ? error.status : 0,
           details: error && error.details ? error.details : null
@@ -1720,7 +1785,7 @@
     if (!el) {
       return;
     }
-    el.textContent = String(value || "n/a");
+    el.textContent = String(value || "н/д");
   }
 
   function pretty(value) {

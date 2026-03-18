@@ -10,7 +10,7 @@ const config = {
   authBaseUrl: normalizeBaseUrl(process.env.UI_AUTH_BASE_URL || process.env.AUTH_BASE_URL, "http://localhost:9000"),
   apiProxyUpstream: normalizeBaseUrl(process.env.UI_API_PROXY_BASE_URL || process.env.API_PROXY_BASE_URL || process.env.UI_API_BASE_URL || process.env.API_BASE_URL, "http://localhost:8080"),
   authProxyUpstream: normalizeBaseUrl(process.env.UI_AUTH_PROXY_BASE_URL || process.env.AUTH_PROXY_BASE_URL || process.env.UI_AUTH_BASE_URL || process.env.AUTH_BASE_URL, "http://localhost:9000"),
-  oidcClientId: String(process.env.UI_OIDC_CLIENT_ID || process.env.OIDC_CLIENT_ID || "spa-stage"),
+  oidcClientId: String(process.env.UI_OIDC_CLIENT_ID || process.env.OIDC_CLIENT_ID || "spa"),
   oidcRedirectUri: String(process.env.UI_OIDC_REDIRECT_URI || process.env.OIDC_REDIRECT_URI || ""),
   oidcPostLogoutUri: String(process.env.UI_OIDC_POST_LOGOUT_URI || process.env.OIDC_POST_LOGOUT_URI || ""),
   apiProxyBase: "/proxy/api",

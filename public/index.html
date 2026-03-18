@@ -3,305 +3,367 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>GERA Operational Workspace</title>
+  <title>GERA — техническая рабочая панель</title>
   <link rel="stylesheet" href="/styles.css">
   <script src="/config.js"></script>
   <script defer src="/app.js"></script>
 </head>
 <body>
-  <div class="backdrop backdrop-1" aria-hidden="true"></div>
-  <div class="backdrop backdrop-2" aria-hidden="true"></div>
+  <main class="workspace workspace-v2">
+    <aside class="sidebar card">
+      <p class="brand">GERA // DEVTOOLS</p>
+      <nav class="nav-stack" aria-label="Разделы панели">
+        <button type="button" class="nav-chip ghost">Проекты</button>
+        <button type="button" class="nav-chip ghost">Расчеты</button>
+        <button type="button" class="nav-chip ghost">Ревью</button>
+      </nav>
 
-  <main class="workspace">
-    <header class="hero card">
-      <div>
-        <p class="eyebrow">GERA Modern / Stage</p>
-        <h1>Операционная панель инженерного MVP</h1>
-        <p class="muted">Основано на `docs/technical-specification.md` и `docs/solution-master-plan.md`: студент создает модель, запускает расчет, преподаватель валидирует результат.</p>
-      </div>
-      <div class="hero-actions">
-        <button id="login-btn" type="button">Войти через OIDC</button>
-        <button id="logout-btn" type="button" class="ghost">Выход</button>
-      </div>
-    </header>
+      <section class="side-section">
+        <h3>Контроль контура</h3>
+        <div class="action-grid compact-grid">
+          <button id="check-ui" type="button">Проверить UI</button>
+          <button id="check-auth" type="button">Проверить Auth</button>
+          <button id="check-api" type="button">Проверить API</button>
+        </div>
+        <p class="status-line">UI: <span id="health-ui-status">н/д</span></p>
+        <p class="status-line">Auth: <span id="health-auth-status">н/д</span></p>
+        <p class="status-line">API: <span id="health-api-status">н/д</span></p>
+      </section>
 
-    <section class="kpi-grid">
-      <article class="kpi card">
-        <p class="kpi-label">Сессия</p>
-        <p id="token-state" class="kpi-value">none</p>
-        <p class="kpi-note">JWT статус</p>
-      </article>
-      <article class="kpi card">
-        <p class="kpi-label">Субъект</p>
-        <p id="token-sub" class="kpi-value">-</p>
-        <p id="token-scope" class="kpi-note">-</p>
-      </article>
-      <article class="kpi card">
-        <p class="kpi-label">Проекты</p>
-        <p id="kpi-project-count" class="kpi-value">0</p>
-        <p id="kpi-ready-count" class="kpi-note">READY: 0</p>
-      </article>
-      <article class="kpi card">
-        <p class="kpi-label">Последняя операция</p>
-        <p id="kpi-last-op" class="kpi-value">-</p>
-        <p id="kpi-result-nodes" class="kpi-note">nodes: 0 / edges: 0</p>
-      </article>
-    </section>
+      <details class="side-details" open>
+        <summary>Роли</summary>
+        <ul>
+          <li>Студент: создание проекта, расчет, просмотр результата.</li>
+          <li>Преподаватель: проверка, статус ревью, повторный расчет.</li>
+        </ul>
+      </details>
 
-    <section class="main-grid">
-      <div class="primary-column">
-        <section class="card">
-          <h2>Поток 1. Доступ и идентификация</h2>
-          <p class="muted">MVP политика: только авторизованные пользователи, username/password через OIDC.</p>
-          <dl class="meta-grid">
-            <dt>Auth endpoint</dt>
-            <dd id="auth-endpoint">-</dd>
-            <dt>API endpoint</dt>
-            <dd id="api-endpoint">-</dd>
-            <dt>Client ID</dt>
-            <dd id="client-id">-</dd>
-          </dl>
-          <details>
-            <summary>Регистрация пользователя (технический контур)</summary>
-            <form id="register-form" class="stack">
-              <label>Username <input name="username" required minlength="3" maxlength="50" pattern="^[a-zA-Z0-9._-]+$"></label>
-              <label>Email <input name="email" type="email" required></label>
-              <label>Password <input name="password" type="password" required minlength="8"></label>
-              <button type="submit">Создать учетку</button>
-            </form>
-          </details>
-        </section>
+      <details class="side-details">
+        <summary>Ограничения MVP</summary>
+        <ul>
+          <li>Таймаут расчета: 10 секунд.</li>
+          <li>Хранится только последний результат.</li>
+          <li>Экспорт/печать и recovery пароля пока отключены.</li>
+        </ul>
+      </details>
 
-        <section class="card">
-          <h2>Поток 2. Портфель проектов</h2>
-          <div class="row">
-            <label>Фильтр по названию <input id="filter-name" placeholder="Например, Kupol"></label>
-            <button id="list-projects" type="button">Обновить список</button>
-          </div>
-          <p id="projects-summary" class="muted">Данные не загружены</p>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Название</th>
-                  <th>Статус</th>
-                  <th>Валидация</th>
-                  <th>Обновлен</th>
-                  <th>Действия</th>
-                </tr>
-              </thead>
-              <tbody id="projects-table-body"></tbody>
-            </table>
-          </div>
-        </section>
+      <p class="side-foot">Статус контура: активен // login</p>
+    </aside>
 
-        <section class="card">
-          <h2>Поток 3. Конструктор модели</h2>
-          <p class="muted">FR-037/FR-038: обязательные поля заполнены через компонентный редактор (без JSON).</p>
-          <div class="editor-grid">
-            <label>Project ID <input id="project-id-input" placeholder="Подставится автоматически"></label>
-            <label>Название проекта <input id="project-name-input" placeholder="Kupol Demo"></label>
-            <label>Комментарий <input id="project-comment-input" placeholder="Краткое описание"></label>
-          </div>
+    <section class="main-stage">
+      <header class="hero card">
+        <div>
+          <p class="eyebrow">GERA MODERN / LIGHT CONTOUR</p>
+          <h1>Операционная панель инженерного MVP</h1>
+          <p class="muted">Светлый V2-профиль: плотный рабочий интерфейс для авторизации, расчета, валидации и анализа результата.</p>
+        </div>
+        <div class="hero-actions">
+          <button id="login-btn" type="button">Войти</button>
+          <button id="logout-btn" type="button" class="ghost">Выход</button>
+        </div>
+      </header>
 
-          <section class="subpanel">
-            <h3>Configuration</h3>
-            <p class="muted">Базовые узлы, координаты и расстояния.</p>
+      <section class="kpi-grid">
+        <article class="kpi card">
+          <p class="kpi-label">Сессия</p>
+          <p id="token-state" class="kpi-value">нет</p>
+          <p class="kpi-note">JWT статус</p>
+        </article>
+        <article class="kpi card">
+          <p class="kpi-label">Субъект</p>
+          <p id="token-sub" class="kpi-value">-</p>
+          <p id="token-scope" class="kpi-note">-</p>
+        </article>
+        <article class="kpi card">
+          <p class="kpi-label">Проекты</p>
+          <p id="kpi-project-count" class="kpi-value">0</p>
+          <p id="kpi-ready-count" class="kpi-note">ГОТОВО: 0</p>
+        </article>
+        <article class="kpi card">
+          <p class="kpi-label">Последняя операция</p>
+          <p id="kpi-last-op" class="kpi-value">-</p>
+          <p id="kpi-result-nodes" class="kpi-note">узлы: 0 / связи: 0</p>
+        </article>
+      </section>
 
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Node</th>
-                    <th>X</th>
-                    <th>Y</th>
-                    <th>Z</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody id="base-points-body"></tbody>
-              </table>
+      <section class="board-grid">
+        <div class="primary-column">
+          <section class="card">
+            <h2>Поток 1. Доступ и идентификация</h2>
+            <p class="muted">Вход по логину и паролю. После авторизации доступны все действия по проекту согласно роли.</p>
+            <div class="notice-box">
+              <p class="notice-title">Демо-доступ</p>
+              <p class="notice-line"><strong>admin</strong> / Admin123!</p>
+              <p class="notice-line"><strong>teacher</strong> / Teacher123!</p>
+              <p class="notice-line"><strong>student</strong> / Student123!</p>
             </div>
-            <div class="row">
-              <button id="add-base-point-btn" type="button">+ Базовый узел</button>
-            </div>
-
-            <div class="table-wrap compact-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Distance</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody id="base-distances-body"></tbody>
-              </table>
-            </div>
-            <div class="row">
-              <button id="add-base-distance-btn" type="button">+ Базовое расстояние</button>
-            </div>
+            <dl class="meta-grid">
+              <dt>Эндпоинт авторизации</dt>
+              <dd id="auth-endpoint">-</dd>
+              <dt>API-эндпоинт</dt>
+              <dd id="api-endpoint">-</dd>
+              <dt>Client ID</dt>
+              <dd id="client-id">-</dd>
+            </dl>
+            <details>
+              <summary>Регистрация пользователя (технический контур)</summary>
+              <form id="register-form" class="stack">
+                <label>Логин <input name="username" required minlength="3" maxlength="50" pattern="^[a-zA-Z0-9._-]+$"></label>
+                <label>Электронная почта <input name="email" type="email" required></label>
+                <label>Пароль <input name="password" type="password" required minlength="8"></label>
+                <button type="submit">Создать учетку</button>
+              </form>
+            </details>
           </section>
 
-          <section class="subpanel">
-            <h3>Calculation Procedures</h3>
-            <p class="muted">Процедуры геометрии и графа (код + аргументы j2..j12).</p>
-
-            <h4 class="subheading">Geometry procedures</h4>
+          <section class="card">
+            <h2>Поток 2. Портфель проектов</h2>
+            <div class="row">
+              <label>Фильтр по названию <input id="filter-name" placeholder="Например, Купол"></label>
+              <button id="list-projects" type="button">Обновить список</button>
+            </div>
+            <p id="projects-summary" class="muted">Данные не загружены</p>
             <div class="table-wrap">
               <table>
                 <thead>
                   <tr>
-                    <th>Code</th>
-                    <th>j2</th>
-                    <th>j3</th>
-                    <th>j4</th>
-                    <th>j5</th>
-                    <th>j6</th>
-                    <th>j7</th>
-                    <th>j8</th>
-                    <th>j9</th>
-                    <th>j10</th>
-                    <th>j11</th>
-                    <th>j12</th>
-                    <th></th>
+                    <th>ID проекта</th>
+                    <th>Название</th>
+                    <th>Статус</th>
+                    <th>Валидация</th>
+                    <th>Обновлен</th>
+                    <th>Действия</th>
                   </tr>
                 </thead>
-                <tbody id="geometry-proc-body"></tbody>
+                <tbody id="projects-table-body"></tbody>
               </table>
             </div>
-            <div class="row">
-              <button id="add-geometry-proc-btn" type="button">+ Geometry procedure</button>
-            </div>
 
-            <h4 class="subheading">Graph procedures</h4>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Code</th>
-                    <th>j2</th>
-                    <th>j3</th>
-                    <th>j4</th>
-                    <th>j5</th>
-                    <th>j6</th>
-                    <th>j7</th>
-                    <th>j8</th>
-                    <th>j9</th>
-                    <th>j10</th>
-                    <th>j11</th>
-                    <th>j12</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody id="graph-proc-body"></tbody>
-              </table>
-            </div>
-            <div class="row">
-              <button id="add-graph-proc-btn" type="button">+ Graph procedure</button>
-            </div>
-          </section>
-
-          <p id="model-summary" class="muted">Модель: не заполнена</p>
-          <div class="action-grid">
-            <button id="apply-template-btn" type="button">Быстрый шаблон (минимум)</button>
-            <button id="apply-ger-dan-btn" type="button">Загрузить GER.DAN baseline</button>
-            <button id="create-project-btn" type="button">Создать</button>
-            <button id="load-project-btn" type="button">Загрузить</button>
-            <button id="update-project-btn" type="button">Обновить</button>
-            <button id="ready-review-btn" type="button">Готово к ревью</button>
-            <button id="calculate-btn" type="button">Запустить расчет</button>
-            <button id="load-result-btn" type="button">Показать результат</button>
-          </div>
-          <p class="muted">`GER.DAN baseline` читается из `gera-lib/code/ger.dan`; сравнение выполняется с `ger.xyz` (через файл в UI fixtures).</p>
-        </section>
-
-        <section class="card">
-          <h2>Поток 4. Валидация преподавателя</h2>
-          <div class="row">
-            <label>Project ID <input id="review-project-id" placeholder="prj_..."></label>
-            <label>Статус ревью
-              <select id="review-status">
-                <option value="PENDING">PENDING</option>
-                <option value="APPROVED">APPROVED</option>
-                <option value="REWORK">REWORK</option>
-              </select>
-            </label>
-            <button id="submit-review-btn" type="button">Отправить статус</button>
-          </div>
-        </section>
-
-        <section class="card">
-          <h2>Результат расчета</h2>
-          <p class="muted">UI MVP обязан показывать визуализацию, координаты и связность; `distances` опционально.</p>
-          <div class="row viewer-toolbar">
-            <button id="compare-legacy-btn" type="button">Сравнить с ger.xyz</button>
-            <span class="muted">Legacy compare: <strong id="legacy-compare-status">n/a</strong></span>
-          </div>
-          <div class="viewer-wrap">
-            <canvas id="result-3d-canvas" width="920" height="420"></canvas>
-            <div class="viewer-controls">
-              <div class="viewer-button-grid">
-                <button id="viewer-rot-left-btn" type="button">⟲ Left</button>
-                <button id="viewer-rot-right-btn" type="button">⟳ Right</button>
-                <button id="viewer-rot-up-btn" type="button">↑ Tilt Up</button>
-                <button id="viewer-rot-down-btn" type="button">↓ Tilt Down</button>
-                <button id="viewer-zoom-in-btn" type="button">＋ Zoom In</button>
-                <button id="viewer-zoom-out-btn" type="button">－ Zoom Out</button>
+            <details class="expanded-project">
+              <summary>Развернутая строка: prj_002 // Арка 12</summary>
+              <div class="expanded-meta">
+                <span>Ответственный: teacher</span>
+                <span>Последний расчет: 10:31</span>
+                <span>Версия: v2.4</span>
               </div>
-              <button id="viewer-reset-btn" type="button">Reset view</button>
+              <div class="expanded-actions">
+                <button type="button" class="ghost">Открыть 3D</button>
+                <button type="button" class="ghost">Скачать отчет</button>
+                <button type="button" class="ghost">Комментарий</button>
+              </div>
+            </details>
+          </section>
+
+          <section class="card">
+            <h2>Поток 3. Конструктор модели</h2>
+            <p class="muted">Редактирование параметров без JSON: базовые узлы, расстояния, процедуры геометрии и графа.</p>
+            <div class="editor-grid">
+              <label>ID проекта <input id="project-id-input" placeholder="Подставится автоматически"></label>
+              <label>Название проекта <input id="project-name-input" placeholder="Kupol Demo"></label>
+              <label>Комментарий <input id="project-comment-input" placeholder="Краткое описание"></label>
             </div>
-          </div>
-          <p class="muted">Управление мышью: зажать левую кнопку и тянуть для поворота, колесо для zoom, double-click для reset.</p>
-          <pre id="result-output"></pre>
-        </section>
 
-        <section class="card">
-          <h2>Операционный журнал</h2>
-          <pre id="output"></pre>
-        </section>
-      </div>
+            <section class="subpanel">
+              <h3>Конфигурация</h3>
+              <p class="muted">Базовые узлы, координаты и расстояния.</p>
 
-      <aside class="secondary-column">
-        <section class="card side-card">
-          <h3>Бизнес-роль: студент</h3>
-          <ul>
-            <li>Создает и редактирует свои проекты.</li>
-            <li>Запускает расчет по кнопке.</li>
-            <li>Видит результат и статус валидации.</li>
-          </ul>
-        </section>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Узел</th>
+                      <th>X</th>
+                      <th>Y</th>
+                      <th>Z</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="base-points-body"></tbody>
+                </table>
+              </div>
+              <div class="row">
+                <button id="add-base-point-btn" type="button">+ Базовый узел</button>
+              </div>
 
-        <section class="card side-card">
-          <h3>Бизнес-роль: преподаватель</h3>
-          <ul>
-            <li>Видит все проекты в MVP.</li>
-            <li>Проводит проверку и меняет статус.</li>
-            <li>Может инициировать перерасчет.</li>
-          </ul>
-        </section>
+              <div class="table-wrap compact-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Расстояние</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="base-distances-body"></tbody>
+                </table>
+              </div>
+              <div class="row">
+                <button id="add-base-distance-btn" type="button">+ Базовое расстояние</button>
+              </div>
+            </section>
 
-        <section class="card side-card">
-          <h3>Контроль контуров</h3>
-          <div class="action-grid compact-grid">
-            <button id="check-ui" type="button">Проверить UI</button>
-            <button id="check-auth" type="button">Проверить Auth</button>
-            <button id="check-api" type="button">Проверить API</button>
-          </div>
-          <p class="status-line">UI: <span id="health-ui-status">n/a</span></p>
-          <p class="status-line">Auth: <span id="health-auth-status">n/a</span></p>
-          <p class="status-line">API: <span id="health-api-status">n/a</span></p>
-        </section>
+            <section class="subpanel">
+              <h3>Процедуры расчета</h3>
+              <p class="muted">Процедуры геометрии и графа (код + аргументы j2..j12).</p>
 
-        <section class="card side-card">
-          <h3>Ограничения MVP</h3>
-          <ul>
-            <li>Таймаут расчета: 10 секунд.</li>
-            <li>Хранится только последний результат.</li>
-            <li>Нет экспорта/печати и recovery пароля.</li>
-          </ul>
+              <h4 class="subheading">Процедуры геометрии</h4>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Код</th>
+                      <th>j2</th>
+                      <th>j3</th>
+                      <th>j4</th>
+                      <th>j5</th>
+                      <th>j6</th>
+                      <th>j7</th>
+                      <th>j8</th>
+                      <th>j9</th>
+                      <th>j10</th>
+                      <th>j11</th>
+                      <th>j12</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="geometry-proc-body"></tbody>
+                </table>
+              </div>
+              <div class="row">
+                <button id="add-geometry-proc-btn" type="button">+ Процедура геометрии</button>
+              </div>
+
+              <h4 class="subheading">Процедуры графа</h4>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Код</th>
+                      <th>j2</th>
+                      <th>j3</th>
+                      <th>j4</th>
+                      <th>j5</th>
+                      <th>j6</th>
+                      <th>j7</th>
+                      <th>j8</th>
+                      <th>j9</th>
+                      <th>j10</th>
+                      <th>j11</th>
+                      <th>j12</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="graph-proc-body"></tbody>
+                </table>
+              </div>
+              <div class="row">
+                <button id="add-graph-proc-btn" type="button">+ Процедура графа</button>
+              </div>
+            </section>
+
+            <p id="model-summary" class="muted">Модель: не заполнена</p>
+            <div class="action-grid">
+              <button id="apply-template-btn" type="button">Быстрый шаблон</button>
+              <button id="apply-ger-dan-btn" type="button">Загрузить GER.DAN</button>
+              <button id="create-project-btn" type="button">Создать</button>
+              <button id="load-project-btn" type="button">Загрузить</button>
+              <button id="update-project-btn" type="button">Обновить</button>
+              <button id="ready-review-btn" type="button">Готово к ревью</button>
+              <button id="calculate-btn" type="button">Запустить расчет</button>
+              <button id="load-result-btn" type="button">Показать результат</button>
+            </div>
+            <p class="muted">Эталон `GER.DAN` читается из `gera-lib/code/ger.dan`; сравнение выполняется с `ger.xyz` через фикстуру.</p>
+          </section>
+        </div>
+
+        <div class="secondary-column">
+          <section class="card">
+            <h2>Поток 4. Валидация преподавателя</h2>
+            <div class="row">
+              <label>ID проекта <input id="review-project-id" placeholder="prj_..."></label>
+              <label>Статус ревью
+                <select id="review-status">
+                  <option value="PENDING">ОЖИДАЕТ</option>
+                  <option value="APPROVED">ПОДТВЕРЖДЕНО</option>
+                  <option value="REWORK">НА ДОРАБОТКУ</option>
+                </select>
+              </label>
+              <button id="submit-review-btn" type="button">Отправить статус</button>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>Результат расчета</h2>
+            <p class="muted">Визуализация, координаты и связность. `distances` допускается как опциональный блок.</p>
+            <div class="row viewer-toolbar">
+              <button id="compare-legacy-btn" type="button">Сравнить с ger.xyz</button>
+              <span class="muted">Сравнение с legacy: <strong id="legacy-compare-status">н/д</strong></span>
+            </div>
+
+            <div class="viewer-wrap">
+              <canvas id="result-3d-canvas" width="920" height="420"></canvas>
+              <div class="viewer-controls">
+                <div class="viewer-button-grid">
+                  <button id="viewer-rot-left-btn" type="button">⟲ Влево</button>
+                  <button id="viewer-rot-right-btn" type="button">⟳ Вправо</button>
+                  <button id="viewer-rot-up-btn" type="button">↑ Наклон вверх</button>
+                  <button id="viewer-rot-down-btn" type="button">↓ Наклон вниз</button>
+                  <button id="viewer-zoom-in-btn" type="button">＋ Приблизить</button>
+                  <button id="viewer-zoom-out-btn" type="button">－ Отдалить</button>
+                </div>
+                <button id="viewer-reset-btn" type="button">Сбросить вид</button>
+              </div>
+            </div>
+
+            <div class="mock-toolbar">
+              <h3>Управление 3D-видом</h3>
+              <div class="row">
+                <button type="button" class="ghost">Повернуть ←</button>
+                <button type="button" class="ghost">Повернуть →</button>
+                <button type="button" class="ghost">Масштаб ±</button>
+                <button type="button" class="ghost">Сбросить</button>
+              </div>
+            </div>
+
+            <pre id="result-output"></pre>
+          </section>
+
+          <section class="card">
+            <h2>Операционный журнал</h2>
+            <pre id="output"></pre>
+          </section>
+        </div>
+      </section>
+
+      <details class="modal-drawer">
+        <summary>Превью модальных окон</summary>
+        <section class="modal-previews">
+          <article class="card modal-card">
+            <h3>Модальное окно: Создать проект</h3>
+            <p class="muted">Заполните название и комментарий перед запуском расчета.</p>
+            <div class="stack">
+              <label>Название проекта <input placeholder="Купол Север"></label>
+              <label>Комментарий <input placeholder="Краткое описание"></label>
+            </div>
+            <div class="row">
+              <button type="button" class="ghost">Отмена</button>
+              <button type="button">Создать</button>
+            </div>
+          </article>
+
+          <article class="card modal-card">
+            <h3>Модальное окно: Ревью проекта</h3>
+            <p class="muted">Подтвердите статус и оставьте комментарий для команды.</p>
+            <div class="stack">
+              <label>Статус <input value="ПОДТВЕРЖДЕНО" readonly></label>
+              <label>Комментарий преподавателя <input placeholder="Комментарий"></label>
+            </div>
+            <div class="row">
+              <button type="button" class="ghost">На доработку</button>
+              <button type="button">Подтвердить</button>
+            </div>
+          </article>
         </section>
-      </aside>
+      </details>
     </section>
   </main>
 </body>

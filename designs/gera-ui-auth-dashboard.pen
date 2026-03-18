@@ -1,0 +1,508 @@
+{
+  "version": "2.9",
+  "children": [
+    {
+      "type": "frame",
+      "id": "uOyPm",
+      "x": 80,
+      "y": 80,
+      "name": "Авторизация",
+      "width": 1280,
+      "height": 860,
+      "fill": "#EEF2F9",
+      "children": [
+        {
+          "type": "frame",
+          "id": "mY6fv",
+          "name": "authLeft",
+          "width": 640,
+          "height": "fill_container",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 160,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#0B1324",
+                "position": 0
+              },
+              {
+                "color": "#132C68",
+                "position": 1
+              }
+            ]
+          },
+          "layout": "vertical",
+          "padding": [
+            56,
+            60
+          ],
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "text",
+              "id": "uLFGu",
+              "name": "authLogo",
+              "fill": "#FFFFFF",
+              "content": "GERA // AUTH",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 22,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "znhmI",
+              "name": "authCenter",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 18,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "pkQQm",
+                  "name": "authTitle",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Технический контур авторизации GERA",
+                  "lineHeight": 1.08,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 48,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "JFGRj",
+                  "name": "authDesc",
+                  "fill": "#CBD5E1",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Единая точка входа для студентов и преподавателей: безопасная авторизация, доступ к расчетам и валидации результатов.",
+                  "lineHeight": 1.4,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 16,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "d3BMI",
+              "name": "authFoot",
+              "fill": "#9CC7FF",
+              "content": "Локальный контур: auth + backend + ui + mongo",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 13,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Z4x6S",
+          "name": "authRight",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "padding": 56,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "o23Sy",
+              "name": "authCard",
+              "width": 470,
+              "fill": "#FFFFFF",
+              "cornerRadius": 24,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#DCE5F3"
+              },
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 32,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "OXRwF",
+                  "name": "authCardTitle",
+                  "fill": "#0F172A",
+                  "content": "Вход в систему",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 34,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "A4nR4",
+                  "name": "authCardSub",
+                  "fill": "#64748B",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Авторизуйтесь в едином контуре входа и продолжайте работу с инженерными проектами.",
+                  "lineHeight": 1.4,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 15,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "KIgzA",
+                  "name": "authBtn",
+                  "height": 56,
+                  "fill": "#1D4ED8",
+                  "cornerRadius": 14,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "9xcjT",
+                      "name": "authBtnText",
+                      "fill": "#FFFFFF",
+                      "content": "Войти",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "B0inX",
+                  "name": "authHint",
+                  "fill": "#334155",
+                  "content": "Демо-доступ: admin / Admin123!",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "wnFte",
+      "x": 1440,
+      "y": 80,
+      "name": "Панель UI",
+      "width": 1440,
+      "height": 980,
+      "fill": "#F4F6FB",
+      "layout": "vertical",
+      "gap": 18,
+      "padding": 28,
+      "children": [
+        {
+          "type": "frame",
+          "id": "bhVuF",
+          "name": "top",
+          "width": "fill_container",
+          "height": 72,
+          "padding": [
+            0,
+            8
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "JGlPs",
+              "name": "topTitle",
+              "fill": "#18181B",
+              "content": "Техническая панель GERA",
+              "fontFamily": "DM Sans",
+              "fontSize": 32,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "qYUUP",
+              "name": "topActions",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "C7z1V",
+                  "name": "actionHealth",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E4E4E7"
+                  },
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "1VvnL",
+                      "name": "actionHealthText",
+                      "fill": "#18181B",
+                      "content": "Проверка",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "TLV6U",
+                  "name": "actionLogin",
+                  "fill": "#1D4ED8",
+                  "cornerRadius": 12,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "YJsjD",
+                      "name": "actionLoginText",
+                      "fill": "#FFFFFF",
+                      "content": "Вход",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "sH6bZ",
+          "name": "kpiRow",
+          "width": "fill_container",
+          "height": 136,
+          "gap": 12,
+          "children": [
+            {
+              "type": "frame",
+              "id": "AKR40",
+              "name": "kpiA",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 18,
+              "stroke": {
+                "thickness": 1.5,
+                "fill": "#DEE5F2"
+              },
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 18,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cr9Qn",
+                  "name": "kpiAText1",
+                  "fill": "#71717A",
+                  "content": "ПРОЕКТЫ",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "700",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "text",
+                  "id": "siJhq",
+                  "name": "kpiAText2",
+                  "fill": "#18181B",
+                  "content": "42",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 38,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "aPN8J",
+              "name": "kpiB",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 18,
+              "stroke": {
+                "thickness": 1.5,
+                "fill": "#DEE5F2"
+              },
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 18,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "6KQOg",
+                  "name": "kpiBText1",
+                  "fill": "#71717A",
+                  "content": "ГОТОВО",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "700",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "text",
+                  "id": "2K3VM",
+                  "name": "kpiBText2",
+                  "fill": "#18181B",
+                  "content": "18",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 38,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "o97Fh",
+              "name": "kpiC",
+              "width": "fill_container",
+              "fill": "#EFF6FF",
+              "cornerRadius": 18,
+              "stroke": {
+                "thickness": 1.5,
+                "fill": "#BFD2F4"
+              },
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 18,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "gu2EX",
+                  "name": "kpiCText1",
+                  "fill": "#1D4ED8",
+                  "content": "СЕССИЯ",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "700",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "text",
+                  "id": "2B2JN",
+                  "name": "kpiCText2",
+                  "fill": "#1D4ED8",
+                  "content": "АКТИВНА",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 28,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Row5N",
+          "name": "mainRow",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 12,
+          "children": [
+            {
+              "type": "frame",
+              "id": "041Ch",
+              "name": "panelA",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 18,
+              "stroke": {
+                "thickness": 1.5,
+                "fill": "#DEE5F2"
+              },
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Ct3RW",
+                  "name": "panelATitle",
+                  "fill": "#18181B",
+                  "content": "Портфель проектов",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "TQIPm",
+                  "name": "panelAText",
+                  "fill": "#71717A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Фильтрация, статусы расчета и действия «Загрузить», «Готово», «Расчет», «Результат».",
+                  "lineHeight": 1.4,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "InfzD",
+              "name": "panelB",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 18,
+              "stroke": {
+                "thickness": 1.5,
+                "fill": "#DEE5F2"
+              },
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "CBiHP",
+                  "name": "panelBTitle",
+                  "fill": "#18181B",
+                  "content": "Результат и 3D-визуализация",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 22,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "aWUyY",
+                  "name": "panelBText",
+                  "fill": "#71717A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Визуализация узлов/связей, сравнение с legacy, управляющие действия и журнал операций.",
+                  "lineHeight": 1.4,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

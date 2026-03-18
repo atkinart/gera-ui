@@ -50,7 +50,7 @@ const {
 
 const oidc = createOidcPkceClient({
   issuer: "http://localhost:9000",
-  clientId: "gera-ui",
+  clientId: "spa",
   redirectUri: "http://localhost:5173/auth/callback",
   postLogoutRedirectUri: "http://localhost:5173/"
 });
@@ -133,6 +133,12 @@ const smokeResult = await smoke.run({
 ```
 
 ## Что покрыто
+
+## Локальные креды для auth
+
+- `admin / Admin123!`
+- `teacher / Teacher123!`
+- `student / Student123!`
 
 - Генерация authorize URL c `response_type=code`, `state`, `nonce`, `code_challenge` (`S256`).
 - Валидация callback по `state` + получение `codeVerifier`.

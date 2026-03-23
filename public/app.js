@@ -15,6 +15,16 @@
       renderEnabled: false,
       expectedOverlay: null
     },
+    onboarding: {
+      creating: false,
+      calculating: false
+    },
+    student: {
+      role: "default",
+      sidebarCollapsed: false,
+      accountMenuOpen: false,
+      projects: []
+    },
     logs: []
   };
 
@@ -69,12 +79,14 @@
   bindEvents();
   ensureModelTemplate();
   updateTokenState();
+  renderEntryMode();
   renderProjects([]);
   initViewer();
   clearResultOutput();
   setHealthStatus("health-ui-status", "н/д");
   setHealthStatus("health-auth-status", "н/д");
   setHealthStatus("health-api-status", "н/д");
+  updateOnboardingStatus();
 
   bootstrapAuthFlow();
 
@@ -120,8 +132,48 @@
   }
 
   function bindEvents() {
+    byId("landing-login-btn").addEventListener("click", beginLogin);
+    byId("landing-hero-login-btn").addEventListener("click", beginLogin);
+    byId("landing-final-login-btn").addEventListener("click", beginLogin);
+    byId("student-account-trigger").addEventListener("click", toggleStudentAccountMenu);
+    document.addEventListener("click", handleDocumentClick);
+    byId("student-logout-btn").addEventListener("click", beginLogout);
+    byId("student-sidebar-toggle").addEventListener("click", toggleStudentSidebar);
+    byId("student-toolbar-create-btn").addEventListener("click", function () {
+      runAndPrint("Student: создать проект", createFirstProjectFromTemplate);
+    });
+    byId("student-toolbar-open-btn").addEventListener("click", function () {
+      runAndPrint("Student: открыть проект", openStudentPrimaryProject);
+    });
+    byId("student-open-current-btn").addEventListener("click", function () {
+      runAndPrint("Student: открыть проект", openStudentPrimaryProject);
+    });
+    byId("student-toolbar-import-btn").addEventListener("click", function () {
+      print("Student: импорт", { message: "Импорт будет подключен следующим этапом" });
+    });
+    byId("student-toolbar-export-btn").addEventListener("click", function () {
+      print("Student: экспорт", { message: "Экспорт будет подключен следующим этапом" });
+    });
+    byId("student-toolbar-more-btn").addEventListener("click", function () {
+      print("Student: еще", { message: "Дополнительные действия появятся в этом меню следующим этапом" });
+    });
+    byId("student-toolbar-calc-btn").addEventListener("click", function () {
+      runAndPrint("Student: запустить расчет", calculateFromCurrentContext);
+    });
+    byId("student-empty-calc-btn").addEventListener("click", function () {
+      runAndPrint("Student: запустить расчет", calculateFromCurrentContext);
+    });
     byId("login-btn").addEventListener("click", beginLogin);
     byId("logout-btn").addEventListener("click", beginLogout);
+    byId("onboarding-login-btn").addEventListener("click", beginLogin);
+
+    byId("onboarding-create-btn").addEventListener("click", function () {
+      runAndPrint("Быстрый старт: создать первый проект", createFirstProjectFromTemplate);
+    });
+
+    byId("onboarding-calc-btn").addEventListener("click", function () {
+      runAndPrint("Быстрый старт: первый расчет", runOnboardingFirstCalculation);
+    });
 
     byId("check-ui").addEventListener("click", function () {
       runAndPrint(
@@ -361,6 +413,68 @@
     };
   }
 
+  async function createFirstProjectFromTemplate() {
+    if (state.onboarding.creating) {
+      throw new Error("Создание проекта уже выполняется, дождитесь завершения");
+    }
+
+    if (!state.accessToken) {
+      throw new Error("Сначала выполните вход (Шаг 1)");
+    }
+
+    state.onboarding.creating = true;
+    updateOnboardingStatus();
+
+    try {
+      setModelFromParams(MODEL_TEMPLATE);
+
+      var nameInput = byId("project-name-input");
+      var commentInput = byId("project-comment-input");
+
+      if (!String(nameInput.value || "").trim()) {
+        var stamp = new Date().toLocaleDateString("ru-RU");
+        nameInput.value = "Первый проект " + stamp;
+      }
+
+      if (!String(commentInput.value || "").trim()) {
+        commentInput.value = "Создан через быстрый старт";
+      }
+
+      state.activeProjectId = "";
+      byId("project-id-input").value = "";
+      byId("review-project-id").value = "";
+
+      var response = await createProject();
+      var createdProjectId = String(response && response.body && response.body.projectId || "").trim();
+      if (createdProjectId) {
+        await loadProject(createdProjectId);
+      }
+
+      return {
+        projectId: createdProjectId,
+        message: "Первый проект создан"
+      };
+    } finally {
+      state.onboarding.creating = false;
+      updateOnboardingStatus();
+    }
+  }
+
+  async function runOnboardingFirstCalculation() {
+    if (state.onboarding.calculating) {
+      throw new Error("Расчет уже запущен, дождитесь завершения");
+    }
+
+    state.onboarding.calculating = true;
+    updateOnboardingStatus();
+    try {
+      return await calculateFromCurrentContext();
+    } finally {
+      state.onboarding.calculating = false;
+      updateOnboardingStatus();
+    }
+  }
+
   async function createProject() {
     var draft = collectDraft();
     if (!draft.name) {
@@ -399,7 +513,13 @@
     state.compareSummary = null;
     state.viewer.expectedOverlay = null;
     setLegacyCompareStatus("н/д");
+    byId("student-active-title").textContent = String(body.name || projectId || "Проект");
+    byId("student-active-body").textContent = String(body.comment || "Проект открыт. Можно продолжить редактирование, запускать расчет и просматривать результат.");
+    byId("student-stage-value").textContent = translateProjectStatus(String(body.status || "DRAFT"));
+    byId("student-next-title").textContent = "Запустите расчет для обновления 3D-результата";
+    byId("student-next-body").textContent = "После запуска система вернет обновленную визуализацию и краткую сводку без перехода в технические режимы.";
     render3DScene();
+    applyStudentWorkspaceMode();
 
     return response;
   }
@@ -1069,6 +1189,7 @@
     var rows = Array.isArray(items) ? items : [];
     byId("projects-summary").textContent = rows.length + " проект(ов)";
     byId("kpi-project-count").textContent = String(rows.length);
+    renderStudentProjects(rows);
 
     var readyCount = rows.filter(function (item) {
       return String(item && item.status || "").toUpperCase() === "READY";
@@ -1085,6 +1206,7 @@
       td.textContent = "Проекты не найдены";
       tr.appendChild(td);
       tbody.appendChild(tr);
+      updateOnboardingStatus();
       return;
     }
 
@@ -1110,6 +1232,8 @@
 
       tbody.appendChild(trRow);
     }
+
+    updateOnboardingStatus();
   }
 
   function appendTextCell(row, value) {
@@ -1190,7 +1314,12 @@
     byId("result-output").textContent = pretty(summary);
     byId("kpi-result-nodes").textContent = "узлы: " + String(nodes.length) + " / связи: " + String(edges.length);
     byId("kpi-last-op").textContent = "Результат загружен";
+    byId("student-stage-value").textContent = "Результат готов";
+    byId("student-next-title").textContent = "Результат расчета готов к просмотру";
+    byId("student-next-body").textContent = "Последний результат: узлы " + String(nodes.length) + ", связи " + String(edges.length) + ". Можно продолжить работу или экспортировать данные.";
     render3DScene();
+    applyStudentWorkspaceMode();
+    updateOnboardingStatus();
   }
 
   function clearResultOutput() {
@@ -1204,7 +1333,11 @@
       message: "Результат пока не загружен"
     });
     byId("kpi-result-nodes").textContent = "узлы: 0 / связи: 0";
+    byId("student-next-title").textContent = "Запустите расчет для обновления 3D-результата";
+    byId("student-next-body").textContent = "После запуска система вернет обновленную визуализацию и краткую сводку без перехода в технические режимы.";
     render3DScene();
+    applyStudentWorkspaceMode();
+    updateOnboardingStatus();
   }
 
   function ensureModelTemplate() {
@@ -1678,12 +1811,121 @@
     state.idToken = "";
     localStorage.removeItem("gera.access_token");
     localStorage.removeItem("gera.id_token");
+    state.student.projects = [];
+    state.student.role = "default";
     updateTokenState();
+  }
+
+  function detectUserRole(payload) {
+    var data = payload && typeof payload === "object" ? payload : {};
+    var subject = String(data.sub || "").toLowerCase();
+    if (subject === "student") {
+      return "student";
+    }
+
+    var roles = [];
+    if (Array.isArray(data.roles)) {
+      roles = data.roles.slice();
+    } else if (Array.isArray(data.authorities)) {
+      roles = data.authorities.slice();
+    }
+    if (roles.map(function (item) { return String(item).toLowerCase(); }).includes("student")) {
+      return "student";
+    }
+    return "default";
+  }
+
+  function toggleStudentSidebar() {
+    state.student.sidebarCollapsed = !state.student.sidebarCollapsed;
+    applyStudentWorkspaceMode();
+  }
+
+  function toggleStudentAccountMenu() {
+    state.student.accountMenuOpen = !state.student.accountMenuOpen;
+    applyStudentWorkspaceMode();
+  }
+
+  function handleDocumentClick(event) {
+    var target = event && event.target;
+    var account = byId("student-account-menu");
+    var trigger = byId("student-account-trigger");
+    if (!target || !account || !trigger || !state.student.accountMenuOpen) {
+      return;
+    }
+    if (account.contains(target) || trigger.contains(target)) {
+      return;
+    }
+    state.student.accountMenuOpen = false;
+    applyStudentWorkspaceMode();
+  }
+
+  function applyStudentWorkspaceMode() {
+    var root = document.documentElement;
+    var accountMenu = byId("student-account-menu");
+    var accountTrigger = byId("student-account-trigger");
+    if (!root) {
+      return;
+    }
+    root.dataset.studentSidebar = state.student.sidebarCollapsed ? "collapsed" : "open";
+    root.dataset.studentActive = readProjectId() ? "true" : "false";
+    byId("student-sidebar-toggle").textContent = state.student.sidebarCollapsed ? "Показать" : "Скрыть";
+    if (accountMenu && accountTrigger) {
+      accountMenu.hidden = !state.student.accountMenuOpen;
+      accountTrigger.setAttribute("aria-expanded", state.student.accountMenuOpen ? "true" : "false");
+    }
+  }
+
+  async function openStudentPrimaryProject() {
+    var projectId = String(state.activeProjectId || "").trim();
+    if (!projectId) {
+      var firstProject = Array.isArray(state.student.projects) && state.student.projects.length > 0 ? state.student.projects[0] : null;
+      projectId = String(firstProject && firstProject.projectId || "").trim();
+    }
+    if (!projectId) {
+      throw new Error("Нет проекта для открытия. Сначала создайте новый проект.");
+    }
+    return loadProject(projectId);
+  }
+
+  function renderStudentProjects(rows) {
+    var items = Array.isArray(rows) ? rows : [];
+    state.student.projects = items;
+
+    var current = items[0] || null;
+    var draft = items[1] || null;
+
+    byId("student-project-current-title").textContent = current ? String(current.name || current.projectId || "Без названия") : "Нет проектов";
+    byId("student-project-current-body").textContent = current
+      ? translateProjectStatus(String(current.status || "")) + ". Последнее изменение: " + String(current.updatedAt || "н/д")
+      : "Создайте первый проект или импортируйте существующий файл.";
+
+    byId("student-project-draft-title").textContent = draft ? String(draft.name || draft.projectId || "Без названия") : "Второй проект отсутствует";
+    byId("student-project-draft-body").textContent = draft
+      ? translateProjectStatus(String(draft.status || "")) + ". Можно продолжить редактирование позже."
+      : "Здесь появится следующий проект, когда в портфеле будет больше одного элемента.";
+
+    if (!readProjectId()) {
+      byId("student-active-title").textContent = current ? String(current.name || current.projectId || "Текущий проект") : "Проект еще не открыт";
+      byId("student-stage-value").textContent = current ? translateProjectStatus(String(current.status || "")) : "Новый старт";
+    }
+
+    applyStudentWorkspaceMode();
+  }
+
+  function renderEntryMode() {
+    var root = document.documentElement;
+    if (!root) {
+      return;
+    }
+    root.dataset.session = state.accessToken ? "auth" : "guest";
+    root.dataset.role = state.student.role || "default";
+    applyStudentWorkspaceMode();
   }
 
   function updateTokenState() {
     byId("token-state").textContent = state.accessToken ? "есть" : "нет";
     var accessPayload = decodeJwtPayload(state.accessToken);
+    state.student.role = detectUserRole(accessPayload);
     byId("token-sub").textContent = accessPayload && accessPayload.sub ? String(accessPayload.sub) : "-";
 
     var scope = "-";
@@ -1695,6 +1937,54 @@
       }
     }
     byId("token-scope").textContent = scope;
+    renderEntryMode();
+    updateOnboardingStatus();
+    maybeHydrateStudentWorkspace();
+  }
+
+  function maybeHydrateStudentWorkspace() {
+    if (!state.accessToken || state.student.role !== "student") {
+      return;
+    }
+    listProjects().catch(function (error) {
+      print("Student: загрузка проектов — ошибка", {
+        message: toErrorMessage(error)
+      });
+    });
+  }
+
+  function updateOnboardingStatus() {
+    var hasToken = Boolean(state.accessToken);
+    var projectCount = Number.parseInt(String(byId("kpi-project-count").textContent || "0"), 10);
+    var hasProject = Number.isFinite(projectCount) && projectCount > 0;
+    var hasResult = Boolean(state.lastResult && (state.lastResult.resultId || state.lastResult.projectId));
+
+    setOnboardingStep("onboarding-step-login", hasToken);
+    setOnboardingStep("onboarding-step-project", hasProject);
+    setOnboardingStep("onboarding-step-calc", hasResult);
+
+    var doneCount = 0;
+    if (hasToken) {
+      doneCount += 1;
+    }
+    if (hasProject) {
+      doneCount += 1;
+    }
+    if (hasResult) {
+      doneCount += 1;
+    }
+
+    byId("onboarding-progress").textContent = String(doneCount) + "/3";
+
+    byId("onboarding-login-btn").disabled = hasToken;
+    byId("onboarding-create-btn").disabled = !hasToken || state.onboarding.creating || state.onboarding.calculating;
+    byId("onboarding-calc-btn").disabled = !hasToken || !hasProject || state.onboarding.creating || state.onboarding.calculating;
+  }
+
+  function setOnboardingStep(stepId, done) {
+    var node = byId(stepId);
+    node.classList.toggle("done", Boolean(done));
+    node.classList.toggle("pending", !done);
   }
 
   function decodeJwtPayload(token) {

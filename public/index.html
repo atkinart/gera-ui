@@ -4,12 +4,230 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>GERA — техническая рабочая панель</title>
+  <script>
+    (() => {
+      var hasToken = false;
+      var role = "default";
+      var token = "";
+      var payload = null;
+      var pad = 0;
+      function decodePayload(token) {
+        if (!token || typeof token !== "string") {
+          return null;
+        }
+        var parts = token.split(".");
+        if (parts.length < 2) {
+          return null;
+        }
+        try {
+          payload = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+          pad = payload.length % 4;
+          if (pad) {
+            payload += "=".repeat(4 - pad);
+          }
+          return JSON.parse(atob(payload));
+        } catch {
+          return null;
+        }
+      }
+
+      function detectRole(payload) {
+        var subject = payload && payload.sub ? String(payload.sub).toLowerCase() : "";
+        if (subject === "student") {
+          return "student";
+        }
+        return "default";
+      }
+
+      try {
+        token = window.localStorage.getItem("gera.access_token");
+        hasToken = Boolean(token);
+        role = detectRole(decodePayload(token));
+      } catch {
+        hasToken = false;
+      }
+      document.documentElement.dataset.session = hasToken ? "auth" : "guest";
+      document.documentElement.dataset.role = role;
+      document.documentElement.dataset.studentSidebar = "open";
+      document.documentElement.dataset.studentActive = "false";
+    })();
+  </script>
   <link rel="stylesheet" href="/styles.css">
   <script src="/config.js"></script>
   <script defer src="/app.js"></script>
 </head>
 <body>
-  <main class="workspace workspace-v2">
+  <section id="public-landing" class="public-shell">
+    <div class="public-page">
+      <header class="public-header public-card">
+        <div class="public-brand">
+          <span class="public-brand-mark">GERA</span>
+          <span class="public-brand-copy">Инженерные расчеты и 3D-визуализация</span>
+        </div>
+        <div class="public-header-actions">
+          <a href="#landing-workflow" class="public-link">Возможности</a>
+          <button id="landing-login-btn" type="button">Войти</button>
+        </div>
+      </header>
+
+      <section class="public-hero">
+        <article class="public-card public-hero-copy public-hero-copy-wide">
+          <p class="public-eyebrow">Единый продуктовый контур</p>
+          <h1>Платформа для инженерной команды: от проекта до понятного проверенного результата</h1>
+          <p class="public-lead">GERA помогает создавать инженерные проекты, запускать расчеты, получать 3D-визуализацию и передавать результат на ревью без переключения между инструментами.</p>
+          <div class="public-cta-row">
+            <button id="landing-hero-login-btn" type="button">Войти и открыть проекты</button>
+            <a href="#landing-workflow" class="public-secondary-link">Как это работает</a>
+          </div>
+          <div class="public-proof-row">
+            <span class="public-proof-pill">Единый login</span>
+            <span class="public-proof-pill">Статусы расчета</span>
+            <span class="public-proof-pill">3D-визуализация</span>
+            <span class="public-proof-pill">Ревью результата</span>
+          </div>
+        </article>
+      </section>
+
+      <section id="landing-workflow" class="public-card public-workflow">
+        <p class="public-eyebrow">Как работает GERA</p>
+        <h2>Один понятный пользовательский путь вместо технической панели</h2>
+        <div class="public-workflow-grid">
+          <article class="public-step-card">
+            <span class="public-step-num">01</span>
+            <h3>Войти</h3>
+            <p>Пользователь входит в систему и сразу попадает в свой рабочий контур.</p>
+          </article>
+          <article class="public-step-card">
+            <span class="public-step-num">02</span>
+            <h3>Создать проект</h3>
+            <p>Быстрый старт помогает завести первый проект без пустого экрана и лишних действий.</p>
+          </article>
+          <article class="public-step-card">
+            <span class="public-step-num">03</span>
+            <h3>Получить результат</h3>
+            <p>После расчета система показывает 3D-визуализацию, сводку и готовит результат к ревью.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="public-card public-final-cta">
+        <div>
+          <p class="public-eyebrow">Запуск продукта</p>
+          <h2>Готовы запустить первый инженерный расчет в GERA?</h2>
+        </div>
+        <button id="landing-final-login-btn" type="button">Войти в продукт</button>
+      </section>
+    </div>
+  </section>
+
+  <main id="student-workspace" class="student-shell">
+    <section class="student-page">
+      <header class="student-header">
+        <div class="student-brand-wrap">
+          <p class="student-brand">GERA / STUDENT</p>
+          <p class="student-subbrand">Рабочее пространство студента: проект, расчет и результат</p>
+        </div>
+        <div class="student-header-actions">
+          <div class="student-account">
+            <button id="student-account-trigger" type="button" class="student-account-trigger" aria-expanded="false">ST</button>
+            <div id="student-account-menu" class="student-account-menu student-card" hidden>
+              <p id="student-account-login" class="student-account-login">student</p>
+              <p id="student-account-role" class="student-account-role">Роль: студент</p>
+              <div class="student-account-divider"></div>
+              <button id="student-logout-btn" type="button" class="ghost student-account-logout">Выйти</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="student-toolbar student-toolbar-band student-card">
+        <button id="student-toolbar-create-btn" type="button" class="ghost compact-action compact-action-soft">＋ Создать</button>
+        <button id="student-toolbar-open-btn" type="button" class="ghost compact-action compact-action-soft">▣ Открыть</button>
+        <button id="student-toolbar-calc-btn" type="button" class="compact-action compact-action-primary">▶ Расчет</button>
+        <button id="student-toolbar-import-btn" type="button" class="ghost compact-action">⇪ Импорт</button>
+        <button id="student-toolbar-export-btn" type="button" class="ghost compact-action">⇩ Экспорт</button>
+        <button id="student-toolbar-more-btn" type="button" class="ghost compact-action">⋯ Еще</button>
+      </div>
+
+      <section class="student-layout">
+        <aside id="student-sidebar" class="student-sidebar student-card">
+          <div class="student-sidebar-head">
+            <h2>Мои проекты</h2>
+            <button id="student-sidebar-toggle" type="button" class="student-collapse-btn">Скрыть</button>
+          </div>
+
+          <div class="student-sidebar-collapsed-tools" aria-hidden="true">
+            <button id="student-sidebar-icon-btn" type="button" class="student-sidebar-icon-btn">▤</button>
+            <button id="student-sidebar-expand-btn" type="button" class="student-sidebar-expand-btn">→</button>
+          </div>
+
+          <div class="student-project-list">
+            <article class="student-project-card student-project-card-current">
+              <p class="student-project-tag" id="student-project-current-tag">ТЕКУЩИЙ</p>
+              <h3 id="student-project-current-title">Арка 12</h3>
+              <p id="student-project-current-body">Готов к запуску расчета. Последнее изменение сегодня в 10:40.</p>
+            </article>
+
+            <article class="student-project-card">
+              <p class="student-project-tag student-project-tag-muted" id="student-project-draft-tag">ЧЕРНОВИК</p>
+              <h3 id="student-project-draft-title">Балка 04</h3>
+              <p id="student-project-draft-body">Можно вернуться к редактированию параметров и продолжить позже.</p>
+            </article>
+          </div>
+
+        </aside>
+
+        <section class="student-work-area student-card">
+          <h1>Рабочая область проекта</h1>
+          <p class="muted">Основной вход для редактирования, запуска расчета и просмотра результата. Она специально оставлена максимально широкой, а блок проектов можно свернуть.</p>
+
+          <section id="student-empty-state" class="student-empty-state">
+            <p class="student-work-label">WORK AREA</p>
+            <h2 id="student-work-title">Откройте проект или создайте новый, чтобы начать работу</h2>
+            <p id="student-work-body">Если это первый вход, рабочая область помогает быстро начать: выбрать существующий проект или создать новый без перехода в технические режимы.</p>
+            <div class="student-empty-actions">
+              <button id="student-open-current-btn" type="button">Открыть проект</button>
+              <button id="student-empty-calc-btn" type="button" class="ghost">Запустить расчет</button>
+            </div>
+            <div class="student-hints-grid">
+              <article class="student-hint-card">
+                <p class="student-hint-tag">СТАРТ 01</p>
+                <h3>Создать проект</h3>
+                <p>Для первого входа система предлагает начать с нового проекта и сразу перейти к рабочей области модели.</p>
+              </article>
+              <article class="student-hint-card">
+                <p class="student-hint-tag">СТАРТ 02</p>
+                <h3>Открыть проект</h3>
+                <p>Если работа уже начата, можно быстро вернуться к последнему проекту и продолжить расчет или редактирование.</p>
+              </article>
+            </div>
+          </section>
+
+          <section id="student-active-state" class="student-active-state">
+            <div class="student-active-top">
+              <div>
+                <p class="student-work-label">ТЕКУЩИЙ ПРОЕКТ</p>
+                <h2 id="student-active-title">Арка 12</h2>
+                <p id="student-active-body">Здесь студент видит только главное: этап работы, ключевые параметры и следующий понятный шаг.</p>
+              </div>
+              <div class="student-stage-card">
+                <p class="student-hint-tag">ЭТАП</p>
+                <strong id="student-stage-value">Подготовка модели</strong>
+              </div>
+            </div>
+
+            <div class="student-next-card">
+              <p class="student-hint-tag">СЛЕДУЮЩЕЕ ДЕЙСТВИЕ</p>
+              <h3 id="student-next-title">Запустите расчет для обновления 3D-результата</h3>
+              <p id="student-next-body">После запуска система вернет обновленную визуализацию и краткую сводку без перехода в технические режимы.</p>
+            </div>
+          </section>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <main id="workspace-app" class="workspace workspace-v2">
     <aside class="sidebar card">
       <p class="brand">GERA // DEVTOOLS</p>
       <nav class="nav-stack" aria-label="Разделы панели">
@@ -62,6 +280,29 @@
           <button id="logout-btn" type="button" class="ghost">Выход</button>
         </div>
       </header>
+
+      <section id="onboarding-card" class="card onboarding-card">
+        <div class="onboarding-head">
+          <div>
+            <p class="eyebrow">FIRST VALUE FLOW</p>
+            <h2>Быстрый старт для нового пользователя</h2>
+            <p class="muted">Три шага: войти, создать первый проект, выполнить первый расчет.</p>
+          </div>
+          <span id="onboarding-progress" class="onboarding-progress">0/3</span>
+        </div>
+
+        <ol class="onboarding-steps">
+          <li class="onboarding-step" id="onboarding-step-login">Шаг 1. Войти под учетной записью</li>
+          <li class="onboarding-step" id="onboarding-step-project">Шаг 2. Создать первый проект по шаблону</li>
+          <li class="onboarding-step" id="onboarding-step-calc">Шаг 3. Запустить расчет и получить результат</li>
+        </ol>
+
+        <div class="action-grid compact-grid">
+          <button id="onboarding-login-btn" type="button">Шаг 1: Войти</button>
+          <button id="onboarding-create-btn" type="button">Шаг 2: Создать проект</button>
+          <button id="onboarding-calc-btn" type="button">Шаг 3: Первый расчет</button>
+        </div>
+      </section>
 
       <section class="kpi-grid">
         <article class="kpi card">

@@ -6,10 +6,28 @@
       "id": "uOyPm",
       "x": 80,
       "y": 80,
-      "name": "Авторизация",
+      "name": "Auth Login",
       "width": 1280,
       "height": 860,
-      "fill": "#EEF2F9",
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "#F3F6FB",
+            "position": 0
+          },
+          {
+            "color": "#EEF2F9",
+            "position": 1
+          }
+        ]
+      },
       "children": [
         {
           "type": "frame",
@@ -21,7 +39,7 @@
             "type": "gradient",
             "gradientType": "linear",
             "enabled": true,
-            "rotation": 160,
+            "rotation": 145,
             "size": {
               "height": 1
             },
@@ -131,7 +149,7 @@
                   "type": "text",
                   "id": "OXRwF",
                   "name": "authCardTitle",
-                  "fill": "#0F172A",
+                  "fill": "#101828",
                   "content": "Вход в систему",
                   "fontFamily": "DM Sans",
                   "fontSize": 34,
@@ -141,10 +159,10 @@
                   "type": "text",
                   "id": "A4nR4",
                   "name": "authCardSub",
-                  "fill": "#64748B",
+                  "fill": "#52617A",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Авторизуйтесь в едином контуре входа и продолжайте работу с инженерными проектами.",
+                  "content": "Авторизуйтесь через единый OAuth2/OIDC-контур и продолжайте работу с инженерными проектами.",
                   "lineHeight": 1.4,
                   "fontFamily": "DM Sans",
                   "fontSize": 15,
@@ -155,7 +173,25 @@
                   "id": "KIgzA",
                   "name": "authBtn",
                   "height": 56,
-                  "fill": "#1D4ED8",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 215,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#1D4ED8",
+                        "position": 0
+                      },
+                      {
+                        "color": "#2563EB",
+                        "position": 1
+                      }
+                    ]
+                  },
                   "cornerRadius": 14,
                   "justifyContent": "center",
                   "alignItems": "center",
@@ -165,7 +201,7 @@
                       "id": "9xcjT",
                       "name": "authBtnText",
                       "fill": "#FFFFFF",
-                      "content": "Войти",
+                      "content": "Войти по OIDC",
                       "fontFamily": "JetBrains Mono",
                       "fontSize": 15,
                       "fontWeight": "700"
@@ -193,7 +229,7 @@
       "id": "wnFte",
       "x": 1440,
       "y": 80,
-      "name": "Панель UI",
+      "name": "UI Dashboard",
       "width": 1440,
       "height": 980,
       "fill": "#F4F6FB",
@@ -218,7 +254,7 @@
               "type": "text",
               "id": "JGlPs",
               "name": "topTitle",
-              "fill": "#18181B",
+              "fill": "#0F172A",
               "content": "Техническая панель GERA",
               "fontFamily": "DM Sans",
               "fontSize": 32,
@@ -238,7 +274,7 @@
                   "cornerRadius": 12,
                   "stroke": {
                     "thickness": 1,
-                    "fill": "#E4E4E7"
+                    "fill": "#D7DFEC"
                   },
                   "padding": [
                     10,
@@ -251,7 +287,7 @@
                       "type": "text",
                       "id": "1VvnL",
                       "name": "actionHealthText",
-                      "fill": "#18181B",
+                      "fill": "#1E293B",
                       "content": "Проверка",
                       "fontFamily": "JetBrains Mono",
                       "fontSize": 13,
@@ -263,11 +299,29 @@
                   "type": "frame",
                   "id": "TLV6U",
                   "name": "actionLogin",
-                  "fill": "#1D4ED8",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 215,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#1D4ED8",
+                        "position": 0
+                      },
+                      {
+                        "color": "#2563EB",
+                        "position": 1
+                      }
+                    ]
+                  },
                   "cornerRadius": 12,
                   "padding": [
                     10,
-                    14
+                    16
                   ],
                   "justifyContent": "center",
                   "alignItems": "center",
@@ -315,7 +369,7 @@
                   "type": "text",
                   "id": "cr9Qn",
                   "name": "kpiAText1",
-                  "fill": "#71717A",
+                  "fill": "#667085",
                   "content": "ПРОЕКТЫ",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 12,
@@ -326,7 +380,7 @@
                   "type": "text",
                   "id": "siJhq",
                   "name": "kpiAText2",
-                  "fill": "#18181B",
+                  "fill": "#111827",
                   "content": "42",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 38,
@@ -353,7 +407,7 @@
                   "type": "text",
                   "id": "6KQOg",
                   "name": "kpiBText1",
-                  "fill": "#71717A",
+                  "fill": "#667085",
                   "content": "ГОТОВО",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 12,
@@ -364,7 +418,7 @@
                   "type": "text",
                   "id": "2K3VM",
                   "name": "kpiBText2",
-                  "fill": "#18181B",
+                  "fill": "#111827",
                   "content": "18",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 38,
@@ -377,7 +431,7 @@
               "id": "o97Fh",
               "name": "kpiC",
               "width": "fill_container",
-              "fill": "#EFF6FF",
+              "fill": "#EAF2FF",
               "cornerRadius": 18,
               "stroke": {
                 "thickness": 1.5,
@@ -439,7 +493,7 @@
                   "type": "text",
                   "id": "Ct3RW",
                   "name": "panelATitle",
-                  "fill": "#18181B",
+                  "fill": "#111827",
                   "content": "Портфель проектов",
                   "fontFamily": "DM Sans",
                   "fontSize": 22,
@@ -449,7 +503,7 @@
                   "type": "text",
                   "id": "TQIPm",
                   "name": "panelAText",
-                  "fill": "#71717A",
+                  "fill": "#6B7280",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
                   "content": "Фильтрация, статусы расчета и действия «Загрузить», «Готово», «Расчет», «Результат».",
@@ -479,7 +533,7 @@
                   "type": "text",
                   "id": "CBiHP",
                   "name": "panelBTitle",
-                  "fill": "#18181B",
+                  "fill": "#111827",
                   "content": "Результат и 3D-визуализация",
                   "fontFamily": "DM Sans",
                   "fontSize": 22,
@@ -489,14 +543,4198 @@
                   "type": "text",
                   "id": "aWUyY",
                   "name": "panelBText",
-                  "fill": "#71717A",
+                  "fill": "#6B7280",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Визуализация узлов/связей, сравнение с legacy, управляющие действия и журнал операций.",
+                  "content": "Просмотр узлов и связей, сравнение с legacy-эталоном, управление действиями и операционный журнал.",
                   "lineHeight": 1.4,
                   "fontFamily": "DM Sans",
                   "fontSize": 14,
                   "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "NuKAg",
+      "x": 3040,
+      "y": 80,
+      "name": "Авторизация V2 Light",
+      "width": 1280,
+      "height": 860,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "#F6F9FF",
+            "position": 0
+          },
+          {
+            "color": "#EDF3FF",
+            "position": 1
+          }
+        ]
+      },
+      "children": [
+        {
+          "type": "frame",
+          "id": "7lrCl",
+          "name": "authLeftV2",
+          "width": 700,
+          "height": "fill_container",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 155,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#EAF1FF",
+                "position": 0
+              },
+              {
+                "color": "#F7FAFF",
+                "position": 1
+              }
+            ]
+          },
+          "layout": "vertical",
+          "gap": 18,
+          "padding": [
+            56,
+            60
+          ],
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "text",
+              "id": "usZE7",
+              "name": "logoV2",
+              "fill": "#1E3A8A",
+              "content": "GERA // LOGIN",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 21,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "Laqb1",
+              "name": "centerV2",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Zzx78",
+                  "name": "titleV2",
+                  "fill": "#0F172A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Безопасный вход в инженерную платформу",
+                  "lineHeight": 1.06,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 46,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "Qc4Lc",
+                  "name": "descV2",
+                  "fill": "#475569",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Единый экран входа для учебного и административного контуров. После входа доступны проекты, расчеты и ревью.",
+                  "lineHeight": 1.4,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 16,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "ecHU7",
+                  "name": "chipsV2",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Qoxme",
+                      "name": "chipA",
+                      "fill": "#E8F0FF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#C8D9FA"
+                      },
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "WquSe",
+                          "name": "chipAText",
+                          "fill": "#1D4ED8",
+                          "content": "Авторизация",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "N4lSA",
+                      "name": "chipB",
+                      "fill": "#E8F0FF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#C8D9FA"
+                      },
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QWV1C",
+                          "name": "chipBText",
+                          "fill": "#1D4ED8",
+                          "content": "Проверка доступа",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "JaJZi",
+              "name": "footV2",
+              "fill": "#5A7CB8",
+              "content": "Локальная среда: auth + backend + ui + mongo",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 13,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "dxYxz",
+          "name": "authRightV2",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "#F0F5FF",
+          "layout": "vertical",
+          "padding": 56,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "9x6SB",
+              "name": "authCardV2Light",
+              "width": 500,
+              "fill": "#FFFFFF",
+              "cornerRadius": 20,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9E4F6"
+              },
+              "layout": "vertical",
+              "gap": 14,
+              "padding": 30,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "4LqtZ",
+                  "fill": "#0F172A",
+                  "content": "Вход",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 34,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "DfSrY",
+                  "fill": "#52617A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Введите учетные данные для доступа к проектам, расчетам и ревью.",
+                  "lineHeight": 1.4,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 15,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "dogwv",
+                  "height": 48,
+                  "fill": "#F8FAFF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D7E2F4"
+                  },
+                  "padding": [
+                    12,
+                    14
+                  ],
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Lgvoy",
+                      "fill": "#64748B",
+                      "content": "Логин",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "KVhDo",
+                  "height": 48,
+                  "fill": "#F8FAFF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D7E2F4"
+                  },
+                  "padding": [
+                    12,
+                    14
+                  ],
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Pyg6O",
+                      "fill": "#64748B",
+                      "content": "Пароль",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "2BbJ1",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "iA2Ug",
+                      "fill": "#64748B",
+                      "content": "Запомнить меня",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "crVyX",
+                      "fill": "#1D4ED8",
+                      "content": "Забыли пароль?",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "oPxDk",
+                  "height": 56,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 210,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#1D4ED8",
+                        "position": 0
+                      },
+                      {
+                        "color": "#2563EB",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 14,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "63YSi",
+                      "fill": "#FFFFFF",
+                      "content": "Войти",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "9W6kC",
+                  "height": 48,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#C8D6EE"
+                  },
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "E7NwA",
+                      "fill": "#1E3A8A",
+                      "content": "Создать аккаунт",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "KLSZ8",
+                  "fill": "#647DAA",
+                  "content": "Демо-доступ: admin / Admin123!",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "nrBnO",
+      "x": 4400,
+      "y": 80,
+      "name": "Панель V2 Light",
+      "width": 1440,
+      "height": 980,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "#F8FAFF",
+            "position": 0
+          },
+          {
+            "color": "#EEF3FC",
+            "position": 1
+          }
+        ]
+      },
+      "children": [
+        {
+          "type": "frame",
+          "id": "lytQ7",
+          "name": "sidebarV2",
+          "width": 280,
+          "height": "fill_container",
+          "fill": "#FFFFFF",
+          "stroke": {
+            "thickness": 1,
+            "fill": "#DBE5F4"
+          },
+          "layout": "vertical",
+          "gap": 18,
+          "padding": [
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "hFwDD",
+              "name": "sideLogoV2",
+              "fill": "#1E3A8A",
+              "content": "GERA // DEVTOOLS",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 17,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "SisqU",
+              "name": "navV2",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nSMDf",
+                  "name": "navProjects",
+                  "fill": "#E8F0FF",
+                  "cornerRadius": 10,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#C8D9FA"
+                  },
+                  "padding": [
+                    10,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dsHcQ",
+                      "name": "navProjectsText",
+                      "fill": "#1D4ED8",
+                      "content": "Проекты",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FneyA",
+                  "name": "navCalc",
+                  "fill": "#F7FAFF",
+                  "cornerRadius": 10,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D7E2F4"
+                  },
+                  "padding": [
+                    10,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "tUg5J",
+                      "name": "navCalcText",
+                      "fill": "#334155",
+                      "content": "Расчеты",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "UqK36",
+                  "name": "navReview",
+                  "fill": "#F7FAFF",
+                  "cornerRadius": 10,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D7E2F4"
+                  },
+                  "padding": [
+                    10,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "3mvap",
+                      "name": "navReviewText",
+                      "fill": "#334155",
+                      "content": "Ревью",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "ckdYE",
+              "name": "sideFootV2",
+              "fill": "#647DAA",
+              "content": "Статус контура: активен // login",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 12,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "WOsUJ",
+          "name": "mainV2",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "#F4F7FD",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "DXcUA",
+              "name": "headerV2",
+              "width": "fill_container",
+              "height": 72,
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vpBw2",
+                  "name": "headTitleV2",
+                  "fill": "#0F172A",
+                  "content": "Операционная панель",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 30,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "ghAuP",
+                  "name": "headActionsV2",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "ElV5u",
+                      "name": "actCheck",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D7E2F4"
+                      },
+                      "padding": [
+                        9,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GWWyw",
+                          "name": "actCheckText",
+                          "fill": "#1E293B",
+                          "content": "Проверка",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ZzMXC",
+                      "name": "actLogin",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 220,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#1D4ED8",
+                            "position": 0
+                          },
+                          {
+                            "color": "#2563EB",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 12,
+                      "padding": [
+                        9,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Jrg6A",
+                          "name": "actLoginText",
+                          "fill": "#FFFFFF",
+                          "content": "Войти",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Op8ea",
+              "name": "kpiRowV2",
+              "width": "fill_container",
+              "height": 128,
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "4Zffq",
+                  "name": "kpiA2",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "v39pK",
+                      "name": "kpiA2Label",
+                      "fill": "#647DAA",
+                      "content": "ПРОЕКТЫ",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "8BCBu",
+                      "name": "kpiA2Val",
+                      "fill": "#0F172A",
+                      "content": "42",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 34,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "6JVqL",
+                  "name": "kpiB2",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "FWz0J",
+                      "name": "kpiB2Label",
+                      "fill": "#647DAA",
+                      "content": "ГОТОВО",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "uXtAK",
+                      "name": "kpiB2Val",
+                      "fill": "#0F172A",
+                      "content": "18",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 34,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "2piwQ",
+                  "name": "kpiC2",
+                  "width": "fill_container",
+                  "fill": "#EAF2FF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#BDD2F4"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TAcJv",
+                      "name": "kpiC2Label",
+                      "fill": "#1D4ED8",
+                      "content": "СЕССИЯ",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "JjAyA",
+                      "name": "kpiC2Val",
+                      "fill": "#1D4ED8",
+                      "content": "АКТИВНА",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 28,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "HeaVc",
+              "name": "contentRowV2",
+              "width": "fill_container",
+              "height": 380,
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "yI1cu",
+                  "name": "panelLeft2Light",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 18,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": 20,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "u4jwM",
+                      "fill": "#0F172A",
+                      "content": "Портфель проектов",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "VBveU",
+                      "fill": "#52617A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Фильтры, статусы и действия по каждому проекту в одном рабочем столе.",
+                      "lineHeight": 1.4,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "mCWVz",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "oJ9H8",
+                          "width": "fill_container",
+                          "height": 40,
+                          "fill": "#F8FAFF",
+                          "cornerRadius": 10,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D7E2F4"
+                          },
+                          "padding": [
+                            10,
+                            12
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ggQlB",
+                              "fill": "#64748B",
+                              "content": "Поиск по названию",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "SRO2o",
+                          "width": 140,
+                          "height": 40,
+                          "fill": "#F8FAFF",
+                          "cornerRadius": 10,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D7E2F4"
+                          },
+                          "padding": [
+                            10,
+                            12
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "NlP4S",
+                              "fill": "#64748B",
+                              "content": "Статус: все",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "wmVYW",
+                          "width": 130,
+                          "height": 40,
+                          "fill": {
+                            "type": "gradient",
+                            "gradientType": "linear",
+                            "enabled": true,
+                            "rotation": 220,
+                            "size": {
+                              "height": 1
+                            },
+                            "colors": [
+                              {
+                                "color": "#1D4ED8",
+                                "position": 0
+                              },
+                              {
+                                "color": "#2563EB",
+                                "position": 1
+                              }
+                            ]
+                          },
+                          "cornerRadius": 10,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "HH6Nq",
+                              "fill": "#FFFFFF",
+                              "content": "Обновить",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Jxzsx",
+                      "width": "fill_container",
+                      "fill": "#F8FAFF",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D7E2F4"
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "nzoPH",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "WpJEt",
+                              "fill": "#647DAA",
+                              "content": "ID проекта",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "GW5K1",
+                              "fill": "#647DAA",
+                              "content": "Название",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "LzMXq",
+                              "fill": "#647DAA",
+                              "content": "Статус",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "YDQeR",
+                              "fill": "#647DAA",
+                              "content": "Обновлен",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nAtOh",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 8,
+                          "padding": [
+                            8,
+                            10
+                          ],
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "K2lAt",
+                              "fill": "#334155",
+                              "content": "prj_001",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "KhnAm",
+                              "fill": "#0F172A",
+                              "content": "Купол Север",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "chbh4",
+                              "fill": "#166534",
+                              "content": "ГОТОВО",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "cQfaV",
+                              "fill": "#64748B",
+                              "content": "10:42",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "1tFVV",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 8,
+                          "padding": [
+                            8,
+                            10
+                          ],
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "xZSdG",
+                              "fill": "#334155",
+                              "content": "prj_002",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "w1Wus",
+                              "fill": "#0F172A",
+                              "content": "Арка 12",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "PvCMh",
+                              "fill": "#1D4ED8",
+                              "content": "РАСЧЕТ",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "qcVhA",
+                              "fill": "#64748B",
+                              "content": "10:31",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "MmzWV",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 8,
+                          "padding": [
+                            8,
+                            10
+                          ],
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "qUsLP",
+                              "fill": "#334155",
+                              "content": "prj_003",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "f3D0b",
+                              "fill": "#0F172A",
+                              "content": "Мост А3",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "ieTxN",
+                              "fill": "#B45309",
+                              "content": "РЕВЬЮ",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "fbHFe",
+                              "fill": "#64748B",
+                              "content": "09:58",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "DxgBy",
+                          "name": "expRow",
+                          "width": "fill_container",
+                          "fill": "#EEF4FF",
+                          "cornerRadius": 10,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#C9DAF8"
+                          },
+                          "layout": "vertical",
+                          "gap": 6,
+                          "padding": [
+                            10,
+                            12
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "KI7ri",
+                              "name": "expHead",
+                              "width": "fill_container",
+                              "justifyContent": "space_between",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "rXAjk",
+                                  "name": "expHeadLeft",
+                                  "fill": "#1E3A8A",
+                                  "content": "prj_002 // Арка 12",
+                                  "fontFamily": "JetBrains Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "jwBtU",
+                                  "name": "expHeadRight",
+                                  "fill": "#2563EB",
+                                  "content": "Развернуто",
+                                  "fontFamily": "JetBrains Mono",
+                                  "fontSize": 11,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "qv7DM",
+                              "name": "expMeta",
+                              "width": "fill_container",
+                              "justifyContent": "space_between",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "u6ZhW",
+                                  "name": "expMetaA",
+                                  "fill": "#475569",
+                                  "content": "Ответственный: teacher",
+                                  "fontFamily": "DM Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "500"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "SynVF",
+                                  "name": "expMetaB",
+                                  "fill": "#475569",
+                                  "content": "Последний расчет: 10:31",
+                                  "fontFamily": "DM Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "500"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "g2lBz",
+                                  "name": "expMetaC",
+                                  "fill": "#475569",
+                                  "content": "Версия: v2.4",
+                                  "fontFamily": "DM Sans",
+                                  "fontSize": 12,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "R9sZj",
+                              "name": "expActions",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "cxMHB",
+                                  "name": "expAct1",
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 999,
+                                  "stroke": {
+                                    "thickness": 1,
+                                    "fill": "#C8D9FA"
+                                  },
+                                  "padding": [
+                                    6,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "q8zLW",
+                                      "name": "expAct1Text",
+                                      "fill": "#1D4ED8",
+                                      "content": "Открыть 3D",
+                                      "fontFamily": "JetBrains Mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "700"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "5g6Ea",
+                                  "name": "expAct2",
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 999,
+                                  "stroke": {
+                                    "thickness": 1,
+                                    "fill": "#C8D9FA"
+                                  },
+                                  "padding": [
+                                    6,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "XB1zH",
+                                      "name": "expAct2Text",
+                                      "fill": "#1D4ED8",
+                                      "content": "Скачать отчет",
+                                      "fontFamily": "JetBrains Mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "700"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "ObtGA",
+                                  "name": "expAct3",
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 999,
+                                  "stroke": {
+                                    "thickness": 1,
+                                    "fill": "#C8D9FA"
+                                  },
+                                  "padding": [
+                                    6,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "JAiuD",
+                                      "name": "expAct3Text",
+                                      "fill": "#1D4ED8",
+                                      "content": "Комментарий",
+                                      "fontFamily": "JetBrains Mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "700"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "BvMSv",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Uywuu",
+                          "fill": "#E8F0FF",
+                          "cornerRadius": 999,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#C8D9FA"
+                          },
+                          "padding": [
+                            6,
+                            10
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "NSndv",
+                              "fill": "#1D4ED8",
+                              "content": "Загрузить",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "hNCAX",
+                          "fill": "#E8F0FF",
+                          "cornerRadius": 999,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#C8D9FA"
+                          },
+                          "padding": [
+                            6,
+                            10
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "gQAOd",
+                              "fill": "#1D4ED8",
+                              "content": "Расчет",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "kXbbb",
+                          "fill": "#E8F0FF",
+                          "cornerRadius": 999,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#C8D9FA"
+                          },
+                          "padding": [
+                            6,
+                            10
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "iMTSp",
+                              "fill": "#1D4ED8",
+                              "content": "Результат",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "lwg5m",
+                  "name": "panelRight2Light",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 18,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": 20,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "uevge",
+                      "fill": "#0F172A",
+                      "content": "Результаты и 3D",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Bk1r5",
+                      "fill": "#52617A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Мониторинг расчета, сравнение с эталоном и оперативный журнал выполнения.",
+                      "lineHeight": 1.4,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "65u5M",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "eRCvz",
+                          "width": "fill_container",
+                          "fill": "#F8FAFF",
+                          "cornerRadius": 12,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D7E2F4"
+                          },
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": 12,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "jNjsM",
+                              "fill": "#647DAA",
+                              "content": "УЗЛЫ",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "X1Qg7",
+                              "fill": "#0F172A",
+                              "content": "146",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 24,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "NXSN4",
+                          "width": "fill_container",
+                          "fill": "#F8FAFF",
+                          "cornerRadius": 12,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D7E2F4"
+                          },
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": 12,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "xNh6N",
+                              "fill": "#647DAA",
+                              "content": "СВЯЗИ",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "Cup4K",
+                              "fill": "#0F172A",
+                              "content": "312",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 24,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "QO5n4",
+                          "width": "fill_container",
+                          "fill": "#EAF2FF",
+                          "cornerRadius": 12,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#BDD2F4"
+                          },
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": 12,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "MHxos",
+                              "fill": "#1D4ED8",
+                              "content": "ПОГРЕШНОСТЬ",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "59Rex",
+                              "fill": "#1D4ED8",
+                              "content": "0.004",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 24,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "XN8y0",
+                      "fill": "#0F172A",
+                      "content": "Операционный журнал",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 16,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "r8QAW",
+                      "width": "fill_container",
+                      "fill": "#F8FAFF",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D7E2F4"
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "abz19",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "r4knl",
+                              "fill": "#64748B",
+                              "content": "10:42",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "2ovLP",
+                              "fill": "#166534",
+                              "content": "Расчет завершен успешно",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "4Bm4A",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "iIihn",
+                              "fill": "#64748B",
+                              "content": "10:36",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "5vkVJ",
+                              "fill": "#1D4ED8",
+                              "content": "Сравнение с эталоном: совпало",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "pGkXa",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "R2yyK",
+                              "fill": "#64748B",
+                              "content": "10:31",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "iU2NJ",
+                              "fill": "#334155",
+                              "content": "Запущен пересчет узлов",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "0FYrZ",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "rHxVk",
+                              "fill": "#64748B",
+                              "content": "10:29",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "aHXKF",
+                              "fill": "#334155",
+                              "content": "Проект загружен в контур",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "BOQL6",
+                      "name": "ctrlTitle",
+                      "fill": "#0F172A",
+                      "content": "Управление 3D-видом",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 16,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "74Gv2",
+                      "name": "ctrlWrap",
+                      "width": "fill_container",
+                      "fill": "#F8FAFF",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D7E2F4"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "j0ZsH",
+                          "name": "ctrlPreview",
+                          "width": "fill_container",
+                          "height": 96,
+                          "fill": {
+                            "type": "gradient",
+                            "gradientType": "linear",
+                            "enabled": true,
+                            "rotation": 180,
+                            "size": {
+                              "height": 1
+                            },
+                            "colors": [
+                              {
+                                "color": "#EAF2FF",
+                                "position": 0
+                              },
+                              {
+                                "color": "#F7FAFF",
+                                "position": 1
+                              }
+                            ]
+                          },
+                          "cornerRadius": 10,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D1E0F5"
+                          },
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "6I1xh",
+                              "name": "ctrlPreviewText",
+                              "fill": "#647DAA",
+                              "content": "Область 3D предпросмотра",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "MCTLu",
+                          "name": "ctrlRow1",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "TFp1W",
+                              "name": "ctrlLeft",
+                              "width": "fill_container",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 10,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "#D7E2F4"
+                              },
+                              "padding": [
+                                8,
+                                10
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "X3Y4U",
+                                  "name": "ctrlLeftText",
+                                  "fill": "#1E3A8A",
+                                  "content": "Повернуть ←",
+                                  "fontFamily": "JetBrains Mono",
+                                  "fontSize": 11,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "q73WK",
+                              "name": "ctrlRight",
+                              "width": "fill_container",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 10,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "#D7E2F4"
+                              },
+                              "padding": [
+                                8,
+                                10
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "aPGrs",
+                                  "name": "ctrlRightText",
+                                  "fill": "#1E3A8A",
+                                  "content": "Повернуть →",
+                                  "fontFamily": "JetBrains Mono",
+                                  "fontSize": 11,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "sj0f1",
+                          "name": "ctrlRow2",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "tdxe1",
+                              "name": "ctrlZoom",
+                              "width": "fill_container",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 10,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "#D7E2F4"
+                              },
+                              "padding": [
+                                8,
+                                10
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "zEkD9",
+                                  "name": "ctrlZoomText",
+                                  "fill": "#1E3A8A",
+                                  "content": "Масштаб ±",
+                                  "fontFamily": "JetBrains Mono",
+                                  "fontSize": 11,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "IG2vG",
+                              "name": "ctrlReset",
+                              "width": "fill_container",
+                              "fill": "#E8F0FF",
+                              "cornerRadius": 10,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "#C8D9FA"
+                              },
+                              "padding": [
+                                8,
+                                10
+                              ],
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "2u04s",
+                                  "name": "ctrlResetText",
+                                  "fill": "#1D4ED8",
+                                  "content": "Сбросить",
+                                  "fontFamily": "JetBrains Mono",
+                                  "fontSize": 11,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "exY3G",
+              "name": "modalRowV2",
+              "width": "fill_container",
+              "height": 220,
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "lmwsI",
+                  "name": "modalCreateProject",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Mn8EH",
+                      "name": "createTitle",
+                      "fill": "#0F172A",
+                      "content": "Модальное окно: Создать проект",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 16,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "TVy1t",
+                      "name": "createDesc",
+                      "fill": "#52617A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Заполните название и краткое описание перед запуском расчета.",
+                      "lineHeight": 1.4,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "WZLrU",
+                      "name": "createField1",
+                      "height": 40,
+                      "fill": "#F8FAFF",
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D7E2F4"
+                      },
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Q3joK",
+                          "fill": "#64748B",
+                          "content": "Название проекта",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 11,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "bIePa",
+                      "name": "createField2",
+                      "height": 40,
+                      "fill": "#F8FAFF",
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D7E2F4"
+                      },
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ayUly",
+                          "fill": "#64748B",
+                          "content": "Комментарий",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 11,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "aqD37",
+                      "name": "createActions",
+                      "width": "fill_container",
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "YHdIL",
+                          "name": "createCancel",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 10,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D7E2F4"
+                          },
+                          "padding": [
+                            8,
+                            12
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Jere8",
+                              "fill": "#334155",
+                              "content": "Отмена",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Kthk0",
+                          "name": "createSubmit",
+                          "fill": {
+                            "type": "gradient",
+                            "gradientType": "linear",
+                            "enabled": true,
+                            "rotation": 220,
+                            "size": {
+                              "height": 1
+                            },
+                            "colors": [
+                              {
+                                "color": "#1D4ED8",
+                                "position": 0
+                              },
+                              {
+                                "color": "#2563EB",
+                                "position": 1
+                              }
+                            ]
+                          },
+                          "cornerRadius": 10,
+                          "padding": [
+                            8,
+                            12
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "FhXAg",
+                              "fill": "#FFFFFF",
+                              "content": "Создать",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "IXdL5",
+                  "name": "modalReviewProject",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "NF3ly",
+                      "name": "reviewTitle",
+                      "fill": "#0F172A",
+                      "content": "Модальное окно: Ревью проекта",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 16,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "l1GTv",
+                      "name": "reviewDesc",
+                      "fill": "#52617A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Подтвердите статус проекта и оставьте комментарий для команды.",
+                      "lineHeight": 1.4,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "C2pgJ",
+                      "name": "reviewField1",
+                      "height": 40,
+                      "fill": "#F8FAFF",
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D7E2F4"
+                      },
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "vR1Lc",
+                          "fill": "#64748B",
+                          "content": "Статус: подтверждено",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 11,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "les4w",
+                      "name": "reviewField2",
+                      "height": 40,
+                      "fill": "#F8FAFF",
+                      "cornerRadius": 10,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D7E2F4"
+                      },
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "4WI5J",
+                          "fill": "#64748B",
+                          "content": "Комментарий преподавателя",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 11,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "toDe0",
+                      "name": "reviewActions",
+                      "width": "fill_container",
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "o87Fz",
+                          "name": "reviewDraft",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 10,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D7E2F4"
+                          },
+                          "padding": [
+                            8,
+                            12
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Xj60p",
+                              "fill": "#B45309",
+                              "content": "На доработку",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "9np9P",
+                          "name": "reviewApprove",
+                          "fill": "#E8F5E9",
+                          "cornerRadius": 10,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#B7E1C0"
+                          },
+                          "padding": [
+                            8,
+                            12
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "FvotM",
+                              "fill": "#166534",
+                              "content": "Подтвердить",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "90tbU",
+      "x": 5960,
+      "y": 80,
+      "name": "GERA Product Landing",
+      "width": 1440,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "#F8FAFF",
+            "position": 0
+          },
+          {
+            "color": "#EEF3FC",
+            "position": 1
+          }
+        ]
+      },
+      "layout": "vertical",
+      "gap": 28,
+      "padding": [
+        44,
+        56,
+        72,
+        56
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "XNHrS",
+          "name": "header",
+          "width": "fill_container",
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "zD10Z",
+              "name": "brandWrap",
+              "layout": "vertical",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vFWdv",
+                  "name": "brand",
+                  "fill": "#0F172A",
+                  "content": "GERA",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "uhPU5",
+                  "name": "brandSub",
+                  "fill": "#4B6B9B",
+                  "content": "Инженерные расчеты и 3D-визуализация",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "4B2f1",
+              "name": "headActions",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "9hTHD",
+                  "name": "headLink",
+                  "fill": "#46658E",
+                  "content": "Возможности",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "oGXv1",
+                  "name": "headCta",
+                  "fill": "#2563EB",
+                  "cornerRadius": 14,
+                  "padding": [
+                    12,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "7JEiT",
+                      "name": "headCtaText",
+                      "fill": "#FFFFFF",
+                      "content": "Войти",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "oJsKr",
+          "name": "hero",
+          "width": "fill_container",
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "9zwFf",
+              "name": "heroCopy",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 22,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "J0YK8",
+                  "name": "eyebrow",
+                  "fill": "#2563EB",
+                  "content": "ЕДИНЫЙ ПРОДУКТОВЫЙ КОНТУР",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "700",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "text",
+                  "id": "jJKc4",
+                  "name": "heroTitle",
+                  "fill": "#0F172A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Платформа для инженерной команды: от проекта до понятного проверенного результата",
+                  "lineHeight": 1.04,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 58,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "cBDvx",
+                  "name": "heroBody",
+                  "fill": "#5C6F91",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "GERA помогает создавать инженерные проекты, запускать расчеты, получать 3D-визуализацию и передавать результат на ревью без переключения между инструментами.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 19,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "cvafR",
+                  "name": "heroActions",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "dc8Kx",
+                      "name": "ctaPrimary",
+                      "fill": "#2563EB",
+                      "cornerRadius": 16,
+                      "padding": [
+                        14,
+                        22
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "65Va3",
+                          "name": "ctaPrimaryText",
+                          "fill": "#FFFFFF",
+                          "content": "Войти и открыть проекты",
+                          "fontFamily": "DM Sans",
+                          "fontSize": 16,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "UoNsW",
+                      "name": "ctaGhost",
+                      "cornerRadius": 16,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#C9D8F1"
+                      },
+                      "padding": [
+                        14,
+                        22
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "9Yj8j",
+                          "name": "ctaGhostText",
+                          "fill": "#35558A",
+                          "content": "Как это работает",
+                          "fontFamily": "DM Sans",
+                          "fontSize": 16,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "e6OlJ",
+                  "name": "proofRow",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Ql0OK",
+                      "name": "p1",
+                      "fill": "#F5F8FF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D6E0F3"
+                      },
+                      "padding": [
+                        9,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "vzyKE",
+                          "name": "p1t",
+                          "fill": "#3F5F91",
+                          "content": "Единый login",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "oMwgp",
+                      "name": "p2",
+                      "fill": "#F5F8FF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D6E0F3"
+                      },
+                      "padding": [
+                        9,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GtDgw",
+                          "name": "p2t",
+                          "fill": "#3F5F91",
+                          "content": "Статусы расчета",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "fGDxL",
+                      "name": "p3",
+                      "fill": "#F5F8FF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D6E0F3"
+                      },
+                      "padding": [
+                        9,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nUSuN",
+                          "name": "p3t",
+                          "fill": "#3F5F91",
+                          "content": "3D-визуализация",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "6j6K2",
+                      "name": "p4",
+                      "fill": "#F5F8FF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D6E0F3"
+                      },
+                      "padding": [
+                        9,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "7dX9g",
+                          "name": "p4t",
+                          "fill": "#3F5F91",
+                          "content": "Ревью результата",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "QKb3X",
+          "name": "workflow",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "cornerRadius": 28,
+          "stroke": {
+            "thickness": 1,
+            "fill": "#D9E4F6"
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "Maf61",
+              "name": "workflowLabel",
+              "fill": "#2563EB",
+              "content": "КАК РАБОТАЕТ GERA",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 12,
+              "fontWeight": "700",
+              "letterSpacing": 1
+            },
+            {
+              "type": "text",
+              "id": "Hndc4",
+              "name": "workflowTitle",
+              "fill": "#0F172A",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Один понятный пользовательский путь вместо технической панели",
+              "fontFamily": "DM Sans",
+              "fontSize": 34,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "RV9c5",
+              "name": "workflowGrid",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "amAO5",
+                  "name": "step1",
+                  "width": "fill_container",
+                  "fill": "#F8FAFF",
+                  "cornerRadius": 20,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 18,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "w7WIi",
+                      "name": "step1n",
+                      "fill": "#2563EB",
+                      "content": "01",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "UVFg5",
+                      "name": "step1t",
+                      "fill": "#0F172A",
+                      "content": "Войти",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "UfJoF",
+                      "name": "step1b",
+                      "fill": "#5C6F91",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Пользователь входит в систему и сразу попадает в свой рабочий контур.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "9LRVE",
+                  "name": "step2",
+                  "width": "fill_container",
+                  "fill": "#F8FAFF",
+                  "cornerRadius": 20,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 18,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "iyEjJ",
+                      "name": "step2n",
+                      "fill": "#2563EB",
+                      "content": "02",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "F5qlz",
+                      "name": "step2t",
+                      "fill": "#0F172A",
+                      "content": "Создать проект",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "m5awX",
+                      "name": "step2b",
+                      "fill": "#5C6F91",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Быстрый старт помогает завести первый проект без пустого экрана и лишних действий.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "7rEhv",
+                  "name": "step3",
+                  "width": "fill_container",
+                  "fill": "#F8FAFF",
+                  "cornerRadius": 20,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 18,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dlR3q",
+                      "name": "step3n",
+                      "fill": "#2563EB",
+                      "content": "03",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "OcGjx",
+                      "name": "step3t",
+                      "fill": "#0F172A",
+                      "content": "Получить результат",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "pgs0d",
+                      "name": "step3b",
+                      "fill": "#5C6F91",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "После расчета система показывает 3D-визуализацию, сводку и готовит результат к ревью.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "31G5F",
+          "name": "finalCta",
+          "width": "fill_container",
+          "fill": "#0F172A",
+          "cornerRadius": 28,
+          "padding": [
+            26,
+            28
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "8qlDc",
+              "name": "finalCopy",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": 760,
+              "content": "Готовы запустить первый инженерный расчет в GERA?",
+              "fontFamily": "DM Sans",
+              "fontSize": 30,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "AncwH",
+              "name": "finalBtn",
+              "fill": "#2563EB",
+              "cornerRadius": 16,
+              "padding": [
+                14,
+                22
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "FRQuI",
+                  "name": "finalBtnText",
+                  "fill": "#FFFFFF",
+                  "content": "Войти в продукт",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 16,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "0XS0h",
+      "x": 7520,
+      "y": 80,
+      "name": "GERA Product Landing V2",
+      "width": 1440,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "#F8FAFF",
+            "position": 0
+          },
+          {
+            "color": "#EEF3FC",
+            "position": 1
+          }
+        ]
+      },
+      "layout": "vertical",
+      "gap": 28,
+      "padding": [
+        44,
+        56,
+        72,
+        56
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "9f1ce",
+          "name": "header",
+          "width": "fill_container",
+          "padding": [
+            0,
+            0,
+            10,
+            0
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "WWdWM",
+              "name": "brandWrap",
+              "layout": "vertical",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "uU7u3",
+                  "name": "brand",
+                  "fill": "#0F172A",
+                  "content": "GERA",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "ltAw1",
+                  "name": "brandSub",
+                  "fill": "#4B6B9B",
+                  "content": "Инженерные расчеты и 3D-визуализация",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "cmEbQ",
+              "name": "headActions",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Uud8Q",
+                  "x": 0,
+                  "y": 12,
+                  "name": "headLink",
+                  "enabled": false,
+                  "fill": "#46658E",
+                  "content": "Возможности",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "le0LK",
+                  "name": "headCta",
+                  "fill": "#2563EB",
+                  "cornerRadius": 14,
+                  "padding": [
+                    12,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Mjcbo",
+                      "name": "headCtaText",
+                      "fill": "#FFFFFF",
+                      "content": "Войти",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "desap",
+          "name": "hero",
+          "width": "fill_container",
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "n07OY",
+              "name": "heroCopy",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 28,
+              "padding": [
+                12,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "J2HOp",
+                  "name": "eyebrow",
+                  "fill": "#2563EB",
+                  "content": "PRODUCT OVERVIEW",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "600",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "text",
+                  "id": "lCoYA",
+                  "name": "heroTitle",
+                  "fill": "#18181B",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Инженерная платформа для расчета, визуализации и проверки результата",
+                  "lineHeight": 1.02,
+                  "fontFamily": "Inter",
+                  "fontSize": 52,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "LSL4M",
+                  "name": "heroBody",
+                  "fill": "#71717A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "GERA объединяет рабочие проекты, вычислительный контур и 3D-представление результата в одной системе для инженерных команд и учебных контуров.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 17
+                },
+                {
+                  "type": "frame",
+                  "id": "Papc5",
+                  "name": "heroActions",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "6TUzx",
+                      "name": "ctaPrimary",
+                      "fill": "#2563EB",
+                      "cornerRadius": 12,
+                      "padding": [
+                        12,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "yD7Cf",
+                          "name": "ctaPrimaryText",
+                          "fill": "#FFFFFF",
+                          "content": "Войти в систему",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "b0DA2",
+                      "name": "ctaGhost",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "thickness": 1.5,
+                        "fill": "#E4E4E7"
+                      },
+                      "padding": [
+                        12,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "NEZrk",
+                          "name": "ctaGhostText",
+                          "fill": "#18181B",
+                          "content": "Запросить демонстрацию",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "lZedQ",
+                  "name": "proofRow",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "7Qtv8",
+                      "name": "p1",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1.5,
+                        "fill": "#E4E4E7"
+                      },
+                      "padding": [
+                        8,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "TsPhN",
+                          "name": "p1t",
+                          "fill": "#71717A",
+                          "content": "Единый login",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "GqbWr",
+                      "name": "p2",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1.5,
+                        "fill": "#E4E4E7"
+                      },
+                      "padding": [
+                        8,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "I1iE3",
+                          "name": "p2t",
+                          "fill": "#71717A",
+                          "content": "Статусы расчета",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hZIxX",
+                      "name": "p3",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1.5,
+                        "fill": "#E4E4E7"
+                      },
+                      "padding": [
+                        8,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n2UFE",
+                          "name": "p3t",
+                          "fill": "#71717A",
+                          "content": "3D-визуализация",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "gC5Ym",
+                      "name": "p4",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1.5,
+                        "fill": "#E4E4E7"
+                      },
+                      "padding": [
+                        8,
+                        14
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "5djRW",
+                          "name": "p4t",
+                          "fill": "#71717A",
+                          "content": "Ревью результата",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "L6NdG",
+          "name": "workflow",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "cornerRadius": 24,
+          "stroke": {
+            "thickness": 1.5,
+            "fill": "#E4E4E7"
+          },
+          "layout": "vertical",
+          "gap": 18,
+          "padding": 28,
+          "children": [
+            {
+              "type": "text",
+              "id": "WqZmg",
+              "name": "workflowLabel",
+              "fill": "#2563EB",
+              "content": "КАК РАБОТАЕТ GERA",
+              "fontFamily": "Inter",
+              "fontSize": 12,
+              "fontWeight": "600",
+              "letterSpacing": 1
+            },
+            {
+              "type": "text",
+              "id": "2Dk59",
+              "name": "workflowTitle",
+              "fill": "#18181B",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Три шага до первого проверяемого результата",
+              "fontFamily": "Inter",
+              "fontSize": 32,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "XcC6j",
+              "name": "workflowGrid",
+              "width": "fill_container",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "V4dDn",
+                  "name": "step1",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1.5,
+                    "fill": "#E4E4E7"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 20,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "lsbkp",
+                      "name": "step1n",
+                      "fill": "#2563EB",
+                      "content": "01",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "zX4WW",
+                      "name": "step1t",
+                      "fill": "#18181B",
+                      "content": "Войти",
+                      "fontFamily": "Inter",
+                      "fontSize": 20,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "N7HkV",
+                      "name": "step1b",
+                      "fill": "#71717A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Пользователь входит в систему и сразу попадает в свой рабочий контур.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "Inter",
+                      "fontSize": 14
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BnI0Y",
+                  "name": "step2",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1.5,
+                    "fill": "#E4E4E7"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 20,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "lBnil",
+                      "name": "step2n",
+                      "fill": "#2563EB",
+                      "content": "02",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "suKG1",
+                      "name": "step2t",
+                      "fill": "#18181B",
+                      "content": "Создать проект",
+                      "fontFamily": "Inter",
+                      "fontSize": 20,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Ji3UT",
+                      "name": "step2b",
+                      "fill": "#71717A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Быстрый старт помогает завести первый проект без пустого экрана и лишних действий.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "Inter",
+                      "fontSize": 14
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "WkLUz",
+                  "name": "step3",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1.5,
+                    "fill": "#E4E4E7"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 20,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zGjnS",
+                      "name": "step3n",
+                      "fill": "#2563EB",
+                      "content": "03",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "X5Jkf",
+                      "name": "step3t",
+                      "fill": "#18181B",
+                      "content": "Получить результат",
+                      "fontFamily": "Inter",
+                      "fontSize": 20,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "yZPUG",
+                      "name": "step3b",
+                      "fill": "#71717A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "После расчета система показывает 3D-визуализацию, сводку и готовит результат к ревью.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "Inter",
+                      "fontSize": 14
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "4WP3n",
+          "name": "finalCta",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "cornerRadius": 24,
+          "stroke": {
+            "thickness": 1.5,
+            "fill": "#E4E4E7"
+          },
+          "padding": [
+            24,
+            26
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "d6BPJ",
+              "name": "finalCopy",
+              "fill": "#18181B",
+              "textGrowth": "fixed-width",
+              "width": 760,
+              "content": "Готовы подключить GERA к рабочему процессу вашей команды?",
+              "fontFamily": "Inter",
+              "fontSize": 28,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "qlck9",
+              "name": "finalBtn",
+              "fill": "#2563EB",
+              "cornerRadius": 12,
+              "padding": [
+                12,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "SErO2",
+                  "name": "finalBtnText",
+                  "fill": "#FFFFFF",
+                  "content": "Войти в продукт",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "56NhL",
+      "x": 9080,
+      "y": 80,
+      "name": "Student Workspace Basic",
+      "width": 1440,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "#F7FAFF",
+            "position": 0
+          },
+          {
+            "color": "#EEF3FC",
+            "position": 1
+          }
+        ]
+      },
+      "layout": "vertical",
+      "gap": 16,
+      "padding": [
+        32,
+        36,
+        36,
+        36
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "kRVyq",
+          "name": "header",
+          "width": "fill_container",
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "NFqBM",
+              "name": "brandWrap",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "48OcL",
+                  "name": "brand",
+                  "fill": "#0F172A",
+                  "content": "GERA / STUDENT",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "NHtD5",
+                  "name": "sub",
+                  "fill": "#5F78A3",
+                  "content": "Рабочее пространство студента: проект, расчет и результат",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "U8I1q",
+              "name": "headActions",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ZXjnp",
+                  "name": "roleChip",
+                  "fill": "#EAF2FF",
+                  "cornerRadius": 999,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#C7D8F6"
+                  },
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zNzGx",
+                      "name": "roleText",
+                      "fill": "#315B9A",
+                      "content": "роль: студент",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "zPu9x",
+                  "name": "logout",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 14,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "padding": [
+                    10,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "r08HC",
+                      "name": "logoutText",
+                      "fill": "#23406E",
+                      "content": "Выход",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "3jiIy",
+          "name": "main",
+          "width": "fill_container",
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "T9VQ5",
+              "name": "left",
+              "width": 300,
+              "fill": "#FFFFFF",
+              "cornerRadius": 20,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9E4F6"
+              },
+              "layout": "vertical",
+              "gap": 14,
+              "padding": 18,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "f7Slu",
+                  "name": "projectA",
+                  "width": "fill_container",
+                  "fill": "#F8FAFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "XUxYM",
+                      "name": "projectATag",
+                      "fill": "#2563EB",
+                      "content": "ТЕКУЩИЙ",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "6HtOH",
+                      "name": "projectATitle",
+                      "fill": "#0F172A",
+                      "content": "Арка 12",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "JxaOL",
+                      "name": "projectABody",
+                      "fill": "#5C6F91",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Готов к запуску расчета. Последнее изменение сегодня в 10:40.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "LJXJC",
+                  "name": "projectB",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "1Cb9I",
+                      "name": "projectBTag",
+                      "fill": "#6B7D99",
+                      "content": "ЧЕРНОВИК",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "ayQKs",
+                      "name": "projectBTitle",
+                      "fill": "#0F172A",
+                      "content": "Балка 04",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "t7vke",
+                      "name": "projectBBody",
+                      "fill": "#5C6F91",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Можно вернуться к редактированию параметров и продолжить позже.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FgjPQ",
+                  "name": "leftTop",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "YLBK5",
+                      "name": "leftTopText",
+                      "fill": "#0F172A",
+                      "content": "Мои проекты",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 24,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Fio39",
+                      "name": "collapse",
+                      "fill": "#F8FAFF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D9E4F6"
+                      },
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "PXNVI",
+                          "name": "collapseText",
+                          "fill": "#315B9A",
+                          "content": "Скрыть",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "F9Gz8",
+                  "name": "actions",
+                  "width": "fill_container",
+                  "fill": "#F8FAFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nGNv1",
+                      "name": "actionsTag",
+                      "fill": "#6B7D99",
+                      "content": "УПРАВЛЕНИЕ",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ocxqT",
+                      "name": "actionsGrid",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "JsUtO",
+                          "name": "a1",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 14,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D9E4F6"
+                          },
+                          "padding": [
+                            12,
+                            14
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "dNP06",
+                              "name": "a1t",
+                              "fill": "#0F172A",
+                              "content": "Создать проект",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 14,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "XgcIm",
+                          "name": "a2",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 14,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D9E4F6"
+                          },
+                          "padding": [
+                            12,
+                            14
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Zw5gd",
+                              "name": "a2t",
+                              "fill": "#0F172A",
+                              "content": "Открыть проект",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 14,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "iJFRP",
+                          "name": "a3",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 14,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D9E4F6"
+                          },
+                          "padding": [
+                            12,
+                            14
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "WOPGU",
+                              "name": "a3t",
+                              "fill": "#0F172A",
+                              "content": "Импортировать",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 14,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "cTk45",
+                          "name": "a4",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 14,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D9E4F6"
+                          },
+                          "padding": [
+                            12,
+                            14
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "cumdA",
+                              "name": "a4t",
+                              "fill": "#0F172A",
+                              "content": "Экспортировать",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 14,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "JGsHy",
+                          "name": "a5",
+                          "width": "fill_container",
+                          "fill": "#EAF2FF",
+                          "cornerRadius": 14,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#BDD2F4"
+                          },
+                          "padding": [
+                            12,
+                            14
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "rOqGO",
+                              "name": "a5t",
+                              "fill": "#1E4ED8",
+                              "content": "Запустить расчет",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 14,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "WFmte",
+              "name": "right",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 20,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9E4F6"
+              },
+              "layout": "vertical",
+              "gap": 14,
+              "padding": 22,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "K1pJb",
+                  "name": "rightTitle",
+                  "fill": "#0F172A",
+                  "content": "Рабочая область проекта",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 30,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "YwvZj",
+                  "name": "rightBody",
+                  "fill": "#5C6F91",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Основная зона для редактирования, запуска расчета и просмотра результата. Она специально оставлена максимально широкой, а блок проектов можно свернуть.",
+                  "lineHeight": 1.45,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "7IxvL",
+                  "name": "workspace",
+                  "width": "fill_container",
+                  "height": 520,
+                  "fill": "#F8FAFF",
+                  "cornerRadius": 18,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "layout": "vertical",
+                  "gap": 14,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "OWfID",
+                      "name": "workspaceTag",
+                      "fill": "#2563EB",
+                      "content": "WORK AREA",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "x9vow",
+                      "name": "workspaceTitle",
+                      "fill": "#0F172A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Откройте проект или создайте новый, чтобы начать работу",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 30,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Pp7GA",
+                      "name": "workspaceBody",
+                      "fill": "#5C6F91",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Если это первый вход, рабочая область помогает быстро начать: выбрать существующий проект или создать новый без перехода в технические режимы.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vGLqC",
+                      "name": "workspaceActions",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "dcDjT",
+                          "name": "wa1",
+                          "fill": "#2563EB",
+                          "cornerRadius": 14,
+                          "padding": [
+                            12,
+                            18
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tihM4",
+                              "name": "wa1t",
+                              "fill": "#FFFFFF",
+                              "content": "Открыть проект",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 14,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "EUN2r",
+                          "name": "wa2",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 14,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#CAD8F1"
+                          },
+                          "padding": [
+                            12,
+                            18
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "2RZ9F",
+                              "name": "wa2t",
+                              "fill": "#35558A",
+                              "content": "Запустить расчет",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 14,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "7G7UH",
+                      "name": "hints",
+                      "width": "fill_container",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "zq0Hm",
+                          "name": "hintCreate",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 16,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D9E4F6"
+                          },
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": 18,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ajxOX",
+                              "name": "hintCreateTag",
+                              "fill": "#2563EB",
+                              "content": "СТАРТ 01",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "700",
+                              "letterSpacing": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "gbTgz",
+                              "name": "hintCreateTitle",
+                              "fill": "#0F172A",
+                              "content": "Создать проект",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 20,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "pFITg",
+                              "name": "hintCreateBody",
+                              "fill": "#5C6F91",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Для первого входа система предлагает начать с нового проекта и сразу перейти к рабочей области модели.",
+                              "lineHeight": 1.45,
+                              "fontFamily": "DM Sans",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "rPrkW",
+                          "name": "hintOpen",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 16,
+                          "stroke": {
+                            "thickness": 1,
+                            "fill": "#D9E4F6"
+                          },
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": 18,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "TEWI2",
+                              "name": "hintOpenTag",
+                              "fill": "#2563EB",
+                              "content": "СТАРТ 02",
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 12,
+                              "fontWeight": "700",
+                              "letterSpacing": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "PkeGH",
+                              "name": "hintOpenTitle",
+                              "fill": "#0F172A",
+                              "content": "Открыть проект",
+                              "fontFamily": "DM Sans",
+                              "fontSize": 20,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "y6Vtz",
+                              "name": "hintOpenBody",
+                              "fill": "#5C6F91",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Если работа уже начата, можно быстро вернуться к последнему проекту и продолжить расчет или редактирование.",
+                              "lineHeight": 1.45,
+                              "fontFamily": "DM Sans",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }

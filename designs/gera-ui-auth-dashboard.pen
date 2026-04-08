@@ -3555,7 +3555,8 @@
                   "content": "GERA объединяет рабочие проекты, вычислительный контур и 3D-представление результата в одной системе для инженерных команд и учебных контуров.",
                   "lineHeight": 1.5,
                   "fontFamily": "Inter",
-                  "fontSize": 17
+                  "fontSize": 17,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "frame",
@@ -3825,7 +3826,8 @@
                       "content": "Пользователь входит в систему и сразу попадает в свой рабочий контур.",
                       "lineHeight": 1.45,
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -3874,7 +3876,8 @@
                       "content": "Быстрый старт помогает завести первый проект без пустого экрана и лишних действий.",
                       "lineHeight": 1.45,
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -3923,7 +3926,8 @@
                       "content": "После расчета система показывает 3D-визуализацию, сводку и готовит результат к ревью.",
                       "lineHeight": 1.45,
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -4068,57 +4072,289 @@
               "children": [
                 {
                   "type": "frame",
-                  "id": "ZXjnp",
-                  "name": "roleChip",
-                  "fill": "#EAF2FF",
-                  "cornerRadius": 999,
-                  "stroke": {
-                    "thickness": 1,
-                    "fill": "#C7D8F6"
-                  },
-                  "padding": [
-                    10,
-                    14
-                  ],
+                  "id": "xs67o",
+                  "name": "avatarWrap",
+                  "gap": 12,
+                  "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "zNzGx",
-                      "name": "roleText",
-                      "fill": "#315B9A",
-                      "content": "роль: студент",
-                      "fontFamily": "JetBrains Mono",
-                      "fontSize": 12,
-                      "fontWeight": "700"
+                      "type": "frame",
+                      "id": "0ccJY",
+                      "name": "avatar",
+                      "width": 44,
+                      "height": 44,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D9E4F6"
+                      },
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "BbWKX",
+                          "name": "avatarText",
+                          "fill": "#23406E",
+                          "content": "ST",
+                          "fontFamily": "DM Sans",
+                          "fontSize": 14,
+                          "fontWeight": "700"
+                        }
+                      ]
                     }
                   ]
-                },
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "CIRuE",
+          "name": "toolbar",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "cornerRadius": 18,
+          "stroke": {
+            "thickness": 1,
+            "fill": "#D9E4F6"
+          },
+          "gap": 10,
+          "padding": [
+            12,
+            14
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "HFfqD",
+              "name": "primary",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
                 {
                   "type": "frame",
-                  "id": "zPu9x",
-                  "name": "logout",
-                  "fill": "#FFFFFF",
-                  "cornerRadius": 14,
+                  "id": "pvjE8",
+                  "name": "a1",
+                  "fill": "#F8FAFF",
+                  "cornerRadius": 12,
                   "stroke": {
                     "thickness": 1,
                     "fill": "#D9E4F6"
                   },
                   "padding": [
                     10,
-                    16
+                    12
                   ],
                   "children": [
                     {
                       "type": "text",
-                      "id": "r08HC",
-                      "name": "logoutText",
-                      "fill": "#23406E",
-                      "content": "Выход",
+                      "id": "uyIu1",
+                      "name": "a1t",
+                      "fill": "#315B9A",
+                      "content": "＋",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "2Qn1j",
+                      "name": "a1l",
+                      "fill": "#0F172A",
+                      "content": "Создать",
                       "fontFamily": "DM Sans",
                       "fontSize": 14,
                       "fontWeight": "700"
                     }
                   ]
+                },
+                {
+                  "type": "frame",
+                  "id": "6w4vp",
+                  "name": "a2",
+                  "fill": "#F8FAFF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "padding": [
+                    10,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "YB2wg",
+                      "name": "a2t",
+                      "fill": "#315B9A",
+                      "content": "▣",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "OwCmM",
+                      "name": "a2l",
+                      "fill": "#0F172A",
+                      "content": "Открыть",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "NwgIe",
+                  "name": "a3",
+                  "fill": "#EAF2FF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#BDD2F4"
+                  },
+                  "padding": [
+                    10,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xdXUM",
+                      "name": "a3t",
+                      "fill": "#1E4ED8",
+                      "content": "▶",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "DGpjc",
+                      "name": "a3l",
+                      "fill": "#1E4ED8",
+                      "content": "Расчет",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wGnYU",
+              "name": "secondary",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "CySeG",
+                  "name": "a4",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "padding": [
+                    10,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "sAX5a",
+                      "name": "a4t",
+                      "fill": "#5F78A3",
+                      "content": "⇪",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "5B7GV",
+                      "name": "a4l",
+                      "fill": "#23406E",
+                      "content": "Импорт",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "VhmCB",
+                  "name": "a5",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#D9E4F6"
+                  },
+                  "padding": [
+                    10,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "gdfp3",
+                      "name": "a5t",
+                      "fill": "#5F78A3",
+                      "content": "⇩",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "dgRCp",
+                      "name": "a5l",
+                      "fill": "#23406E",
+                      "content": "Экспорт",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "JQVP8",
+              "name": "overflow",
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9E4F6"
+              },
+              "padding": [
+                10,
+                12
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "152EJ",
+                  "name": "overflowText",
+                  "fill": "#23406E",
+                  "content": "⋯ Еще",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "700"
                 }
               ]
             }
@@ -4146,6 +4382,53 @@
               "gap": 14,
               "padding": 18,
               "children": [
+                {
+                  "type": "frame",
+                  "id": "FgjPQ",
+                  "name": "leftTop",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "YLBK5",
+                      "name": "leftTopText",
+                      "fill": "#0F172A",
+                      "content": "Мои проекты",
+                      "fontFamily": "DM Sans",
+                      "fontSize": 24,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Fio39",
+                      "name": "collapse",
+                      "fill": "#F8FAFF",
+                      "cornerRadius": 999,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#D9E4F6"
+                      },
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "PXNVI",
+                          "name": "collapseText",
+                          "fill": "#315B9A",
+                          "content": "Скрыть",
+                          "fontFamily": "JetBrains Mono",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                },
                 {
                   "type": "frame",
                   "id": "f7Slu",
@@ -4245,231 +4528,6 @@
                       "fontFamily": "DM Sans",
                       "fontSize": 14,
                       "fontWeight": "normal"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "FgjPQ",
-                  "name": "leftTop",
-                  "width": "fill_container",
-                  "justifyContent": "space_between",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "YLBK5",
-                      "name": "leftTopText",
-                      "fill": "#0F172A",
-                      "content": "Мои проекты",
-                      "fontFamily": "DM Sans",
-                      "fontSize": 24,
-                      "fontWeight": "700"
-                    },
-                    {
-                      "type": "frame",
-                      "id": "Fio39",
-                      "name": "collapse",
-                      "fill": "#F8FAFF",
-                      "cornerRadius": 999,
-                      "stroke": {
-                        "thickness": 1,
-                        "fill": "#D9E4F6"
-                      },
-                      "padding": [
-                        8,
-                        12
-                      ],
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "PXNVI",
-                          "name": "collapseText",
-                          "fill": "#315B9A",
-                          "content": "Скрыть",
-                          "fontFamily": "JetBrains Mono",
-                          "fontSize": 12,
-                          "fontWeight": "700"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "F9Gz8",
-                  "name": "actions",
-                  "width": "fill_container",
-                  "fill": "#F8FAFF",
-                  "cornerRadius": 16,
-                  "stroke": {
-                    "thickness": 1,
-                    "fill": "#D9E4F6"
-                  },
-                  "layout": "vertical",
-                  "gap": 10,
-                  "padding": 14,
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "nGNv1",
-                      "name": "actionsTag",
-                      "fill": "#6B7D99",
-                      "content": "УПРАВЛЕНИЕ",
-                      "fontFamily": "JetBrains Mono",
-                      "fontSize": 12,
-                      "fontWeight": "700",
-                      "letterSpacing": 1
-                    },
-                    {
-                      "type": "frame",
-                      "id": "ocxqT",
-                      "name": "actionsGrid",
-                      "width": "fill_container",
-                      "layout": "vertical",
-                      "gap": 8,
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "JsUtO",
-                          "name": "a1",
-                          "width": "fill_container",
-                          "fill": "#FFFFFF",
-                          "cornerRadius": 14,
-                          "stroke": {
-                            "thickness": 1,
-                            "fill": "#D9E4F6"
-                          },
-                          "padding": [
-                            12,
-                            14
-                          ],
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "dNP06",
-                              "name": "a1t",
-                              "fill": "#0F172A",
-                              "content": "Создать проект",
-                              "fontFamily": "DM Sans",
-                              "fontSize": 14,
-                              "fontWeight": "700"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "XgcIm",
-                          "name": "a2",
-                          "width": "fill_container",
-                          "fill": "#FFFFFF",
-                          "cornerRadius": 14,
-                          "stroke": {
-                            "thickness": 1,
-                            "fill": "#D9E4F6"
-                          },
-                          "padding": [
-                            12,
-                            14
-                          ],
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "Zw5gd",
-                              "name": "a2t",
-                              "fill": "#0F172A",
-                              "content": "Открыть проект",
-                              "fontFamily": "DM Sans",
-                              "fontSize": 14,
-                              "fontWeight": "700"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "iJFRP",
-                          "name": "a3",
-                          "width": "fill_container",
-                          "fill": "#FFFFFF",
-                          "cornerRadius": 14,
-                          "stroke": {
-                            "thickness": 1,
-                            "fill": "#D9E4F6"
-                          },
-                          "padding": [
-                            12,
-                            14
-                          ],
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "WOPGU",
-                              "name": "a3t",
-                              "fill": "#0F172A",
-                              "content": "Импортировать",
-                              "fontFamily": "DM Sans",
-                              "fontSize": 14,
-                              "fontWeight": "700"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "cTk45",
-                          "name": "a4",
-                          "width": "fill_container",
-                          "fill": "#FFFFFF",
-                          "cornerRadius": 14,
-                          "stroke": {
-                            "thickness": 1,
-                            "fill": "#D9E4F6"
-                          },
-                          "padding": [
-                            12,
-                            14
-                          ],
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "cumdA",
-                              "name": "a4t",
-                              "fill": "#0F172A",
-                              "content": "Экспортировать",
-                              "fontFamily": "DM Sans",
-                              "fontSize": 14,
-                              "fontWeight": "700"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "JGsHy",
-                          "name": "a5",
-                          "width": "fill_container",
-                          "fill": "#EAF2FF",
-                          "cornerRadius": 14,
-                          "stroke": {
-                            "thickness": 1,
-                            "fill": "#BDD2F4"
-                          },
-                          "padding": [
-                            12,
-                            14
-                          ],
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "rOqGO",
-                              "name": "a5t",
-                              "fill": "#1E4ED8",
-                              "content": "Запустить расчет",
-                              "fontFamily": "DM Sans",
-                              "fontSize": 14,
-                              "fontWeight": "700"
-                            }
-                          ]
-                        }
-                      ]
                     }
                   ]
                 }
@@ -4735,6 +4793,451 @@
                       ]
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "e0LWB",
+      "x": 10600,
+      "y": 80,
+      "name": "Student Sidebar Collapsed",
+      "width": 96,
+      "height": 520,
+      "fill": "#FFFFFF",
+      "cornerRadius": 20,
+      "stroke": {
+        "thickness": 1,
+        "fill": "#D9E4F6"
+      },
+      "layout": "vertical",
+      "gap": 12,
+      "padding": [
+        16,
+        12
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "rHWRC",
+          "name": "iconTop",
+          "width": "fill_container",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "7mKBv",
+              "name": "iconWrap",
+              "width": 40,
+              "height": 40,
+              "fill": "#F8FAFF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9E4F6"
+              },
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "G0jSU",
+                  "name": "iconText",
+                  "fill": "#315B9A",
+                  "content": "▤",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 16,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Omgop",
+          "name": "expand",
+          "width": "fill_container",
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "uDT2M",
+              "name": "expandBtn",
+              "width": 40,
+              "height": 40,
+              "fill": "#EAF2FF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#BDD2F4"
+              },
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "zBY0T",
+                  "name": "expandText",
+                  "fill": "#1E4ED8",
+                  "content": "→",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 16,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "3Wzrl",
+      "x": 10600,
+      "y": 640,
+      "name": "Create Project Modal",
+      "width": 560,
+      "fill": "#FFFFFF",
+      "cornerRadius": 24,
+      "stroke": {
+        "thickness": 1,
+        "fill": "#D9E4F6"
+      },
+      "layout": "vertical",
+      "gap": 18,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "BFh6l",
+          "name": "modalTag",
+          "fill": "#2563EB",
+          "content": "НОВЫЙ ПРОЕКТ",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 12,
+          "fontWeight": "700",
+          "letterSpacing": 1
+        },
+        {
+          "type": "text",
+          "id": "j9ESr",
+          "name": "modalTitle",
+          "fill": "#0F172A",
+          "content": "Создать проект",
+          "fontFamily": "DM Sans",
+          "fontSize": 32,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "LVZz3",
+          "name": "modalBody",
+          "fill": "#5C6F91",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Укажите название проекта и, при необходимости, короткое описание. После создания рабочая область очистится под новый проект.",
+          "lineHeight": 1.5,
+          "fontFamily": "DM Sans",
+          "fontSize": 15,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "Wwf49",
+          "name": "fieldName",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "text",
+              "id": "1ewSi",
+              "name": "fieldNameLabel",
+              "fill": "#0F172A",
+              "content": "Название проекта",
+              "fontFamily": "DM Sans",
+              "fontSize": 14,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "hNjZV",
+              "name": "fieldNameInput",
+              "width": "fill_container",
+              "fill": "#F8FAFF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9E4F6"
+              },
+              "padding": [
+                14,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "rceXm",
+                  "name": "fieldNameInputText",
+                  "fill": "#8A9AB6",
+                  "content": "Обязательное поле",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "IuT6j",
+          "name": "fieldDesc",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "text",
+              "id": "1x8Km",
+              "name": "fieldDescLabel",
+              "fill": "#0F172A",
+              "content": "Описание",
+              "fontFamily": "DM Sans",
+              "fontSize": 14,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "zL4LW",
+              "name": "fieldDescInput",
+              "width": "fill_container",
+              "height": 96,
+              "fill": "#F8FAFF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9E4F6"
+              },
+              "padding": [
+                14,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "KoTDs",
+                  "name": "fieldDescInputText",
+                  "fill": "#8A9AB6",
+                  "content": "Необязательное поле",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "J1DUy",
+          "name": "modalActions",
+          "width": "fill_container",
+          "gap": 12,
+          "justifyContent": "end",
+          "children": [
+            {
+              "type": "frame",
+              "id": "xUqa3",
+              "name": "closeBtn",
+              "fill": "#FFFFFF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9E4F6"
+              },
+              "padding": [
+                12,
+                18
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "227zP",
+                  "name": "closeText",
+                  "fill": "#23406E",
+                  "content": "Закрыть",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "PSlim",
+              "name": "createBtn",
+              "fill": "#2563EB",
+              "cornerRadius": 14,
+              "padding": [
+                12,
+                18
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "7piZ9",
+                  "name": "createText",
+                  "fill": "#FFFFFF",
+                  "content": "Создать",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "rxb7A",
+      "x": 11220,
+      "y": 640,
+      "name": "Unsaved Project Confirm Modal",
+      "width": 520,
+      "fill": "#FFFFFF",
+      "cornerRadius": 24,
+      "stroke": {
+        "thickness": 1,
+        "fill": "#D9E4F6"
+      },
+      "layout": "vertical",
+      "gap": 18,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "oTRI9",
+          "name": "confirmTag",
+          "fill": "#2563EB",
+          "content": "ПОДТВЕРЖДЕНИЕ",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": 12,
+          "fontWeight": "700",
+          "letterSpacing": 1
+        },
+        {
+          "type": "text",
+          "id": "ZIvTi",
+          "name": "confirmTitle",
+          "fill": "#0F172A",
+          "content": "Текущий проект не сохранен",
+          "fontFamily": "DM Sans",
+          "fontSize": 30,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "NqfLx",
+          "name": "confirmBody",
+          "fill": "#5C6F91",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Сохранить текущий проект перед открытием другого проекта или созданием нового?",
+          "lineHeight": 1.5,
+          "fontFamily": "DM Sans",
+          "fontSize": 15,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "bu92I",
+          "name": "confirmActions",
+          "width": "fill_container",
+          "gap": 12,
+          "justifyContent": "end",
+          "children": [
+            {
+              "type": "frame",
+              "id": "u1xxJ",
+              "name": "confirmSkip",
+              "fill": "#FFFFFF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9E4F6"
+              },
+              "padding": [
+                12,
+                18
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Z9ljg",
+                  "name": "confirmSkipText",
+                  "fill": "#23406E",
+                  "content": "Не сохранять",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "XsqHI",
+              "name": "confirmClose",
+              "fill": "#FFFFFF",
+              "cornerRadius": 14,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#D9E4F6"
+              },
+              "padding": [
+                12,
+                18
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "1HqBM",
+                  "name": "confirmCloseText",
+                  "fill": "#23406E",
+                  "content": "Отмена",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "0gGVQ",
+              "name": "confirmSave",
+              "fill": "#2563EB",
+              "cornerRadius": 14,
+              "padding": [
+                12,
+                18
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "qdtfj",
+                  "name": "confirmSaveText",
+                  "fill": "#FFFFFF",
+                  "content": "Сохранить",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "700"
                 }
               ]
             }

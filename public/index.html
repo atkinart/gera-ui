@@ -162,13 +162,13 @@
           </div>
 
           <div class="student-project-list">
-            <article class="student-project-card student-project-card-current">
+            <article id="student-project-current-card" class="student-project-card student-project-card-current student-project-card-clickable">
               <p class="student-project-tag" id="student-project-current-tag">ТЕКУЩИЙ</p>
               <h3 id="student-project-current-title">Арка 12</h3>
               <p id="student-project-current-body">Готов к запуску расчета. Последнее изменение сегодня в 10:40.</p>
             </article>
 
-            <article class="student-project-card">
+            <article id="student-project-draft-card" class="student-project-card student-project-card-clickable">
               <p class="student-project-tag student-project-tag-muted" id="student-project-draft-tag">ЧЕРНОВИК</p>
               <h3 id="student-project-draft-title">Балка 04</h3>
               <p id="student-project-draft-body">Можно вернуться к редактированию параметров и продолжить позже.</p>
@@ -224,6 +224,41 @@
           </section>
         </section>
       </section>
+
+      <div id="create-project-modal" class="modal-shell" hidden>
+        <div class="modal-backdrop"></div>
+        <section class="modal-card student-card" role="dialog" aria-modal="true" aria-labelledby="create-project-modal-title">
+          <p class="student-work-label">НОВЫЙ ПРОЕКТ</p>
+          <h2 id="create-project-modal-title">Создать проект</h2>
+          <p class="muted">Укажите название проекта и, при необходимости, короткое описание. После создания рабочая область очистится под новый проект.</p>
+          <label class="modal-field" for="create-project-name">
+            <span>Название проекта</span>
+            <input id="create-project-name" type="text" placeholder="Обязательное поле">
+          </label>
+          <label class="modal-field" for="create-project-description">
+            <span>Описание</span>
+            <textarea id="create-project-description" rows="4" placeholder="Необязательное поле"></textarea>
+          </label>
+          <div class="modal-actions">
+            <button id="create-project-close" type="button" class="ghost">Закрыть</button>
+            <button id="create-project-submit" type="button">Создать</button>
+          </div>
+        </section>
+      </div>
+
+      <div id="unsaved-confirm-modal" class="modal-shell" hidden>
+        <div class="modal-backdrop"></div>
+        <section class="modal-card student-card" role="dialog" aria-modal="true" aria-labelledby="unsaved-confirm-title">
+          <p class="student-work-label">ПОДТВЕРЖДЕНИЕ</p>
+          <h2 id="unsaved-confirm-title">Текущий проект не сохранен</h2>
+          <p id="unsaved-confirm-body" class="muted">Сохранить текущий проект перед открытием другого проекта или созданием нового?</p>
+          <div class="modal-actions">
+            <button id="unsaved-confirm-cancel" type="button" class="ghost">Отмена</button>
+            <button id="unsaved-confirm-skip" type="button" class="ghost">Не сохранять</button>
+            <button id="unsaved-confirm-save" type="button">Сохранить</button>
+          </div>
+        </section>
+      </div>
     </section>
   </main>
 

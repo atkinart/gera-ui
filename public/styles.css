@@ -535,6 +535,15 @@ html[data-student-sidebar="collapsed"] .student-sidebar .student-collapse-btn::b
   gap: 8px;
 }
 
+.student-project-card-clickable {
+  cursor: pointer;
+}
+
+.student-project-card-clickable:hover {
+  border-color: #bdd2f4;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.08);
+}
+
 .student-project-card-current,
 .student-next-card {
   background: #f8faff;
@@ -593,6 +602,66 @@ html[data-student-sidebar="collapsed"] .student-sidebar .student-collapse-btn::b
   padding: 14px 16px;
   background: #ffffff;
   border-radius: 18px;
+}
+
+.modal-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-shell[hidden] {
+  display: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.28);
+  backdrop-filter: blur(4px);
+}
+
+.modal-card {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 100%);
+  padding: 24px;
+  display: grid;
+  gap: 18px;
+}
+
+.modal-field {
+  display: grid;
+  gap: 8px;
+}
+
+.modal-field span {
+  font-family: var(--font-public);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.modal-field input,
+.modal-field textarea {
+  width: 100%;
+  border: 1px solid #d9e4f6;
+  border-radius: 14px;
+  background: #f8faff;
+  padding: 14px 16px;
+  font: inherit;
+  color: #0f172a;
+  resize: vertical;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }
 
 .compact-action {

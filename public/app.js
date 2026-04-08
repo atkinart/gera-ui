@@ -23,7 +23,11 @@
       role: "default",
       sidebarCollapsed: false,
       accountMenuOpen: false,
-      projects: []
+      createModalOpen: false,
+      unsavedConfirmOpen: false,
+      pendingAction: null,
+      projects: [],
+      persistedDraft: null
     },
     logs: []
   };
@@ -140,13 +144,27 @@
     byId("student-logout-btn").addEventListener("click", beginLogout);
     byId("student-sidebar-toggle").addEventListener("click", toggleStudentSidebar);
     byId("student-toolbar-create-btn").addEventListener("click", function () {
-      runAndPrint("Student: создать проект", createFirstProjectFromTemplate);
+      openCreateProjectModal();
     });
     byId("student-toolbar-open-btn").addEventListener("click", function () {
-      runAndPrint("Student: открыть проект", openStudentPrimaryProject);
+      runAndPrint("Student: открыть проект", function () {
+        return openStudentProjectFromCard("current");
+      });
     });
     byId("student-open-current-btn").addEventListener("click", function () {
-      runAndPrint("Student: открыть проект", openStudentPrimaryProject);
+      runAndPrint("Student: открыть проект", function () {
+        return openStudentProjectFromCard("current");
+      });
+    });
+    byId("student-project-current-card").addEventListener("click", function () {
+      runAndPrint("Student: открыть текущий проект", function () {
+        return openStudentProjectFromCard("current");
+      });
+    });
+    byId("student-project-draft-card").addEventListener("click", function () {
+      runAndPrint("Student: открыть черновик", function () {
+        return openStudentProjectFromCard("draft");
+      });
     });
     byId("student-toolbar-import-btn").addEventListener("click", function () {
       print("Student: импорт", { message: "Импорт будет подключен следующим этапом" });
@@ -159,6 +177,19 @@
     });
     byId("student-toolbar-calc-btn").addEventListener("click", function () {
       runAndPrint("Student: запустить расчет", calculateFromCurrentContext);
+    });
+    byId("create-project-close").addEventListener("click", closeCreateProjectModal);
+    byId("create-project-submit").addEventListener("click", function () {
+      runAndPrint("Student: создать проект", createProjectFromModal, {
+        onSuccess: closeCreateProjectModal
+      });
+    });
+    byId("unsaved-confirm-cancel").addEventListener("click", cancelUnsavedConfirm);
+    byId("unsaved-confirm-skip").addEventListener("click", function () {
+      resolveUnsavedConfirm(false);
+    });
+    byId("unsaved-confirm-save").addEventListener("click", function () {
+      resolveUnsavedConfirm(true);
     });
     byId("student-empty-calc-btn").addEventListener("click", function () {
       runAndPrint("Student: запустить расчет", calculateFromCurrentContext);
@@ -491,6 +522,7 @@
     if (projectId) {
       setActiveProjectId(projectId);
     }
+    state.student.persistedDraft = normalizeDraft(draft);
     state.viewer.renderEnabled = false;
     state.lastResult = null;
     await listProjects();
@@ -518,6 +550,11 @@
     byId("student-stage-value").textContent = translateProjectStatus(String(body.status || "DRAFT"));
     byId("student-next-title").textContent = "Запустите расчет для обновления 3D-результата";
     byId("student-next-body").textContent = "После запуска система вернет обновленную визуализацию и краткую сводку без перехода в технические режимы.";
+    state.student.persistedDraft = normalizeDraft({
+      name: String(body.name || ""),
+      comment: String(body.comment || ""),
+      modelParams: body.modelParams || MODEL_TEMPLATE
+    });
     render3DScene();
     applyStudentWorkspaceMode();
 
@@ -537,6 +574,7 @@
       body: JSON.stringify(draft)
     });
 
+    state.student.persistedDraft = normalizeDraft(draft);
     await listProjects();
     return response;
   }
@@ -1840,6 +1878,148 @@
     applyStudentWorkspaceMode();
   }
 
+  function openCreateProjectModal() {
+    state.student.createModalOpen = true;
+    state.student.accountMenuOpen = false;
+    byId("create-project-name").value = "";
+    byId("create-project-description").value = "";
+    applyStudentWorkspaceMode();
+    byId("create-project-name").focus();
+  }
+
+  function closeCreateProjectModal() {
+    state.student.createModalOpen = false;
+    applyStudentWorkspaceMode();
+  }
+
+  function openUnsavedConfirm(actionLabel, action) {
+    state.student.pendingAction = typeof action === "function" ? action : null;
+    state.student.unsavedConfirmOpen = true;
+    byId("unsaved-confirm-body").textContent = "Сохранить текущий проект перед " + actionLabel + "?";
+    applyStudentWorkspaceMode();
+  }
+
+  function cancelUnsavedConfirm() {
+    state.student.pendingAction = null;
+    state.student.unsavedConfirmOpen = false;
+    applyStudentWorkspaceMode();
+  }
+
+  async function resolveUnsavedConfirm(shouldSave) {
+    var action = state.student.pendingAction;
+    state.student.pendingAction = null;
+    state.student.unsavedConfirmOpen = false;
+    applyStudentWorkspaceMode();
+    if (shouldSave) {
+      await persistCurrentProjectDraft();
+    }
+    if (typeof action === "function") {
+      return action();
+    }
+    return null;
+  }
+
+  async function createProjectFromModal() {
+    var name = String(byId("create-project-name").value || "").trim();
+    var description = String(byId("create-project-description").value || "").trim();
+    if (!name) {
+      throw new Error("Название проекта обязательно");
+    }
+
+    if (hasUnsavedProjectChanges()) {
+      openUnsavedConfirm("созданием нового проекта", function () {
+        return createProjectFromModalConfirmed(name, description);
+      });
+      return { deferred: true };
+    }
+
+    return createProjectFromModalConfirmed(name, description);
+  }
+
+  async function createProjectFromModalConfirmed(name, description) {
+
+    resetWorkspaceForNewProject();
+    byId("project-name-input").value = name;
+    byId("project-comment-input").value = description;
+
+    var response = await createProject();
+    var createdProjectId = String(response && response.body && response.body.projectId || "").trim();
+    if (createdProjectId) {
+      await loadProject(createdProjectId);
+    }
+    return {
+      projectId: createdProjectId,
+      message: "Новый проект создан"
+    };
+  }
+
+  function hasUnsavedProjectChanges() {
+    var currentDraft = collectDraft();
+    var currentId = readProjectId();
+    if (currentId) {
+      return JSON.stringify(normalizeDraft(currentDraft)) !== JSON.stringify(normalizeDraft(state.student.persistedDraft));
+    }
+    return isMeaningfulDraft(currentDraft);
+  }
+
+  async function persistCurrentProjectDraft() {
+    var projectId = readProjectId();
+    if (projectId) {
+      await updateProject(projectId);
+      return;
+    }
+
+    if (!String(byId("project-name-input").value || "").trim()) {
+      byId("project-name-input").value = "Черновик " + new Date().toLocaleDateString("ru-RU");
+    }
+    await createProject();
+  }
+
+  function resetWorkspaceForNewProject() {
+    state.activeProjectId = "";
+    byId("project-id-input").value = "";
+    byId("review-project-id").value = "";
+    setModelFromParams(MODEL_TEMPLATE);
+    state.viewer.renderEnabled = false;
+    state.lastResult = null;
+    state.compareSummary = null;
+    state.viewer.expectedOverlay = null;
+    setLegacyCompareStatus("н/д");
+    clearResultOutput();
+    updateModelSummary();
+    state.student.persistedDraft = null;
+  }
+
+  async function openStudentProjectFromCard(slot) {
+    var projects = Array.isArray(state.student.projects) ? state.student.projects : [];
+    var target = slot === "draft" ? projects[1] : projects[0];
+    var projectId = String(target && target.projectId || "").trim();
+    if (!projectId) {
+      throw new Error("Проект для открытия не найден");
+    }
+    if (hasUnsavedProjectChanges()) {
+      openUnsavedConfirm("открытием другого проекта", function () {
+        return loadProject(projectId);
+      });
+      return { deferred: true };
+    }
+    return loadProject(projectId);
+  }
+
+  function normalizeDraft(draft) {
+    return draft ? JSON.parse(JSON.stringify(draft)) : null;
+  }
+
+  function isMeaningfulDraft(draft) {
+    if (!draft) {
+      return false;
+    }
+    if (String(draft.name || "").trim() || String(draft.comment || "").trim()) {
+      return true;
+    }
+    return JSON.stringify(draft.modelParams || {}) !== JSON.stringify(MODEL_TEMPLATE);
+  }
+
   function toggleStudentAccountMenu() {
     state.student.accountMenuOpen = !state.student.accountMenuOpen;
     applyStudentWorkspaceMode();
@@ -1850,19 +2030,29 @@
     var account = byId("student-account-menu");
     var trigger = byId("student-account-trigger");
     if (!target || !account || !trigger || !state.student.accountMenuOpen) {
-      return;
+      if (!target) {
+        return;
+      }
+    } else if (!account.contains(target) && !trigger.contains(target)) {
+      state.student.accountMenuOpen = false;
+      applyStudentWorkspaceMode();
     }
-    if (account.contains(target) || trigger.contains(target)) {
-      return;
+
+    if (state.student.createModalOpen) {
+      var modal = byId("create-project-modal");
+      var modalCard = modal ? modal.querySelector(".modal-card") : null;
+      if (modal && modalCard && !modalCard.contains(target) && !target.closest("#student-toolbar-create-btn")) {
+        closeCreateProjectModal();
+      }
     }
-    state.student.accountMenuOpen = false;
-    applyStudentWorkspaceMode();
   }
 
   function applyStudentWorkspaceMode() {
     var root = document.documentElement;
     var accountMenu = byId("student-account-menu");
     var accountTrigger = byId("student-account-trigger");
+    var createModal = byId("create-project-modal");
+    var unsavedModal = byId("unsaved-confirm-modal");
     if (!root) {
       return;
     }
@@ -1873,26 +2063,33 @@
       accountMenu.hidden = !state.student.accountMenuOpen;
       accountTrigger.setAttribute("aria-expanded", state.student.accountMenuOpen ? "true" : "false");
     }
-  }
-
-  async function openStudentPrimaryProject() {
-    var projectId = String(state.activeProjectId || "").trim();
-    if (!projectId) {
-      var firstProject = Array.isArray(state.student.projects) && state.student.projects.length > 0 ? state.student.projects[0] : null;
-      projectId = String(firstProject && firstProject.projectId || "").trim();
+    if (createModal) {
+      createModal.hidden = !state.student.createModalOpen;
     }
-    if (!projectId) {
-      throw new Error("Нет проекта для открытия. Сначала создайте новый проект.");
+    if (unsavedModal) {
+      unsavedModal.hidden = !state.student.unsavedConfirmOpen;
     }
-    return loadProject(projectId);
   }
 
   function renderStudentProjects(rows) {
     var items = Array.isArray(rows) ? rows : [];
     state.student.projects = items;
 
-    var current = items[0] || null;
-    var draft = items[1] || null;
+    var activeId = readProjectId();
+    var current = null;
+    var draft = null;
+
+    if (activeId) {
+      current = items.find(function (item) {
+        return String(item && item.projectId || "") === activeId;
+      }) || null;
+    }
+    if (!current) {
+      current = items[0] || null;
+    }
+    draft = items.find(function (item) {
+      return current && String(item && item.projectId || "") !== String(current.projectId || "");
+    }) || null;
 
     byId("student-project-current-title").textContent = current ? String(current.name || current.projectId || "Без названия") : "Нет проектов";
     byId("student-project-current-body").textContent = current
